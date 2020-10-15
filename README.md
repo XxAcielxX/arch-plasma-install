@@ -1,10 +1,13 @@
 # Arch with KDE Plasma Installation Guide (MBR & UEFI)
 
-- We are going to install Arch and KDE Plasma packages required for a minimal system up & running.
-- Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
-- After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal is to:
+Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
 
 ## Getting started
+
+## Let's begin
+- We are going to install Arch and KDE Plasma packages required for a minimal system up & running.
+- Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
+- After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal.
 
 ### Check for Internet Connectivity
 ```
@@ -23,9 +26,9 @@ We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdis
 ```
 cfdisk /dev/sd*
 ```
-- "*" = disk drive, find your by running `lsblk`
-- SWAP Partition should double the size of RAM available in your system
-- We will be using one partition for our ROOT, boot & home
+- \* = disk drive, find your by running `lsblk` and replace in all the below instances.
+- SWAP Partition should double the size of RAM available in your system.
+- We will be using one partition for our ROOT, boot & home.
 
 ### Format the Partition, Make SWAP & Mount ROOT
 ##### ROOT
