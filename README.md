@@ -3,8 +3,10 @@
 Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
 
 ## Getting started
-
-
+- Installation
+- - [Let's Begin](https://github.com/XxAcielxX/arch-plasma-install#lets-begin)
+- Extras
+- - YAY
 ## Let's begin
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
 - After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal.
@@ -229,13 +231,53 @@ partitionmanager | KDE Disk & Partion Manager
 sudo pacman -S firefox qbittorrent wget github neofetch zsh
 ```
 
+### Final Reboot
+```
+reboot
+```
+
+## Extra
+
 ### Install YAY
 ```
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
-### Final Reboot
+
+## Maintenance & Performance Tuning
+
+### PacCache
+
+Install
 ```
-reboot
+sudo pacman -S pacman-contrib
+```
+
+To manually clean pacman cache, run
+```
+paccache -rk1
+```
+Where, *k* indicates to keep "num" of each package in the cache.
+
+#### To automate paccache process
+
+To do so, create a file /etc/pacman.d/hooks/clean_package_cache.hook:
+
+```sudo mkdir /etc/pacman.d/hooks
+sudo nano /etc/pacman.d/hooks/clean_cache.hook
+```
+
+Add the following lines:
+```
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Operation = Remove
+Type = Package
+Target = *
+[Action]
+Description = Cleaning pacman cache...
+When = PostTransaction
+Exec = /usr/bin/paccache -rk1
 ```
