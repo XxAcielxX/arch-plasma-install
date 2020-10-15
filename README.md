@@ -1,4 +1,4 @@
-# Arch with KDE Plasma Install Guide (MBR & UEFI)
+# Arch with KDE Plasma Installation Guide (MBR & UEFI)
 
 We are going to install Arch and KDE Plasma packages required for a minimal system up & running.
 
@@ -18,14 +18,38 @@ ping -t 4 google.com
 timedatectl set-ntp true
 ```
 
-## Disk Partitioning (MBR)
-We are going to two partitions on our HDD, 1. SWAP & 2. ROOT using `cfdisk`.
+## Disk Partitioning & Mounting (MBR)
+We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdisk`.
 ```
 cfdisk /dev/sd*
 ```
- - * = disk drive, find your it by running `lsblk`
+ - "*" = disk drive, find your by running `lsblk`
  - SWAP Partition should double the size of RAM available in your system
  - We will be using one partition for our ROOT, boot & home
 
+### Format the Partition, Make SWAP & Mount ROOT
+##### ROOT
+```
+mkfs.ext4 /dev/sd*2
+```
+##### SWAP
+```
+mkswap /dev/sd*1
+swapon /dev/sd*1
+```
+#### Mount ROOT
+```
+mount /dev/sd*2 /mnt
+```
+
 ## Disk Partitioning (UEFI)
 Coming soon...
+
+
+## Base System Installation
+
+### Update Mirrors using Reflector
+```
+reflector --country County1,Country2 --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+```
+- 
