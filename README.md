@@ -15,41 +15,69 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 ```
 ping -t 4 google.com
 ```
-- If you are using Wi-Fi, then use `wifi-menu` to connect to your local network
-- If this is successful then we will head to next step
+- If you are connected through Ethernet, then your Internet will be working out of the box.
+- If you are using Wi-Fi, then use `wifi-menu` to connect to your local network.
+- If this is successful then we will head to next step.
 
 ### Update system clock
 ```
 timedatectl set-ntp true
 ```
 
+## Disk Partition (use UEFI or MBR, go according to your system)
+
+### Disk Partitioning (UEFI)
+```
+gdisk /dev/[disk name]
+```
+- If you have a brand new HDD then create GPT Partition Table by pressing `g`, then:
+```
+n = New Partition
+1 = 1st Partition 
++512M = BOOT Partition Size
+ef00 = EFI Partition Type
+
+n = New Partition again
+2 = 2nd Partition 
++xxxG = ROOT Partition Size (use the remaining space left)
+8300 or simply press enter = EXT4 ROOT Partition Type
+```
+### Format Partitions (UEFI)
+```
+mkfs.fat -F32 /dev/[efi partition name]
+mkfs.ext4 /dev/[root partiton name] 
+```
+
+### Mount Partitions (UEFI)
+```
+mount /dev/[root partition name] /mnt
+mkdir /mnt/boot/efi
+mount /dev/[efi partition name] /mnt/boot/efi
+```
+
 ## Disk Partitioning & Mounting (MBR)
 We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdisk`.
 ```
-cfdisk /dev/sd*
+cfdisk /dev/[disk name]
 ```
-- \* = disk drive, find your by running `lsblk` and replace in all the below instances.
+- [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
 - SWAP Partition should double the size of RAM available in your system.
 - We will be using one partition for our ROOT, boot & home.
 
 ### Format the Partition, Make SWAP & Mount ROOT
-##### ROOT
+##### Format ROOT as EXT4
 ```
-mkfs.ext4 /dev/sd*2
+mkfs.ext4 /dev/[root partition name]
 ```
-##### SWAP
+##### Make & Turn SWAP on
 ```
-mkswap /dev/sd*1
-swapon /dev/sd*1
+mkswap /dev/[swap partition name]
+swapon /dev/[root partition name]
 ```
 #### Mount ROOT
 ```
-mount /dev/sd*2 /mnt
+mount /dev/[root partition name] /mnt
 ```
-
-## Disk Partitioning (UEFI)
-Coming soon...
-
 
 ## Base System Installation
 
@@ -83,7 +111,7 @@ arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 ```
-Replace `Region` & `City` with your region and city. Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
+Replace `Region` & `City` according to your Time-Zone . Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
 
 ## Set Language (en_US.UTF-8 as default Language)
 If you want to set your language, please read 
@@ -142,9 +170,16 @@ systemctl enable NetworkManager
 passwd
 ```
 
-### GRUB Bootloader
+### Install GRUB Bootloader
 ```
 pacman -S grub
+```
+
+#### For UEFI System
+
+
+#### For MBR System
+```
 grub-install --target=i386-pc /dev/sd*
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
