@@ -52,25 +52,21 @@ Coming soon...
 ```
 reflector --country County1,Country2 --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 ```
-- Replace Country1 & Country2 with country names near to you or with the one you're living in. Refer to https://wiki.archlinux.org/index.php/reflector for more info
+Replace Country1 & Country2 with country names near to you or with the one you're living in. Refer to https://wiki.archlinux.org/index.php/reflector for more info.
 
 ### Install base system
 ```
 pacstrap /mnt base base-devel linux linux-firmware nano intel-ucode reflector
 ```
-- Replace `linux` with linux-hardened, linux-lts or linux-zen to install the kernel of your choice
-- Replace `nano` with editor of your choice (vim or vi)
-- Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor
+Replace `linux` with linux-hardened, linux-lts or linux-zen to install the kernel of your choice.
+Replace `nano` with editor of your choice (vim or vi).
+Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor.
 
-### Generate yor fstab
+### Generate yor fstab (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively): 
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-
-#### Check fstab Mount Points
-```
-cat /mnt/etc/fstab
-```
+Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. 
 
 ## Chroot
 ```
@@ -79,22 +75,45 @@ arch-chroot /mnt
 
 ### Set Time & Date
 ```
-ln -sf /usr/share/zoneinfo/Asia/Karachi /etc/localtime && hwclock --systohc
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+hwclock --systohc
+```
+Replace `Region` & `City` with your region and city. Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
+
+## Set Language (en_US.UTF-8 as default Language)
+If you want to set your language, please read 
+
+#### Edit locale.gen
+```
+nano /etc/locale.gen
+```
+Uncomment the below line from
+```
+#en_US.UTF-8 UTF-8
+```
+To
+```
+en_US.UTF-8 UTF-8
+```
+- save & exit
+
+Generate Locale
+```
+locale-gen
 ```
 
-### Set Language
+### Add LANG to locale.conf
 ```
-sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen && locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 ```
 
-### Set Hostname & Hosts
+## Set Hostname
 ```
 echo arch > /etc/hostname
 ```
-- Replace `arch` with hostname of your choice
+Replace `arch` with hostname of your choice.
 
-### Set Hosts File
+### Set Hosts
 ```
 nano /etc/hosts
 ```
@@ -104,7 +123,8 @@ nano /etc/hosts
 ::1          localhost
 127. 0.1.1   arch.localdomain arch
 ```
-- Replace `arch` with hostname of your choice
+Replace `arch` with hostname of your choice.
+save & exit
 
 ### Install & Enable NetworkManager
 ```
@@ -139,11 +159,11 @@ reboot
 ```
 useradd -mG wheel username
 ```
-- Replace `username` with your username of choice
+Replace `username` with your username of choice.
 
 ## Set User Password
 ```
-passwd aciel
+passwd username
 ```
 
 ### Set Wheel Group to use Sudo Command
@@ -155,6 +175,7 @@ EDITOR=nano visudo
 ```
 %wheel ALL=(ALL) ALL
 ```
+save & exit
 
 ### Exit from ROOT
 ```
@@ -168,11 +189,12 @@ exit
 sudo pacman -Syu
 ```
 
-### XOrg & Radeon GPU Drivers
+### XOrg & GPU Drivers
 ```
-sudo pacman -S xorg xf86-video-ati
+sudo pacman -S xorg xf86-video-xxx
 ```
-- (lib32-mesa, requires multilib Repo)
+
+### Enable Multilib Repo
 
 
 ### Install & Enable SDDM
@@ -191,13 +213,13 @@ plasma-desktop | Minimal Plasma DE installation
 konsole | KDE Terminal
 dolphin | KDE default File Manager
 ark | Archiving Tool
-kwrite | 
-kcalc | 
-spectacle | 
-ksysguard | 
-krunner | 
-kscreen | 
-partitionmanager | 
+kwrite | Text Editor
+kcalc | Scientific Calculator
+spectacle | KDE screenshot capture utility
+ksysguard | KDE System Task Monitor
+krunner | KDE Quick drop-down search menu
+kscreen | KDE Display Setting Manager
+partitionmanager | KDE Disk & Partion Manager
 
 ### My Required Applications
 ```
