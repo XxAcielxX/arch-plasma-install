@@ -1,4 +1,4 @@
-# Arch with KDE Plasma Installation Guide (MBR & UEFI)
+# Arch with KDE Plasma Installation Guide (UEFI & MBR)
 
 Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
 
@@ -24,7 +24,9 @@ ping -t 4 google.com
 timedatectl set-ntp true
 ```
 
-## Disk Partition (use UEFI or MBR, go according to your system)
+Disk Partition (use UEFI or MBR, go according to your system)
+
+## For UEFI System
 
 ### Disk Partitioning (UEFI)
 ```
@@ -54,8 +56,9 @@ mount /dev/[root partition name] /mnt
 mkdir /mnt/boot/efi
 mount /dev/[efi partition name] /mnt/boot/efi
 ```
+## For MBR System
 
-## Disk Partitioning & Mounting (MBR)
+### Disk Partitioning & Mounting (MBR)
 We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdisk`.
 ```
 cfdisk /dev/[disk name]
@@ -64,17 +67,17 @@ cfdisk /dev/[disk name]
 - SWAP Partition should double the size of RAM available in your system.
 - We will be using one partition for our ROOT, boot & home.
 
-### Format the Partition, Make SWAP & Mount ROOT
+### Format the Partition, Make SWAP & Mount ROOT (MBR)
 ##### Format ROOT as EXT4
 ```
 mkfs.ext4 /dev/[root partition name]
 ```
-##### Make & Turn SWAP on
+##### Make & Turn SWAP on (MBR)
 ```
 mkswap /dev/[swap partition name]
 swapon /dev/[root partition name]
 ```
-#### Mount ROOT
+#### Mount ROOT (MBR)
 ```
 mount /dev/[root partition name] /mnt
 ```
@@ -105,6 +108,20 @@ Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
 ```
 arch-chroot /mnt
 ```
+### Create Swapfile (UEFI Only)
+```
+dd if=/dev/zero of=/swapfile bs=1G count=2 status=progress
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+```
+Replace the above 2 in `count=2` with 2 x RAM Size. (e.g it you have 8GB, then 2x8 = 16 then `count=16`)
+
+### Add Swapfile info in your `/etc/fstab`
+```
+/swapfile none swap defaults 0 0
+```
+Insert the above at the bottom of `/etc/fstab`
 
 ### Set Time & Date
 ```
@@ -128,7 +145,7 @@ To
 ```
 en_US.UTF-8 UTF-8
 ```
-- save & exit
+save & exit.
 
 Generate Locale
 ```
@@ -157,7 +174,7 @@ nano /etc/hosts
 127. 0.1.1   arch.localdomain arch
 ```
 Replace `arch` with hostname of your choice.
-save & exit
+save & exit.
 
 ### Install & Enable NetworkManager
 ```
@@ -176,11 +193,17 @@ pacman -S grub
 ```
 
 #### For UEFI System
-
+```
+grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB
+```
 
 #### For MBR System
 ```
-grub-install --target=i386-pc /dev/sd*
+grub-install --target=i386-pc /dev/[disk name]
+```
+
+### Create Grub configuration file
+```
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -229,13 +252,21 @@ exit
 sudo pacman -Syu
 ```
 
-### XOrg & GPU Drivers
+### xorg & GPU Drivers
 ```
 sudo pacman -S xorg xf86-video-xxx
 ```
+For Nvidia GPUs, type `xf86-video-nvidia`
+For newer AMD GPUs, type `xf86-video-amdgpu`
+For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`
 
-### Enable Multilib Repo
-
+### (OPTIONAL) Enable Multilib Repo
+multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://wine.hq), [Steam](https://store.steampowered.com/), etc).
+Edit `/etc/pacman.conf` & uncomment the below section
+```
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+```
 
 ### Install & Enable SDDM
 ```
