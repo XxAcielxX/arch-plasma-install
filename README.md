@@ -95,7 +95,9 @@ Replace Country1 & Country2 with country names near to you or with the one you'r
 pacstrap /mnt base base-devel linux linux-firmware nano intel-ucode reflector
 ```
 Replace `linux` with linux-hardened, linux-lts or linux-zen to install the kernel of your choice.
+
 Replace `nano` with editor of your choice (vim or vi).
+
 Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor.
 
 ### Generate yor fstab (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively): 
@@ -108,7 +110,7 @@ Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
 ```
 arch-chroot /mnt
 ```
-### Create Swapfile (UEFI Only)
+### Create Swapfile (UEFI only)
 ```
 dd if=/dev/zero of=/swapfile bs=1G count=2 status=progress
 chmod 600 /swapfile
@@ -117,11 +119,11 @@ swapon /swapfile
 ```
 Replace the above 2 in `count=2` with 2 x RAM Size. (e.g it you have 8GB, then 2x8 = 16 then `count=16`)
 
-### Add Swapfile info in your `/etc/fstab`
+### Add Swapfile entery in your `/etc/fstab` file (UEFI only) 
 ```
 /swapfile none swap defaults 0 0
 ```
-Insert the above at the bottom of `/etc/fstab`
+Insert the above line at the bottom of `/etc/fstab`.
 
 ### Set Time & Date
 ```
@@ -257,12 +259,15 @@ sudo pacman -Syu
 sudo pacman -S xorg xf86-video-xxx
 ```
 For Nvidia GPUs, type `xf86-video-nvidia`
+
 For newer AMD GPUs, type `xf86-video-amdgpu`
+
 For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`
 
 ### (OPTIONAL) Enable Multilib Repo
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://wine.hq), [Steam](https://store.steampowered.com/), etc).
-Edit `/etc/pacman.conf` & uncomment the below section
+
+Edit `/etc/pacman.conf` & uncomment the below section.
 ```
 [multilib]
 Include = /etc/pacman.d/mirrorlist
