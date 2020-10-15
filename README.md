@@ -23,9 +23,9 @@ We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdis
 ```
 cfdisk /dev/sd*
 ```
- - "*" = disk drive, find your by running `lsblk`
- - SWAP Partition should double the size of RAM available in your system
- - We will be using one partition for our ROOT, boot & home
+- "*" = disk drive, find your by running `lsblk`
+- SWAP Partition should double the size of RAM available in your system
+- We will be using one partition for our ROOT, boot & home
 
 ### Format the Partition, Make SWAP & Mount ROOT
 ##### ROOT
@@ -60,4 +60,157 @@ pacstrap /mnt base base-devel linux linux-firmware nano intel-ucode reflector
 ```
 - Replace `linux` with linux-hardened, linux-lts or linux-zen to install the kernel of your choice
 - Replace `nano` with editor of your choice (vim or vi)
-- Replace `intel-ucode` with amd-ucode if you are using AMD Processor
+- Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor
+
+### Generate yor fstab
+```
+genfstab -U /mnt >> /mnt/etc/fstab
+```
+
+#### Check fstab Mount Points
+```
+cat /mnt/etc/fstab
+```
+
+## Chroot
+```
+arch-chroot /mnt
+```
+
+### Set Time & Date
+```
+ln -sf /usr/share/zoneinfo/Asia/Karachi /etc/localtime && hwclock --systohc
+```
+
+### Set Language
+```
+sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen && locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+```
+
+### Set Hostname & Hosts
+```
+echo arch > /etc/hostname
+```
+- Replace `arch` with hostname of your choice
+
+### Set Hosts File
+```
+nano /etc/hosts
+```
+#### add these lines to it
+```
+127.0.0.1    localhost
+::1          localhost
+127. 0.1.1   arch.localdomain arch
+```
+- Replace `arch` with hostname of your choice
+
+### Install & Enable NetworkManager
+```
+pacman -S networkmanager
+systemctl enable NetworkManager
+```
+
+### Set ROOT Password
+```
+passwd
+```
+
+### GRUB Bootloader
+```
+pacman -S grub
+grub-install --target=i386-pc /dev/sd*
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### Final Step
+```
+exit 
+umount -a
+reboot
+```
+
+## Unplug the USB Stick and boot into your freshly installed Arch system
+
+### Login as ROOT
+
+### Add user
+```
+useradd -mG wheel username
+```
+- Replace `username` with your username of choice
+
+## Set User Password
+```
+passwd aciel
+```
+
+### Set Wheel Group to use Sudo Command
+```
+EDITOR=nano visudo
+```
+
+#### Find and uncomment the below line
+```
+%wheel ALL=(ALL) ALL
+```
+
+### Exit from ROOT
+```
+exit
+```
+
+## Login as USER
+
+### Check for updates
+```
+sudo pacman -Syu
+```
+
+### XOrg & Radeon GPU Drivers
+```
+sudo pacman -S xorg xf86-video-ati
+```
+- (lib32-mesa, requires multilib Repo)
+
+
+### Install & Enable SDDM
+```
+sudo pacman -S sddm
+sudo systemctl enable sddm
+```
+
+### KDE Plasma & Applications
+```
+sudo pacman -S plasma-desktop konsole dolphin ark kwrite kcalc spectacle ksysguard krunner kscreen partitionmanager
+```
+Packages | Description
+------------ | -------------
+plasma-desktop | Minimal Plasma DE installation
+konsole | KDE Terminal
+dolphin | KDE default File Manager
+ark | Archiving Tool
+kwrite | 
+kcalc | 
+spectacle | 
+ksysguard | 
+krunner | 
+kscreen | 
+partitionmanager | 
+
+### My Required Applications
+```
+sudo pacman -S firefox qbittorrent wget github neofetch zsh
+```
+
+### Install YAY
+```
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+```
+### Final Reboot
+```
+reboot
+```
