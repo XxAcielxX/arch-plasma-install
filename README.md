@@ -2,9 +2,9 @@
 
 We are going to install Arch and KDE Plasma packages required for a minimal system up & running.
 
-Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick
+Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
 
-After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal is to
+After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal is to:
 
 ### Check for Internet Connectivity
 ```
@@ -52,4 +52,12 @@ Coming soon...
 ```
 reflector --country County1,Country2 --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 ```
-- 
+- Replace Country1 & Country2 with country names near to you or with the one you're living in. Refer to https://wiki.archlinux.org/index.php/reflector for more info
+
+### Install base system
+```
+pacstrap /mnt base base-devel linux linux-firmware nano intel-ucode reflector
+```
+- Replace `linux` with linux-hardened, linux-lts or linux-zen to install the kernel of your choice
+- Replace `nano` with editor of your choice (vim or vi)
+- Replace `intel-ucode` with amd-ucode if you are using AMD Processor
