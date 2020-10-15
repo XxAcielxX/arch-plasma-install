@@ -4,8 +4,8 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 
 ## Getting started
 
+
 ## Let's begin
-- We are going to install Arch and KDE Plasma packages required for a minimal system up & running.
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
 - After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal.
 
