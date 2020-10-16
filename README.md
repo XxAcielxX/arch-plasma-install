@@ -2,9 +2,32 @@
 
 Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
 
-## Getting started
-- Installation
+## Table of Contents
+- 1. Installation
 - - [Let's Begin](https://github.com/XxAcielxX/arch-plasma-install#lets-begin)
+- Disk Partitioning
+- - [UEFI System](https://github.com/XxAcielxX/arch-plasma-install#for-uefi-system)
+- - [MBR System](https://github.com/XxAcielxX/arch-plasma-install#for-mbr-system)
+
+- [2. Base System Installation](https://github.com/XxAcielxX/arch-plasma-install#base-system-installation)
+- - [Update Mirrors](https://github.com/XxAcielxX/arch-plasma-install#update-mirrors-using-reflector)
+- - [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
+- - [Generate fstab](https://github.com/XxAcielxX/arch-plasma-install#generate-yor-fstab-use--u-or--l-to-define-by-uuid-or-labels-respectively)
+- 3. Chroot
+- - [Swapfile (UEFI only](https://github.com/XxAcielxX/arch-plasma-install#create-swapfile-uefi-only)
+- - [Date & Time](https://github.com/XxAcielxX/arch-plasma-install#set-time--date)
+- - [Language](https://github.com/XxAcielxX/arch-plasma-install#set-language-en_usutf-8-as-default-language)
+- - [Hostname & Hosts](https://github.com/XxAcielxX/arch-plasma-install#set-hostname)
+- - [Network Manager](https://github.com/XxAcielxX/arch-plasma-install#install--enable-networkmanager) 
+- - [ROOT Password](https://github.com/XxAcielxX/arch-plasma-install#set-root-password) 
+- - [GRUB Bootloader](https://github.com/XxAcielxX/arch-plasma-install#install-grub-bootloader) 
+- - - [UEFI System](https://github.com/XxAcielxX/arch-plasma-install#for-uefi-system-1) 
+- - - [MBR System](https://github.com/XxAcielxX/arch-plasma-install#for-mbr-system-1)
+- 4. Boot Freshly Installed System
+- - [Add User](https://github.com/XxAcielxX/arch-plasma-install#add-new-user) 
+- - [Sudo Command](https://github.com/XxAcielxX/arch-plasma-install#set-wheel-group-to-use-sudo-command) 
+
+
 - Extras
 - - YAY
 ## Let's begin
@@ -227,7 +250,7 @@ useradd -mG wheel [username]
 ```
 Replace `[username]` with your username of choice.
 
-## Set User Password
+### Set User Password
 ```
 passwd [username]
 ```
