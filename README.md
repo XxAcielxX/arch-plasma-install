@@ -32,6 +32,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Misc Applications](https://#my-required-applications)
   * [Extras](#extras)
     * [Yay](#install-yay)
+  * [Theming & Customisations](theming--customisations)
   * [Maintenance & Performance Tuning](maintenance--performance-tuning)
     * [Paccache](#paccache)
 
