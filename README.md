@@ -25,7 +25,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Add User](#add-new-user) 
     * [Sudo Command](#set-wheel-group-to-use-sudo-command) 
   * [User Login](#login-as-user)
-    * [Display Drivers & GPU Drivers](#xorg--gpu-drivers)
+    * [Display Server & GPU Drivers](#xorg--gpu-drivers)
     * [Multilib Repository (32bit)](#enable-multilib-repo-optional)
     * [Display Manager (SDDM)](#install--enable-sddm)
     * [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
@@ -289,7 +289,7 @@ exit
 sudo pacman -Syu
 ```
 
-### xorg & GPU Drivers
+### Xorg & GPU Drivers
 ```
 sudo pacman -S xorg xf86-video-[your gpu type]
 ```
@@ -347,6 +347,9 @@ zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login
 ```
 reboot
 ```
+
+### The Conclusion
+Now everything is installed and after the final `reboot`, you will land in you GUI Login Screen ready to use your system. You can also some extra steps mentioned below to further improve your experience. I'll recommend you to install `yay` & `paccache`.
 
 ## Extras
 
