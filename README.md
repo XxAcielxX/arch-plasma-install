@@ -100,7 +100,7 @@ mkfs.ext4 /dev/[root partition name]
 ##### Make & Turn SWAP on (MBR)
 ```
 mkswap /dev/[swap partition name]
-swapon /dev/[root partition name]
+swapon /dev/[swap partition name]
 ```
 #### Mount ROOT (MBR)
 ```
@@ -157,20 +157,16 @@ hwclock --systohc
 ```
 Replace `Region` & `City` according to your Time-Zone . Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
 
-## Set Language (en_US.UTF-8 as default Language)
-If you want to set your language, please read 
+## Set Language
+We will use `en_US.UTF-8` as our default language here but, if you want to set your language, please read 
 
 #### Edit locale.gen
 ```
 nano /etc/locale.gen
 ```
-Uncomment the below line from
+Uncomment the below line
 ```
 #en_US.UTF-8 UTF-8
-```
-To
-```
-en_US.UTF-8 UTF-8
 ```
 save & exit.
 
