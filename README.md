@@ -26,7 +26,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Sudo Command](#set-wheel-group-to-use-sudo-command) 
   * [User Login](#login-as-user)
     * [Display Drivers & GPU Drivers](#xorg--gpu-drivers)
-    * [Multilib Repository (32bit)](#optional-enable-multilib-repo)
+    * [Multilib Repository (32bit)](#enable-multilib-repo-optional)
     * [Display Manager (SDDM)](#install--enable-sddm)
     * [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
     * [Misc Applications](https://#my-required-applications)
@@ -52,9 +52,9 @@ ping -t 4 google.com
 timedatectl set-ntp true
 ```
 ## Preparing the Disk for System
-<div text-color="red">*** WARNING ***</div>
-Be extremely careful when managing your disks, incase your delete your precious data then DON'T blame me.<br/>
-Disk Partition (use UEFI or MBR, go according to your system)
+### \*** WARNING ***</br>
+>> Be extremely careful when managing your disks, incase your delete your precious data then DON'T blame me.</br>
+>> Disk Partition (use UEFI or MBR, go according to your system)
 
 ## For UEFI System
 
@@ -292,7 +292,7 @@ For newer AMD GPUs, type `xf86-video-amdgpu`
 
 For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`
 
-### (OPTIONAL) Enable Multilib Repo
+### Enable Multilib Repo (optional)
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://wine.hq), [Steam](https://store.steampowered.com/), etc).
 
 Edit `/etc/pacman.conf` & uncomment the below section.
