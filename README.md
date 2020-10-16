@@ -12,7 +12,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
   * [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
   * [Generate fstab](#generate-yor-fstab-use--u-or--l-to-define-by-uuid-or-labels-respectively)
   * [Chroot](#chroot)
-    * [Swapfile (UEFI only](#create-swapfile-uefi-only)
+    * [Swapfile (UEFI only)](#create-swapfile-uefi-only)
     * [Date & Time](#set-time--date)
     * [Language](#set-language)
     * [Hostname & Hosts](#set-hostname)
