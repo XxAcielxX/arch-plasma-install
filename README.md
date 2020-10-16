@@ -4,30 +4,37 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 
 ## Table of Contents
   * [Let's Begin](#lets-begin)
-  * Disk Partitioning
-    * [UEFI System](https://github.com/XxAcielxX/arch-plasma-install#for-uefi-system)
-    * [MBR System](https://github.com/XxAcielxX/arch-plasma-install#for-mbr-system)
-  * [Base System Installation](https://github.com/XxAcielxX/arch-plasma-install#base-system-installation)
-  * [Update Mirrors](https://github.com/XxAcielxX/arch-plasma-install#update-mirrors-using-reflector)
+  * [Disk Partitioning](#preparing-the-disk-for-system)
+    * [UEFI System](#for-uefi-system)
+    * [MBR System](#for-mbr-system)
+  * [Base System Installation](#base-system-installation)
+  * [Update Mirrors](#update-mirrors-using-reflector)
   * [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
-  * [Generate fstab](https://github.com/XxAcielxX/arch-plasma-install#generate-yor-fstab-use--u-or--l-to-define-by-uuid-or-labels-respectively)
-  * Chroot
-    * [Swapfile (UEFI only](https://github.com/XxAcielxX/arch-plasma-install#create-swapfile-uefi-only)
-    * [Date & Time](https://github.com/XxAcielxX/arch-plasma-install#set-time--date)
-    * [Language](https://github.com/XxAcielxX/arch-plasma-install#set-language-en_usutf-8-as-default-language)
-    * [Hostname & Hosts](https://github.com/XxAcielxX/arch-plasma-install#set-hostname)
-    * [Network Manager](https://github.com/XxAcielxX/arch-plasma-install#install--enable-networkmanager) 
-    * [ROOT Password](https://github.com/XxAcielxX/arch-plasma-install#set-root-password) 
-    * [GRUB Bootloader](https://github.com/XxAcielxX/arch-plasma-install#install-grub-bootloader) 
-      * [UEFI System](https://github.com/XxAcielxX/arch-plasma-install#for-uefi-system-1) 
-      * [MBR System](https://github.com/XxAcielxX/arch-plasma-install#for-mbr-system-1)
+  * [Generate fstab](#generate-yor-fstab-use--u-or--l-to-define-by-uuid-or-labels-respectively)
+  * [Chroot](#chroot)
+    * [Swapfile (UEFI only](#create-swapfile-uefi-only)
+    * [Date & Time](#set-time--date)
+    * [Language](#set-language-en_usutf-8-as-default-language)
+    * [Hostname & Hosts](#set-hostname)
+    * [Network Manager](#install--enable-networkmanager) 
+    * [ROOT Password](#set-root-password) 
+    * [GRUB Bootloader](#install-grub-bootloader) 
+      * [UEFI System](#for-uefi-system-1) 
+      * [MBR System](#for-mbr-system-1)
   * Boot Freshly Installed System
-    * [Add User](https://github.com/XxAcielxX/arch-plasma-install#add-new-user) 
-    * [Sudo Command](https://github.com/XxAcielxX/arch-plasma-install#set-wheel-group-to-use-sudo-command) 
+    * [Add User](#add-new-user) 
+    * [Sudo Command](#set-wheel-group-to-use-sudo-command) 
+  * [User Login](#login-as-user)
+    * [Display Drivers & GPU Drivers](#xorg--gpu-drivers)
+    * [Nultilib Repository](#optional-enable-multilib-repo)
+    * [Display Manager (SDDM)](#install--enable-sddm)
+    * Desktop Environment (KDE Plasma)](#kde-plasma--applications)
+    * [Misc Applications](https://#my-required-applications)
+  * [Extras](#extras)
+    * [Yay](#install-yay)
+  * [Maintenance & Performance Tuning](maintenance--performance-tuning)
+    * [Paccache](#paccache)
 
-
-- Extras
-- - YAY
 ## Let's begin
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
 - After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal.
@@ -348,7 +355,8 @@ makepkg -si
 
 ## Maintenance & Performance Tuning
 
-### PacCache
+### Paccache
+Pacman Cache Cleaner.
 
 Install
 ```
