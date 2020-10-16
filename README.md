@@ -104,16 +104,16 @@ cfdisk /dev/[disk name]
 - We will be using one partition for our `/`, `/boot` & `/home`.
 
 ### Format the Partition, Make SWAP & Mount ROOT (MBR)
-##### Format ROOT as EXT4
+##### Format ROOT Partition as EXT4
 ```
 mkfs.ext4 /dev/[root partition name]
 ```
-##### Make & Turn SWAP on (MBR)
+##### Make & Turn SWAP Partition on (MBR)
 ```
 mkswap /dev/[swap partition name]
 swapon /dev/[swap partition name]
 ```
-#### Mount ROOT (MBR)
+#### Mount ROOT Partition (MBR)
 ```
 mount /dev/[root partition name] /mnt
 ```
