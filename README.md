@@ -321,11 +321,16 @@ partitionmanager | KDE Disk & Partion Manager
 
 ### My Required Applications
 ```
-sudo pacman -S firefox qbittorrent wget github neofetch zsh
+sudo pacman -S firefox qbittorrent wget git neofetch zsh
 ```
 Packages | Description
 ------------ | -------------
-
+firefox | Mozilla Firefox Web Browser
+qbittorrent | A BitTorrent Client based on QT
+wget | Wget is a free utility for non-interactive download of files from the Web
+git | Github Utility Tools
+neofetch | Neofetch is a command-line system information tool
+zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login shell and as a command interpreter for shell scripting
 
 ### Final Reboot
 ```
@@ -334,7 +339,8 @@ reboot
 
 ## Extras
 
-### Install YAY
+### Install [Yay](https://github.com/Jguer/yay)
+Yet Another Yogurt - An AUR Helper.
 ```
 git clone https://aur.archlinux.org/yay.git
 cd yay
