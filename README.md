@@ -149,7 +149,7 @@ chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
 ```
-Replace the above 2 in `count=2` with 2 x RAM Size. (e.g it you have 8GB, then 2x8 = 16 then `count=16`)
+Replace the above 2 in `count=2` with 2 x RAM Size. (e.g it you have 8GB, then 2x8 = 16 use `count=16`).
 
 ### Add Swapfile entery in your `/etc/fstab` file (UEFI only) 
 ```
@@ -177,7 +177,7 @@ Uncomment the below line
 ```
 save & exit.
 
-Generate Locale
+### Generate Locale
 ```
 locale-gen
 ```
@@ -352,6 +352,9 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
+
+## Theming & Customisations
+Section coming soon...
 
 ## Maintenance & Performance Tuning
 
