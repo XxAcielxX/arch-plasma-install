@@ -44,7 +44,9 @@ ping -t 4 google.com
 ```
 timedatectl set-ntp true
 ```
-
+## Preparing the Disk for System
+<div text-color="red">*** WARNING ***</div>
+Be extremely careful when managing your disks, incase your delete your precious data then DON'T blame me.<br/>
 Disk Partition (use UEFI or MBR, go according to your system)
 
 ## For UEFI System
@@ -84,6 +86,7 @@ mount /dev/[efi partition name] /mnt/boot/efi
 We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdisk`.
 ```
 cfdisk /dev/[disk name]
+- If you have a brand new HDD then create MSDOS Partition Table by selecting `msdos`, then:
 ```
 - [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
 - SWAP Partition should double the size of RAM available in your system.
