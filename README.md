@@ -36,7 +36,6 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
   * [Theming & Customisations](theming--customisations)
   * [Maintenance & Performance Tuning](maintenance--performance-tuning)
     * [Paccache](#paccache)
-
   * [Changelog](#changelog)
 
 ## Let's begin
@@ -407,4 +406,4 @@ Exec = /usr/bin/paccache -rk3
 
 ## Changelog
 
-  * **2020-10-17** - Initial guide created.
+  * **2020-10-16** - Initial guide created.
