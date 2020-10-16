@@ -30,6 +30,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Display Manager (SDDM)](#install--enable-sddm)
     * [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
     * [Misc Applications](https://#my-required-applications)
+  * [The Conclusion](#the-conclusion) 
   * [Extras](#extras)
     * [Yay](#install-yay)
   * [Theming & Customisations](theming--customisations)
@@ -171,7 +172,7 @@ hwclock --systohc
 Replace `Region` & `City` according to your Time-Zone . Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
 
 ## Set Language
-We will use `en_US.UTF-8` as our default language here but, if you want to set your language, please read 
+We will use `en_US.UTF-8` as our default language here but, if you want to set your language, replace `en_US.UTF-8` with your own language.
 
 #### Edit locale.gen
 ```
@@ -350,8 +351,8 @@ reboot
 
 ### The Conclusion
 Now everything is installed and after the final `reboot`, you will land in you GUI Login Screen ready to use your system. You can also some extra steps mentioned below to further improve your experience. I'll recommend you to install `yay` & `paccache`.
-
-## Extras
+- Yay will provide your packages from AUR (Arch User Repository), which are not available in the Official Repo.
+- Paccache can be used clean pacman cached packages either manually or in an automated way.
 
 ### Install [Yay](https://github.com/Jguer/yay)
 Yet Another Yogurt - An AUR Helper.
@@ -376,7 +377,7 @@ sudo pacman -S pacman-contrib
 
 To manually clean pacman cache, run
 ```
-paccache -rk1
+paccache -rk3
 ```
 Where, *k* indicates to keep "num" of each package in the cache.
 
@@ -399,5 +400,5 @@ Target = *
 [Action]
 Description = Cleaning pacman cache...
 When = PostTransaction
-Exec = /usr/bin/paccache -rk1
+Exec = /usr/bin/paccache -rk3
 ```
