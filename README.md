@@ -29,6 +29,7 @@ Disk Partition (use UEFI or MBR, go according to your system)
 ## For UEFI System
 
 ### Disk Partitioning (UEFI)
+We are going to make two partitions on our HDD, `1. EFI BOOT & 2. ROOT` using `gdisk`.
 ```
 gdisk /dev/[disk name]
 ```
@@ -58,7 +59,7 @@ mount /dev/[efi partition name] /mnt/boot/efi
 ```
 ## For MBR System
 
-### Disk Partitioning & Mounting (MBR)
+### Disk Partitioning (MBR)
 We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdisk`.
 ```
 cfdisk /dev/[disk name]
@@ -196,7 +197,7 @@ pacman -S grub
 
 #### For UEFI System
 ```
-grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 ```
 
 #### For MBR System
@@ -220,15 +221,15 @@ reboot
 
 ### Login as ROOT
 
-### Add user
+### Add new User
 ```
-useradd -mG wheel username
+useradd -mG wheel [username]
 ```
-Replace `username` with your username of choice.
+Replace `[username]` with your username of choice.
 
 ## Set User Password
 ```
-passwd username
+passwd [username]
 ```
 
 ### Set Wheel Group to use Sudo Command
@@ -238,11 +239,11 @@ EDITOR=nano visudo
 
 #### Find and uncomment the below line
 ```
-%wheel ALL=(ALL) ALL
+#%wheel ALL=(ALL) ALL
 ```
 save & exit
 
-### Exit from ROOT
+### Logout ROOT
 ```
 exit
 ```
@@ -301,13 +302,16 @@ partitionmanager | KDE Disk & Partion Manager
 ```
 sudo pacman -S firefox qbittorrent wget github neofetch zsh
 ```
+Packages | Description
+------------ | -------------
+
 
 ### Final Reboot
 ```
 reboot
 ```
 
-## Extra
+## Extras
 
 ### Install YAY
 ```
