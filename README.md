@@ -23,7 +23,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
       * [MBR System](#for-mbr-system-1)
   * [**Boot Freshly Installed System**](#unplug-the-usb-stick-and-boot-into-your-freshly-installed-arch-system)
     * [Add User](#add-new-user) 
-    * [Sudo Command](#set-wheel-group-to-use-sudo-command) 
+    * [Sudo Command](#allow-wheel-group-to-use-sudo-commands) 
   * [**User Login**](#login-as-user)
     * [Display Server & GPU Drivers](#xorg--gpu-drivers)
     * [Multilib Repository (32bit)](#enable-multilib-repo-optional)
@@ -268,7 +268,7 @@ Replace `[username]` with your username of choice.
 passwd [username]
 ```
 
-### Set Wheel Group to use Sudo Command
+### Allow Wheel Group to use Sudo Commands
 ```
 EDITOR=nano visudo
 ```
