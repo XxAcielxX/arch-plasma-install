@@ -66,8 +66,9 @@ gdisk /dev/[disk name]
 ```
 - [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
 - If you have a brand new HDD then create GPT Partition Table by pressing `g`, then:
-- We will be using one partition for our ROOT, boot & home. 
+- We will be using one partition for our `/`, `/boot` & `/home`. 
 
+```
 n = New Partition
 1 = 1st Partition 
 +512M = BOOT Partition Size
@@ -101,7 +102,9 @@ cfdisk /dev/[disk name]
 
 - If you have a brand new HDD then create MSDOS Partition Table by selecting `msdos`, then:
 - SWAP Partition should double the size of RAM available in your system.
-- We will be using one partition for our ROOT, boot & home.
+- We will be using one partition for our `/`, `/boot` & `/home`. 
+
+```
 
 ### Format the Partition, Make SWAP & Mount ROOT (MBR)
 ##### Format ROOT as EXT4
