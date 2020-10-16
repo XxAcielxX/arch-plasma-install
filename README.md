@@ -128,12 +128,11 @@ Replace Country1 & Country2 with country names near to you or with the one you'r
 
 ### Install base system
 ```
-pacstrap /mnt base base-devel linux linux-firmware nano intel-ucode reflector
+pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucode reflector
 ```
-Replace `linux` with linux-hardened, linux-lts or linux-zen to install the kernel of your choice.
-
-Replace `nano` with editor of your choice (vim or vi).
-
+Replace `linux` with *linux-hardened*, *linux-lts* or *linux-zen* to install the kernel of your choice.</br>
+Replace `linux-headers` with Kernel type type of your choice (e.g if you installed ``linux-zen then you will need `linux-zen-headers` and so for each one).</br>
+Replace `nano` with editor of your choice (`vim` or `vi`).</br>
 Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor.
 
 ### Generate yor fstab (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively): 
@@ -288,13 +287,11 @@ sudo pacman -Syu
 
 ### xorg & GPU Drivers
 ```
-sudo pacman -S xorg xf86-video-xxx
+sudo pacman -S xorg xf86-video-[your gpu type]
 ```
-For Nvidia GPUs, type `xf86-video-nvidia`
-
-For newer AMD GPUs, type `xf86-video-amdgpu`
-
-For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`
+For Nvidia GPUs, type `xf86-video-nvidia`.</br>
+For newer AMD GPUs, type `xf86-video-amdgpu`.</br>
+For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.</br>
 
 ### Enable Multilib Repo (optional)
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://wine.hq), [Steam](https://store.steampowered.com/), etc).
@@ -317,17 +314,17 @@ sudo pacman -S plasma-desktop konsole dolphin ark kwrite kcalc spectacle ksysgua
 ```
 Packages | Description
 ------------ | -------------
-plasma-desktop | Minimal Plasma DE installation
-konsole | KDE Terminal
-dolphin | KDE default File Manager
-ark | Archiving Tool
-kwrite | Text Editor
-kcalc | Scientific Calculator
-spectacle | KDE screenshot capture utility
-ksysguard | KDE System Task Monitor
-krunner | KDE Quick drop-down search menu
-kscreen | KDE Display Setting Manager
-partitionmanager | KDE Disk & Partion Manager
+plasma-desktop | Minimal Plasma DE installation.
+konsole | KDE Terminal.
+dolphin | KDE default File Manager.
+ark | Archiving Tool.
+kwrite | Text Editor.
+kcalc | Scientific Calculator.
+spectacle | KDE screenshot capture utility.
+ksysguard | KDE System Task Monitor.
+krunner | KDE Quick drop-down desktop search.
+kscreen | KDE Display Setting Manager.
+partitionmanager | KDE Disk & Partion Manager.
 
 ### My Required Applications
 ```
@@ -335,12 +332,12 @@ sudo pacman -S firefox qbittorrent wget git neofetch zsh
 ```
 Packages | Description
 ------------ | -------------
-firefox | Mozilla Firefox Web Browser
-qbittorrent | A BitTorrent Client based on QT
-wget | Wget is a free utility for non-interactive download of files from the Web
-git | Github Utility Tools
-neofetch | Neofetch is a command-line system information tool
-zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login shell and as a command interpreter for shell scripting
+firefox | Mozilla Firefox Web Browser.
+qbittorrent | A BitTorrent Client based on QT.
+wget | Wget is a free utility for non-interactive download of files from the Web.
+git | Github Utility Tools.
+neofetch | Neofetch is a command-line system information tool.
+zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login shell and as a command interpreter for shell scripting.
 
 ### Final Reboot
 ```
@@ -378,13 +375,13 @@ Where, *k* indicates to keep "num" of each package in the cache.
 
 #### To automate paccache process
 
-To do so, create a file /etc/pacman.d/hooks/clean_package_cache.hook:
-
-```sudo mkdir /etc/pacman.d/hooks
+Create a file /etc/pacman.d/hooks/clean_cache.hook
+```
+sudo mkdir /etc/pacman.d/hooks
 sudo nano /etc/pacman.d/hooks/clean_cache.hook
 ```
 
-Add the following lines:
+Add the following lines in it
 ```
 [Trigger]
 Operation = Upgrade
