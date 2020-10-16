@@ -46,7 +46,7 @@ ping -t 4 google.com
 ```
 - If you are connected through Ethernet, then your Internet will be working out of the box.
 - If you are using Wi-Fi, then use `wifi-menu` to connect to your local network.
-- If this is successful then we will head to next step.
+- If this step is successful then we will head to next one.
 
 ### Update system clock
 ```
@@ -54,7 +54,7 @@ timedatectl set-ntp true
 ```
 ## Preparing the Disk for System
 ### \*** WARNING ***</br>
->> Be extremely careful when managing your disks, incase your delete your precious data then DON'T blame me.</br>
+>> Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.</br>
 >> Disk Partition (use UEFI or MBR, go according to your system)
 
 ## For UEFI System
@@ -64,8 +64,10 @@ We are going to make two partitions on our HDD, `1. EFI BOOT & 2. ROOT` using `g
 ```
 gdisk /dev/[disk name]
 ```
+- [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
 - If you have a brand new HDD then create GPT Partition Table by pressing `g`, then:
-```
+- We will be using one partition for our ROOT, boot & home. 
+
 n = New Partition
 1 = 1st Partition 
 +512M = BOOT Partition Size
@@ -73,7 +75,7 @@ ef00 = EFI Partition Type
 
 n = New Partition again
 2 = 2nd Partition 
-+xxxG = ROOT Partition Size (use the remaining space left)
+simply press enter = ROOT Partition Size (using the remaining space left)
 8300 or simply press enter = EXT4 ROOT Partition Type
 ```
 ### Format Partitions (UEFI)
@@ -94,9 +96,10 @@ mount /dev/[efi partition name] /mnt/boot/efi
 We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdisk`.
 ```
 cfdisk /dev/[disk name]
-- If you have a brand new HDD then create MSDOS Partition Table by selecting `msdos`, then:
 ```
 - [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
+
+- If you have a brand new HDD then create MSDOS Partition Table by selecting `msdos`, then:
 - SWAP Partition should double the size of RAM available in your system.
 - We will be using one partition for our ROOT, boot & home.
 
