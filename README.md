@@ -37,6 +37,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Paccache](#paccache)
 
 ## Let's begin
+
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
 - After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal.
 
@@ -53,6 +54,7 @@ ping -t 4 google.com
 timedatectl set-ntp true
 ```
 ## Preparing the Disk for System
+
 ### \*** WARNING ***</br>
 >> Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.</br>
 >> Disk Partition (use UEFI or MBR, go according to your system)
@@ -130,10 +132,10 @@ Replace Country1 & Country2 with country names near to you or with the one you'r
 ```
 pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucode reflector
 ```
-Replace `linux` with *linux-hardened*, *linux-lts* or *linux-zen* to install the kernel of your choice.</br>
-Replace `linux-headers` with Kernel type type of your choice (e.g if you installed ``linux-zen then you will need `linux-zen-headers` and so for each one).</br>
-Replace `nano` with editor of your choice (`vim` or `vi`).</br>
-Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor.
+- Replace `linux` with *linux-hardened*, *linux-lts* or *linux-zen* to install the kernel of your choice.
+- Replace `linux-headers` with Kernel type type of your choice respectively (e.g if you installed `linux-zen` then you will need `linux-zen-headers`).
+- Replace `nano` with editor of your choice (i.e `vim` or `vi`).
+- Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor.
 
 ### Generate yor fstab (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively): 
 ```
@@ -142,6 +144,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. 
 
 ## Chroot
+
 ```
 arch-chroot /mnt
 ```
@@ -191,6 +194,7 @@ echo LANG=en_US.UTF-8 > /etc/locale.conf
 ```
 
 ## Set Hostname
+
 ```
 echo arch > /etc/hostname
 ```
@@ -355,7 +359,7 @@ makepkg -si
 ```
 
 ## Theming & Customisations
-Section coming soon...
+**[Section coming soon...]**
 
 ## Maintenance & Performance Tuning
 
@@ -375,7 +379,7 @@ Where, *k* indicates to keep "num" of each package in the cache.
 
 #### To automate paccache process
 
-Create a file /etc/pacman.d/hooks/clean_cache.hook
+Create a file in `/etc/pacman.d/hooks`
 ```
 sudo mkdir /etc/pacman.d/hooks
 sudo nano /etc/pacman.d/hooks/clean_cache.hook
