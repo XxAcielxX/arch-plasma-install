@@ -65,7 +65,7 @@ We are going to make two partitions on our HDD, `1. EFI BOOT & 2. ROOT` using `g
 gdisk /dev/[disk name]
 ```
 - [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
-- If you have a brand new HDD then create GPT Partition Table by pressing `g`, then:
+- If you have a brand new HDD then create GPT Partition Table by pressing `g`.
 - We will be using one partition for our `/`, `/boot` & `/home`. 
 
 ```
@@ -99,12 +99,9 @@ We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdis
 cfdisk /dev/[disk name]
 ```
 - [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
-
-- If you have a brand new HDD then create MSDOS Partition Table by selecting `msdos`, then:
+- If you have a brand new HDD then create MSDOS Partition Table by selecting `msdos`.
 - SWAP Partition should double the size of RAM available in your system.
-- We will be using one partition for our `/`, `/boot` & `/home`. 
-
-```
+- We will be using one partition for our `/`, `/boot` & `/home`.
 
 ### Format the Partition, Make SWAP & Mount ROOT (MBR)
 ##### Format ROOT as EXT4
