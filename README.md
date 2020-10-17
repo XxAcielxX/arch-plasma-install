@@ -89,6 +89,7 @@ n = New Partition again
 2 = 2nd Partition 
 simply press enter = ROOT Partition Size (using the remaining space left)
 8300 or simply press enter = EXT4 ROOT Partition Type
+w = write & exit
 ```
 ### Format Partitions (UEFI)
 ```
