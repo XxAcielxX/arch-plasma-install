@@ -151,7 +151,7 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 - Replace `nano` with editor of your choice (i.e `vim` or `vi`).
 - Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor.
 
-### Generate yor fstab (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively): 
+### Generate yor fstab (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively)
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
@@ -171,11 +171,11 @@ chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
 ```
-Replace the above 2 in `count=2` with 2 x RAM Size. (e.g it you have 8GB, then 2x8 = 16 use `count=16`).
+Replace the above 1G in `bs=1G` with the amount of RAM installed your system.
 
 ### Add Swapfile entery in your `/etc/fstab` file (UEFI only) 
 ```
-/swapfile none swap defaults 0 0
+/swapfile		none		swap		defaults		0	0
 ```
 Insert the above line at the bottom of `/etc/fstab`.
 
@@ -187,7 +187,7 @@ hwclock --systohc
 Replace `Region` & `City` according to your Time-Zone . Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
 
 ## Set Language
-We will use `en_US.UTF-8` as our default language here but, if you want to set your language, replace `en_US.UTF-8` with your own language.
+We will use `en_US.UTF-8` here but, if you want to set your language, replace `en_US.UTF-8` with yours.
 
 #### Edit locale.gen
 ```
@@ -311,12 +311,12 @@ sudo pacman -Syu
 ```
 sudo pacman -S xorg xf86-video-[your gpu type]
 ```
-For Nvidia GPUs, type `xf86-video-nvidia`.</br>
-For newer AMD GPUs, type `xf86-video-amdgpu`.</br>
-For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.</br>
+- For Nvidia GPUs, type `xf86-video-nvidia`.
+- For newer AMD GPUs, type `xf86-video-amdgpu`.
+- For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
 
 ### Enable Multilib Repo (optional)
-multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://wine.hq), [Steam](https://store.steampowered.com/), etc).
+multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://www.winehq.org/), [Steam](https://store.steampowered.com/), etc).
 
 Edit `/etc/pacman.conf` & uncomment the below section.
 ```
@@ -437,7 +437,7 @@ Exec = /usr/bin/paccache -rk3
 ```
 save & exit.
 
-</br></br>
+</br>
 
 ## Changelog
 
