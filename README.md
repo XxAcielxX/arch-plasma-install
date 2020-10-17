@@ -375,7 +375,7 @@ reboot
 </br>
 
 ### The Conclusion
-Now everything is installed and after the final `reboot`, you will land in you GUI Login Screen ready to use your system. You can also some extra steps mentioned below to further improve your experience. I'll recommend you to install `yay` & `paccache`.
+Now everything is installed and after the final `reboot`, you will land in you GUI Login Screen ready to use your system. You can also do some extra steps mentioned below to further improve your experience. I'll recommend you to install `yay` & `paccache`.
 - Yay will provide your packages from AUR (Arch User Repository), which are not available in the Official Repo.
 - Paccache can be used clean pacman cached packages either manually or in an automated way.
 
