@@ -1,9 +1,11 @@
-[![Discord](https://img.shields.io/discord/364844043886395392.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Discord&logo=discord)](https://discord.gg/b9PBjrs "Drop in to say Hello! / If you need any with my guide then ask questions freely.")
+
 
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
 Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
+
+</br>
 
 ## Table of Contents
   * [**Let's Begin**](#lets-begin)
@@ -41,6 +43,8 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Paccache](#paccache)
   * [**Changelog**](#changelog)
 
+</br>
+
 ## Let's begin
 
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
@@ -58,6 +62,9 @@ ping -t 4 google.com
 ```
 timedatectl set-ntp true
 ```
+
+</br>
+
 ## Preparing the Disk for System
 
 ### \*** WARNING ***</br>
@@ -125,6 +132,8 @@ swapon /dev/[swap partition name]
 mount /dev/[root partition name] /mnt
 ```
 
+</br>
+
 ## Base System Installation
 
 ### Update Mirrors using Reflector
@@ -147,6 +156,8 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. 
+
+</br>
 
 ## Chroot
 
@@ -256,6 +267,8 @@ umount -a
 reboot
 ```
 
+</br>
+
 ## Unplug the USB Stick and boot into your freshly installed Arch system
 
 ### Login as ROOT
@@ -359,10 +372,16 @@ zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login
 reboot
 ```
 
+</br>
+
 ### The Conclusion
 Now everything is installed and after the final `reboot`, you will land in you GUI Login Screen ready to use your system. You can also some extra steps mentioned below to further improve your experience. I'll recommend you to install `yay` & `paccache`.
 - Yay will provide your packages from AUR (Arch User Repository), which are not available in the Official Repo.
 - Paccache can be used clean pacman cached packages either manually or in an automated way.
+
+</br>
+
+## Extras
 
 ### Install [Yay](https://github.com/Jguer/yay)
 Yet Another Yogurt - An AUR Helper.
@@ -372,8 +391,12 @@ cd yay
 makepkg -si
 ```
 
+</br>
+
 ## Theming & Customisations
 **[Section coming soon...]**
+
+</br>
 
 ## Maintenance & Performance Tuning
 
@@ -412,6 +435,11 @@ Description = Cleaning pacman cache...
 When = PostTransaction
 Exec = /usr/bin/paccache -rk3
 ```
+save & exit.
+
+</br>
+</br>
+</br>
 
 ## Changelog
 
