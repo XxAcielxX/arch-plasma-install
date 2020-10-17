@@ -1,4 +1,4 @@
-![Discord](https://img.shields.io/discord/364844043886395392?label=Discord&logo=Aciel%20Discord%20Server&logoColor=%23ff0000)
+[![Discord](https://img.shields.io/discord/364844043886395392.svg?color=007c8d&labelColor=111111&logoColor=888888&label=Discord&logo=discord)](https://discord.gg/b9PBjrs "Hello!, Need help with my guide then ask here.")
 
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
@@ -48,7 +48,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 ## Let's begin
 
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
-- After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal.
+- After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal is
 
 ### Check for Internet Connectivity
 ```
@@ -68,8 +68,8 @@ timedatectl set-ntp true
 ## Preparing the Disk for System
 
 ### \*** WARNING ***</br>
->> Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.</br>
->> Disk Partition (use UEFI or MBR, go according to your system)
+>> Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
+>> Disk partitioning type (use UEFI or MBR, go according to your system)
 
 ## For UEFI System
 
