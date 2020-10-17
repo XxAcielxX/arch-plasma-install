@@ -308,6 +308,12 @@ Edit `/etc/pacman.conf` & uncomment the below section.
 Include = /etc/pacman.d/mirrorlist
 ```
 
+#### MESA Libraries (32bit)
+This package is required by Steam if you play games using Vulkan Backend.
+```
+sudo pacman -S lib32-mesa
+```
+
 ### Install & Enable SDDM
 ```
 sudo pacman -S sddm
@@ -406,5 +412,7 @@ Exec = /usr/bin/paccache -rk3
 
 ## Changelog
 
+  * **2020-10-17**
+    * Added `lib32-mesa` package under Multilib Repo Section.
   * **2020-10-16**
     * Initial guide created.
