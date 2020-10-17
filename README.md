@@ -293,7 +293,7 @@ EDITOR=nano visudo
 ```
 #%wheel ALL=(ALL) ALL
 ```
-save & exit
+save & exit.
 
 ### Logout ROOT
 ```
@@ -437,13 +437,13 @@ Exec = /usr/bin/paccache -rk3
 ```
 save & exit.
 
-</br>
-</br>
-</br>
+</br></br>
 
 ## Changelog
 
   * **2020-10-17**
     * Added `lib32-mesa` package under Multilib Repo Section.
+    * Added Discord Badge.
+    * Improved Guide text formatting for easier reading.
   * **2020-10-16**
     * Initial guide created.
