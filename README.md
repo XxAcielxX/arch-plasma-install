@@ -14,7 +14,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
   * [**Base System Installation**](#base-system-installation)
     * [Update Mirrors](#update-mirrors-using-reflector)
     * [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
-    * [Generate fstab](#generate-yor-fstab-use--u-or--l-to-define-by-uuid-or-labels-respectively)
+    * [Generate fstab](#generate-fstab)
   * [**Chroot**](#chroot)
     * [Swapfile (UEFI only)](#create-swapfile-uefi-only)
     * [Date & Time](#set-time--date)
@@ -38,8 +38,9 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
   * [**Extras**](#extras)
     * [Yay](#install-yay)
   * [**Theming & Customizations**](theming--customisations)
-  * [**Maintenance & Performance Tuning**](maintenance--performance-tuning)
+  * [**Maintenance, Performance Tuning & Monitoring**](maintenance-performance-tuning--monitoring)
     * [Paccache](#paccache)
+    * [Cockpit](#cockpit)
   * [**Changelog**](#changelog)
 </br>
 
@@ -148,7 +149,8 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 - Replace `nano` with editor of your choice (i.e `vim` or `vi`).
 - Replace `intel-ucode` with `amd-ucode` if you are using an AMD Processor.
 
-### Generate yor fstab (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively)
+### Generate fstab
+(use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/index.php/UUID) or labels, respectively)
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
@@ -389,7 +391,7 @@ makepkg -si
 **[Section coming soon...]**
 </br>
 
-## Maintenance & Performance Tuning
+## Maintenance, Performance Tuning & Monitoring
 
 ### Paccache
 Pacman Cache Cleaner.
@@ -427,12 +429,27 @@ When = PostTransaction
 Exec = /usr/bin/paccache -rk3
 ```
 save & exit.
+
+### [Cockpit](https://cockpit-project.org/)
+A systemd web based user interface for Linux servers, Workstations and even Desktops. Can be used to monitor your system stats, performance and perform various settings including updating of your system.
+```
+sudo pacman -S cockpit
+```
+
+##### Enable Cockpit
+```
+sudo systemctl enable --now cockpit.socket
+```
+Now open your browser and point to it `your-machine-ip:9000` and login with ***root*** to get full access.
+
 </br>
 
 ## Changelog
 
+  * **2020-10-18**
+    * Added `cockpit` under *Maintenance, Performance Tuning & Monitoring* Section.
   * **2020-10-17**
-    * Added `lib32-mesa` package under Multilib Repo Section.
+    * Added `lib32-mesa` package under *Multilib Repo* Section.
     * Added Discord Badge.
     * Added Donate BTC Badge.
     * Improved Guide text formatting for easier reading.
