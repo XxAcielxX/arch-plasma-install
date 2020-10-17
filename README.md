@@ -1,4 +1,4 @@
-
+![Discord](https://img.shields.io/discord/364844043886395392?label=Discord&logo=Aciel%20Discord%20Server&logoColor=%23ff0000)
 
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
