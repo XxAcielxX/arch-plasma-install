@@ -1,5 +1,5 @@
-[![Discord](https://img.shields.io/discord/364844043886395392.svg?color=007c8d&labelColor=111111&logoColor=888888&label=Discord&logo=discord)](https://discord.gg/b9PBjrs "Hello!, Need help with my guide then ask here.")
-
+[![Discord](https://img.shields.io/discord/364844043886395392.svg?color=007c8d&labelColor=222222&logoColor=888888&label=Discord&logo=discord)](https://discord.gg/b9PBjrs "Hello!, Need help with my guide then ask here.")
+[![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -434,6 +434,7 @@ save & exit.
   * **2020-10-17**
     * Added `lib32-mesa` package under Multilib Repo Section.
     * Added Discord Badge.
+    * Added Donate BTC Badge.
     * Improved Guide text formatting for easier reading.
   * **2020-10-16**
     * Initial guide created.
