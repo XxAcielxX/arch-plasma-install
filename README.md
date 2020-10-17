@@ -4,7 +4,6 @@
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
 Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
-
 </br>
 
 ## Table of Contents
@@ -42,7 +41,6 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
   * [**Maintenance & Performance Tuning**](maintenance--performance-tuning)
     * [Paccache](#paccache)
   * [**Changelog**](#changelog)
-
 </br>
 
 ## Let's begin
@@ -62,7 +60,6 @@ ping -t 4 google.com
 ```
 timedatectl set-ntp true
 ```
-
 </br>
 
 ## Preparing the Disk for System
@@ -131,7 +128,6 @@ swapon /dev/[swap partition name]
 ```
 mount /dev/[root partition name] /mnt
 ```
-
 </br>
 
 ## Base System Installation
@@ -156,7 +152,6 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. 
-
 </br>
 
 ## Chroot
@@ -184,7 +179,7 @@ Insert the above line at the bottom of `/etc/fstab`.
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 ```
-Replace `Region` & `City` according to your Time-Zone . Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
+Replace `Region` & `City` according to your Time zone. Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
 
 ## Set Language
 We will use `en_US.UTF-8` here but, if you want to set your language, replace `en_US.UTF-8` with yours.
@@ -266,7 +261,6 @@ exit
 umount -a
 reboot
 ```
-
 </br>
 
 ## Unplug the USB Stick and boot into your freshly installed Arch system
@@ -371,14 +365,12 @@ zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login
 ```
 reboot
 ```
-
 </br>
 
 ### The Conclusion
 Now everything is installed and after the final `reboot`, you will land in you GUI Login Screen ready to use your system. You can also do some extra steps mentioned below to further improve your experience. I'll recommend you to install `yay` & `paccache`.
 - Yay will provide your packages from AUR (Arch User Repository), which are not available in the Official Repo.
 - Paccache can be used clean pacman cached packages either manually or in an automated way.
-
 </br>
 
 ## Extras
@@ -390,12 +382,10 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
-
 </br>
 
 ## Theming & Customisations
 **[Section coming soon...]**
-
 </br>
 
 ## Maintenance & Performance Tuning
@@ -436,7 +426,6 @@ When = PostTransaction
 Exec = /usr/bin/paccache -rk3
 ```
 save & exit.
-
 </br>
 
 ## Changelog
