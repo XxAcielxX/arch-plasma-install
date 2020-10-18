@@ -93,7 +93,7 @@ timedatectl set-ntp true
 
 ### Disk Partitioning (UEFI)
 We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
-- If you have a brand new HDD or no partition table is found, then create GPT Partition Table by pressing `g`.
+- If you have a brand new HDD or if no partition table is found, then create GPT Partition Table by pressing `g`.
 ```
 gdisk /dev/[disk name]
 ```
@@ -131,7 +131,7 @@ mount /dev/[efi partition name] /mnt/boot/efi
 
 ### Disk Partitioning (MBR)
 We are going to make two partitions on our HDD, `SWAP & ROOT` using `cfdisk`.
-- If you have a brand new HDD or no partitionttable is found, then create MSDos Partition Table by selecting `msdos`.
+- If you have a brand new HDD or if no partition table is found, then create MSDos Partition Table by selecting `msdos`.
 ```
 cfdisk /dev/[disk name]
 ```
