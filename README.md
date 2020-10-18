@@ -92,24 +92,27 @@ timedatectl set-ntp true
 ## For UEFI System
 
 ### Disk Partitioning (UEFI)
-We are going to make two partitions on our HDD, `1. EFI BOOT & 2. ROOT` using `gdisk`.
+We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
+- If you have a brand new HDD or no partition table is found, then create GPT Partition Table by pressing `g`.
 ```
 gdisk /dev/[disk name]
 ```
 - [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
-- If you have a brand new HDD then create GPT Partition Table by pressing `g`.
 - We will be using one partition for our `/`, `/boot` & `/home`. 
 
 ```
 n = New Partition
-1 = 1st Partition 
-+512M = BOOT Partition Size
+simply press enter = 1st Partition
+simply press enter = As First Sector
++512M = As Last sector (BOOT Partition Size)
 ef00 = EFI Partition Type
 
 n = New Partition again
-2 = 2nd Partition 
-simply press enter = ROOT Partition Size (using the remaining space left)
+simply press enter = 2nd Partition
+simply press enter = As First Sector 
+simply press enter = As Last sector [ROOT Partition Size (using the remaining disk space left)]
 8300 or simply press enter = EXT4 ROOT Partition Type
+
 w = write & exit
 ```
 ### Format Partitions (UEFI)
@@ -127,12 +130,12 @@ mount /dev/[efi partition name] /mnt/boot/efi
 ## For MBR System
 
 ### Disk Partitioning (MBR)
-We are going to make two partitions on our HDD, `1. SWAP & 2. ROOT` using `cfdisk`.
+We are going to make two partitions on our HDD, `SWAP & ROOT` using `cfdisk`.
+- If you have a brand new HDD or no partitionttable is found, then create MSDos Partition Table by selecting `msdos`.
 ```
 cfdisk /dev/[disk name]
 ```
 - [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
-- If you have a brand new HDD then create MSDOS Partition Table by selecting `msdos`.
 - SWAP Partition should double the size of RAM available in your system.
 - We will be using one partition for our `/`, `/boot` & `/home`.
 
