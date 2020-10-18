@@ -68,8 +68,8 @@ timedatectl set-ntp true
 ## Preparing the Disk for System
 
 ### \*** WARNING ***</br>
->> Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
->> Disk partitioning type (use UEFI or MBR, go according to your system).
+> Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
+> Disk partitioning type (use UEFI or MBR, go according to your system).
 
 ## For UEFI System
 
