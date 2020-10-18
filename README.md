@@ -38,9 +38,11 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Audio Utilities & Bluetooth](#audio-utilities--bluetooth)
     * [Misc Applications](https://#my-required-applications)
   * [**The Conclusion**](#the-conclusion) 
-  * [**Extras**](#extras)
+  * [**Extras (optional)**](#extras-optional)
     * [Yay](#install-yay)
+    * [Zsh](#install-zsh)
   * [**Theming & Customizations**](theming--customisations)
+     * [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
   * [**Maintenance, Performance Tuning & Monitoring**](maintenance-performance-tuning--monitoring)
     * [Paccache](#paccache)
     * [Cockpit](#install-cockpit)
@@ -48,9 +50,24 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 </br>
 
 ## Let's begin
-
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
 - After the image is done writing, it's time to boot into the Arch Live Environment. First thing you do is:
+
+### Load Keymaps (for non US ENG Keyboard Users only)
+For a list of all the available keymaps, use the command:
+```
+localectl list-keymaps
+```
+
+To search for a keymap, use the following command, replacing `[search_term]` with the code for your language, country, or layout:
+```
+localectl list-keymaps | grep -i [search_term]
+```
+
+### Now Loadkeys
+```
+loadkeys [keymap]
+```
 
 ### Check for Internet Connectivity
 ```
@@ -366,7 +383,7 @@ bluez-utils | Provides the `bluetoothctl` utility.
 
 ### My Required Applications
 ```
-sudo pacman -S firefox qbittorrent wget screen git neofetch zsh
+sudo pacman -S firefox qbittorrent wget screen git neofetch
 ```
 Packages | Description
 --------- | ----------
@@ -376,7 +393,6 @@ wget | Wget is a free utility for non-interactive download of files from the Web
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
 git | Github Utility Tools.
 neofetch | Neofetch is a command-line system information tool.
-zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login shell and as a command interpreter for shell scripting.
 
 ### Final Reboot
 ```
@@ -390,7 +406,7 @@ Now everything is installed and after the final `reboot`, you will land in you G
 - Paccache can be used clean pacman cached packages either manually or in an automated way.
 </br>
 
-## Extras
+## Extras (optional)
 
 ### Install [Yay](https://github.com/Jguer/yay)
 Yet Another Yogurt - An AUR Helper.
@@ -399,10 +415,33 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
+
+### Install [Zsh](https://wiki.archlinux.org/index.php/zsh/) 
+Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter.
+```
+sudo pacman -S zsh
+```
+Read *[here](#install-oh-my-zsh)* for customisation & theming for Zsh.
 </br>
 
 ## Theming & Customisations
-**[Section coming soon...]**
+
+### Install [Oh My Zsh](https://ohmyz.sh/) 
+Oh My Zsh is an open source, community-driven framework for managing your Zsh configuration.
+```
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+```
+My favourite theme is Powerlevel10k (follow below for installation).
+- You can visit [here](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) to download theme of your choice.
+
+#### Get [Powerlevel10k](https://github.com/romkatv/powerlevel10k/) Theme for Oh My Zsh
+This is the theme I'll install to spice up my terminal experience.
+```
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+#### Configuration
+***For new users***, on the first run, Powerlevel10k configuration wizard will ask you a few questions and configure your prompt. If it doesn't trigger automatically, type `p10k configure`. Configuration wizard creates `~/.p10k.zsh` based on your preferences. Additional prompt customization can be done by editing this file. It has plenty of comments to help you navigate through configuration options.
 
 </br>
 
@@ -463,6 +502,7 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
   * **2020-10-18**
     * Added *Audio Utilities & Bluetooth* Section.
+    * Added `Zsh` along with `Oh My Zsh` & `Powerlevel10k` theme.
     * Added `cockpit` under *Maintenance, Performance Tuning & Monitoring* Section.
   * **2020-10-17**
     * Added `lib32-mesa` package under *Multilib Repo* Section.
