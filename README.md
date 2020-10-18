@@ -97,7 +97,7 @@ We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
 ```
 gdisk /dev/[disk name]
 ```
-- [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
+- [disk name] = device to partition, find yours by running `lsblk`.
 - We will be using one partition for our `/`, `/boot` & `/home`. 
 
 ```
@@ -135,7 +135,7 @@ We are going to make two partitions on our HDD, `SWAP & ROOT` using `cfdisk`.
 ```
 cfdisk /dev/[disk name]
 ```
-- [disk name] = device to partition, find yours by running `lsblk` and replace in all the below instances.
+- [disk name] = device to partition, find yours by running `lsblk`.
 - SWAP Partition should double the size of RAM available in your system.
 - We will be using one partition for our `/`, `/boot` & `/home`.
 
