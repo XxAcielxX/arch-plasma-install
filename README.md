@@ -175,7 +175,7 @@ Replace the above 1G in `bs=1G` with the amount of RAM installed your system.
 
 ### Add Swapfile entery in your `/etc/fstab` file (UEFI only) 
 ```
-/swapfile		none		swap		defaults		0	0
+/swapfile    none    swap    defaults    0 0
 ```
 Insert the above line at the bottom of `/etc/fstab`.
 
