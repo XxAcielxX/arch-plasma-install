@@ -35,6 +35,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Multilib Repository (32bit)](#enable-multilib-repo-optional)
     * [Display Manager (SDDM)](#install--enable-sddm)
     * [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
+    * [Audio Utilities & Bluetooth](#audio-utilities--bluetooth)
     * [Misc Applications](https://#my-required-applications)
   * [**The Conclusion**](#the-conclusion) 
   * [**Extras**](#extras)
@@ -42,14 +43,14 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
   * [**Theming & Customizations**](theming--customisations)
   * [**Maintenance, Performance Tuning & Monitoring**](maintenance-performance-tuning--monitoring)
     * [Paccache](#paccache)
-    * [Cockpit](#cockpit)
+    * [Cockpit](#install-cockpit)
   * [**Changelog**](#changelog)
 </br>
 
 ## Let's begin
 
 - Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
-- After the image is done writing, it's time to boot the into Arch Live ISO. First thing to do after you land onto Live ISO terminal is
+- After the image is done writing, it's time to boot into the Arch Live Environment. First thing you do is:
 
 ### Check for Internet Connectivity
 ```
@@ -340,7 +341,7 @@ sudo systemctl enable sddm
 sudo pacman -S plasma-desktop konsole dolphin ark kwrite kcalc spectacle ksysguard krunner kscreen partitionmanager
 ```
 Packages | Description
------------- | -------------
+--------- | ----------
 plasma-desktop | Minimal Plasma DE installation.
 konsole | KDE Terminal.
 dolphin | KDE default File Manager.
@@ -353,15 +354,26 @@ krunner | KDE Quick drop-down desktop search.
 kscreen | KDE Display Setting Manager.
 partitionmanager | KDE Disk & Partion Manager.
 
-### My Required Applications
+### Audio Utilities & Bluetooth
 ```
-sudo pacman -S firefox qbittorrent wget git neofetch zsh
+sudo pacman -S alsa-utils bluez bluez-utils
 ```
 Packages | Description
------------- | -------------
+--------- | ----------
+alsa-utils | This contains (among other utilities) the `alsamixer` and `amixer` utilities.
+bluez | Provides the Bluetooth protocol stack.
+bluez-utils | Provides the `bluetoothctl` utility.
+
+### My Required Applications
+```
+sudo pacman -S firefox qbittorrent wget screen git neofetch zsh
+```
+Packages | Description
+--------- | ----------
 firefox | Mozilla Firefox Web Browser.
 qbittorrent | A BitTorrent Client based on QT.
 wget | Wget is a free utility for non-interactive download of files from the Web.
+screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
 git | Github Utility Tools.
 neofetch | Neofetch is a command-line system information tool.
 zsh | The Z shell (Zsh) is a Unix shell that can be used as an interactive login shell and as a command interpreter for shell scripting.
@@ -391,6 +403,7 @@ makepkg -si
 
 ## Theming & Customisations
 **[Section coming soon...]**
+
 </br>
 
 ## Maintenance, Performance Tuning & Monitoring
@@ -432,7 +445,7 @@ Exec = /usr/bin/paccache -rk3
 ```
 save & exit.
 
-### [Cockpit](https://cockpit-project.org/)
+### Install [Cockpit](https://cockpit-project.org/)
 A systemd web based user interface for Linux servers, Workstations and even Desktops. Can be used to monitor your system stats, performance and perform various settings including updating of your system.
 ```
 sudo pacman -S cockpit
@@ -449,6 +462,7 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 ## Changelog
 
   * **2020-10-18**
+    * Added *Audio Utilities & Bluetooth* Section.
     * Added `cockpit` under *Maintenance, Performance Tuning & Monitoring* Section.
   * **2020-10-17**
     * Added `lib32-mesa` package under *Multilib Repo* Section.
