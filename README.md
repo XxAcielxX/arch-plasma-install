@@ -159,9 +159,9 @@ mount /dev/[root partition name] /mnt
 
 ### Update Mirrors using Reflector
 ```
-reflector --country County1,Country2 --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector --country [County1] --country [Country2] --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 ```
-Replace Country1 & Country2 with country names near to you or with the one you're living in. Refer to https://wiki.archlinux.org/index.php/reflector for more info.
+Replace `[Country1]` & `[Country2]` with country names near to you or with the one you're living in. *[Reflector](Refer to https://wiki.archlinux.org/index.php/reflector)* for more info.
 
 ### Install base system
 ```
@@ -329,11 +329,12 @@ sudo pacman -Syu
 
 ### Xorg & GPU Drivers
 ```
-sudo pacman -S xorg xf86-video-[your gpu type]
+sudo pacman -S xorg [xf86-video-your gpu type]
 ```
-- For Nvidia GPUs, type `xf86-video-nvidia`.
+- For Nvidia GPUs, type `nvidia` & `nvidia-settings`. For more info/old GPUs, refer to [Arch Wiki - Nvidia](https://wiki.archlinux.org/index.php/NVIDIA).
 - For newer AMD GPUs, type `xf86-video-amdgpu`.
 - For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
+- For dedicated Intel Graphics, type `xf86-video-intel`.
 
 ### Enable Multilib Repo (optional)
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://www.winehq.org/), [Steam](https://store.steampowered.com/), etc).
@@ -386,11 +387,12 @@ bluez-utils | Provides the `bluetoothctl` utility.
 
 ### My Required Applications
 ```
-sudo pacman -S firefox qbittorrent wget screen git neofetch
+sudo pacman -S firefox openssh qbittorrent wget screen git neofetch
 ```
 Packages | Description
 --------- | ----------
 firefox | Mozilla Firefox Web Browser.
+openssh | Secure Shell access server.
 qbittorrent | A BitTorrent Client based on QT.
 wget | Wget is a free utility for non-interactive download of files from the Web.
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
