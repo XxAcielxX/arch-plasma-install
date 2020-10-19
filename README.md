@@ -50,7 +50,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 </br>
 
 ## Let's begin
-- Grab the latest Arch Image ISO from https://www.archlinux.org/download/ and write it to an USB Stick.
+- Grab the latest built ISO Image from **[Arch Linux Download](https://www.archlinux.org/download/)** and write it to an empty USB Stick.
 - After the image is done writing, it's time to boot into the Arch Live Environment. First thing you do is:
 
 ### Load Keymaps (for non US ENG Keyboard Users only)
