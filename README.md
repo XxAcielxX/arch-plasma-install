@@ -359,20 +359,18 @@ sudo systemctl enable sddm
 
 ### KDE Plasma & Applications
 ```
-sudo pacman -S plasma-desktop konsole dolphin ark kwrite kcalc spectacle ksysguard krunner kscreen partitionmanager
+sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager
 ```
 Packages | Description
 --------- | ----------
-plasma-desktop | Minimal Plasma DE installation.
+plasma | Base KDE Plasma DE installation.
 konsole | KDE Terminal.
 dolphin | KDE default File Manager.
 ark | Archiving Tool.
 kwrite | Text Editor.
 kcalc | Scientific Calculator.
 spectacle | KDE screenshot capture utility.
-ksysguard | KDE System Task Monitor.
 krunner | KDE Quick drop-down desktop search.
-kscreen | KDE Display Setting Manager.
 partitionmanager | KDE Disk & Partion Manager.
 
 ### Audio Utilities & Bluetooth
