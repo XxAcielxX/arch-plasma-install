@@ -43,6 +43,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Zsh](#install-zsh)
   * [**Theming & Customizations**](theming--customisations)
      * [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
+     * [Kvantum Manager](#kvantum-manager)
   * [**Maintenance, Performance Tuning & Monitoring**](maintenance-performance-tuning--monitoring)
     * [Paccache](#paccache)
     * [Cockpit](#install-cockpit)
@@ -446,6 +447,34 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 #### Configuration
 ***For new users***, on the first run, Powerlevel10k configuration wizard will ask you a few questions and configure your prompt. If it doesn't trigger automatically, type `p10k configure`. Configuration wizard creates `~/.p10k.zsh` based on your preferences. Additional prompt customization can be done by editing this file. It has plenty of comments to help you navigate through configuration options.
 
+## Kvantum Manager
+[Kvantum](https://github.com/tsujan/Kvantum) is a SVG-based theme engine for Qt, tuned to KDE and LXQt, with an emphasis on elegance, usability and practicality.
+
+### Install through Yay (easy way)
+```
+yay -S kvantum-qt5-git
+```
+
+***Or***
+
+### Install through Pacman (manual way)
+
+#### 1. First install dependencies
+Get these if you don't have them installed already.
+```
+sudo pacman -S gcc libx11 libxext qt5-base qt5-svg qt5-x11extras kwindowsystem
+```
+
+#### 2. Let's build & install
+Just open a terminal and issue the following commands:
+```
+git clone https://github.com/tsujan/Kvantum.git
+cd Kvantum
+
+qmake && make
+sudo make install
+```
+
 </br>
 
 ## Maintenance, Performance Tuning & Monitoring
@@ -460,7 +489,7 @@ sudo pacman -S pacman-contrib
 
 To manually clean pacman cache, run
 ```
-paccache -rk3
+sudo paccache -rk
 ```
 Where, *k* indicates to keep "num" of each package in the cache.
 
@@ -483,7 +512,7 @@ Target = *
 [Action]
 Description = Cleaning pacman cache...
 When = PostTransaction
-Exec = /usr/bin/paccache -rk3
+Exec = /usr/bin/paccache -rk
 ```
 save & exit.
 
@@ -503,6 +532,8 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
+  * **2020-10-22**
+    * Added `Kvantum Manager` under *Theming* Section.
   * **2020-10-18**
     * Added *Audio Utilities & Bluetooth* Section.
     * Added `Zsh` along with `Oh My Zsh` & `Powerlevel10k` theme.
