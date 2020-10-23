@@ -162,7 +162,7 @@ mount /dev/[root partition name] /mnt
 ```
 reflector --country [County1] --country [Country2] --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 ```
-Replace `[Country1]` & `[Country2]` with country names near to you or with the one you're living in. *[Reflector](Refer to https://wiki.archlinux.org/index.php/reflector)* for more info.
+Replace `[Country1]` & `[Country2]` with countries near to you or with the one you're living in. * Refer to [Arch Wiki - Reflector](https://wiki.archlinux.org/index.php/reflector)* for more info.
 
 ### Install base system
 ```
@@ -206,10 +206,10 @@ Insert the above line at the bottom of `/etc/fstab`.
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 ```
-Replace `Region` & `City` according to your Time zone. Refer to https://wiki.archlinux.org/index.php/installation_guide#Time_zone.
+Replace `Region` & `City` according to your Time zone. Refer to [Arch Wiki - Time zone](https://wiki.archlinux.org/index.php/installation_guide#Time_zone).
 
 ## Set Language
-We will use `en_US.UTF-8` here but, if you want to set your language, replace `en_US.UTF-8` with yours.
+We will use `en_US.UTF-8` here but, if you want to set your language, replace `en_US.UTF-8` with yours in all below instances.
 
 #### Edit locale.gen
 ```
@@ -340,10 +340,10 @@ sudo pacman -S xorg [xf86-video-your gpu type]
 ### Enable Multilib Repo (optional)
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://www.winehq.org/), [Steam](https://store.steampowered.com/), etc).
 
-Edit `/etc/pacman.conf` & uncomment the below section.
+Edit `/etc/pacman.conf` & uncomment the below two lines.
 ```
-[multilib]
-Include = /etc/pacman.d/mirrorlist
+#[multilib]
+#Include = /etc/pacman.d/mirrorlist
 ```
 
 #### MESA Libraries (32bit)
@@ -364,7 +364,7 @@ sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partiti
 ```
 Packages | Description
 --------- | ----------
-plasma | Base KDE Plasma DE installation.
+plasma | KDE Plasma Desktop Environment.
 konsole | KDE Terminal.
 dolphin | KDE default File Manager.
 ark | Archiving Tool.
