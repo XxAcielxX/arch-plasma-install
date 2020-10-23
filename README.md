@@ -27,7 +27,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [GRUB Bootloader](#install-grub-bootloader) 
       * [UEFI System](#for-uefi-system-1) 
       * [MBR System](#for-mbr-system-1)
-  * [**Boot Freshly Installed System**](#unplug-the-usb-stick-and-boot-into-your-freshly-installed-arch-system)
+  * [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
     * [Add User](#add-new-user) 
     * [Sudo Command](#allow-wheel-group-to-use-sudo-commands) 
   * [**User Login**](#login-as-user)
@@ -162,7 +162,7 @@ mount /dev/[root partition name] /mnt
 ```
 reflector --country [County1] --country [Country2] --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 ```
-Replace `[Country1]` & `[Country2]` with countries near to you or with the one you're living in. * Refer to [Arch Wiki - Reflector](https://wiki.archlinux.org/index.php/reflector)* for more info.
+Replace `[Country1]` & `[Country2]` with countries near to you or with the one you're living in. Refer to **[Reflector](https://wiki.archlinux.org/index.php/reflector)** for more info.
 
 ### Install base system
 ```
@@ -206,7 +206,7 @@ Insert the above line at the bottom of `/etc/fstab`.
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 ```
-Replace `Region` & `City` according to your Time zone. Refer to [Arch Wiki - Time zone](https://wiki.archlinux.org/index.php/installation_guide#Time_zone).
+Replace `Region` & `City` according to your Time zone. Refer to **[Time zone](https://wiki.archlinux.org/index.php/installation_guide#Time_zone)** more info.
 
 ## Set Language
 We will use `en_US.UTF-8` here but, if you want to set your language, replace `en_US.UTF-8` with yours in all below instances.
@@ -290,7 +290,7 @@ reboot
 ```
 </br>
 
-## Unplug the USB Stick and boot into your freshly installed Arch system
+## Now boot into your freshly installed Arch system
 
 ### Login as ROOT
 
