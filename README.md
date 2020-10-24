@@ -41,6 +41,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
   * [**Extras (optional)**](#extras-optional)
     * [Yay](#install-yay)
     * [Zsh](#install-zsh)
+    * [Change SHELL](#changing-your-shell)
   * [**Theming & Customizations**](theming--customisations)
      * [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
      * [Kvantum Manager](#kvantum-manager)
@@ -423,9 +424,27 @@ makepkg -si
 ### Install [Zsh](https://wiki.archlinux.org/index.php/zsh/) 
 Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter.
 ```
-sudo pacman -S zsh
+sudo pacman -S zsh zsh-completions
 ```
-Read *[here](#install-oh-my-zsh)* for customisation & theming for Zsh.
+Read *[here](#install-oh-my-zsh)* for customisation & theming for Zsh. Read below how to change your SHELL.
+
+### Changing your SHELL
+First check your current SHELL by running:
+```
+echo $SHELL
+```
+
+#### To get list of all available/installed SHELLs:
+```
+chsh -l
+```
+
+### Set Zsh as our SHELL
+For an example, we will set Zsh as default SHELL which we installed in the last step:
+```
+chsh -s /usr/bin/zsh
+```
+For the changes to apply, you will have Logout and Log back in or better do `reboot`.
 </br>
 
 ## Theming & Customisations
@@ -438,14 +457,26 @@ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O 
 My favourite theme is Powerlevel10k (follow below for installation).
 - You can visit [here](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes) to download theme of your choice.
 
-#### Get [Powerlevel10k](https://github.com/romkatv/powerlevel10k/) Theme for Oh My Zsh
+### Get [Powerlevel10k](https://github.com/romkatv/powerlevel10k/) Theme for Oh My Zsh
 This is the theme I'll install to spice up my terminal experience.
 ```
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
+#### Get the recommended fonts
+We will be using ***Yay*** to install the below two packages as one of them is only available from AUR.
+```
+yay -S ttf-dejavu ttf-meslo-nerd-font-powerlevel10k
+```
+Also set your Konsole Terminal font to `MesloGS-NF-Regular`.
+
+#### Set Powerlevel10k as your Zsh Theme
+```
+nano ~/.zshrc
+```
+Find the line starting with `ZSH_THEME="...."` and replace the theme name so the line should now look like this `ZSH_THEME="powerlevel10k/powerlevel10k"` Now do `source ~/.zshrc`.
 #### Configuration
-***For new users***, on the first run, Powerlevel10k configuration wizard will ask you a few questions and configure your prompt. If it doesn't trigger automatically, type `p10k configure`. Configuration wizard creates `~/.p10k.zsh` based on your preferences. Additional prompt customization can be done by editing this file. It has plenty of comments to help you navigate through configuration options.
+> ***For new users***, on the first run, Powerlevel10k configuration wizard will ask you a few questions and configure your prompt. If it doesn't trigger automatically, type `p10k configure`. Configuration wizard creates `~/.p10k.zsh` based on your preferences. Additional prompt customization can be done by editing this file. It has plenty of comments to help you navigate through configuration options.
 
 ## Kvantum Manager
 [Kvantum](https://github.com/tsujan/Kvantum) is a SVG-based theme engine for Qt, tuned to KDE and LXQt, with an emphasis on elegance, usability and practicality.
@@ -532,6 +563,9 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
+  * **2020-10-24**
+    * Edited `Zsh` & `Oh-My-Zsh` Sections and added further details.
+    * Added `Change SHELL` Section.
   * **2020-10-22**
     * Added `Kvantum Manager` under *Theming* Section.
   * **2020-10-18**
