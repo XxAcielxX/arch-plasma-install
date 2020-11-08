@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/discord/364844043886395392.svg?color=007c8d&labelColor=222222&logoColor=888888&label=Discord&logo=discord)](https://discord.gg/b9PBjrs "Hello!, Need help with my guide then ask here.")
 [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
-(Works with Arch ISO Image build as of: 2020.10.01)
+(Works with Arch ISO Image build as of: 2020.11.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -42,6 +42,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Yay](#install-yay)
     * [Zsh](#install-zsh)
     * [Change SHELL](#changing-your-shell)
+    * [Clam AntiVirus](#clamav)
   * [**Theming & Customizations**](theming--customisations)
      * [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
      * [Kvantum Manager](#kvantum-manager)
@@ -161,9 +162,9 @@ mount /dev/[root partition name] /mnt
 
 ### Update Mirrors using Reflector
 ```
-reflector --country [County1] --country [Country2] --age 12 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+reflector -c County1 -c Country2 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist
 ```
-Replace `[Country1]` & `[Country2]` with countries near to you or with the one you're living in. Refer to **[Reflector](https://wiki.archlinux.org/index.php/reflector)** for more info.
+Replace `Country1` & `Country2` with countries near to you or with the one you're living in. Refer to **[Reflector](https://wiki.archlinux.org/index.php/reflector)** for more info.
 
 ### Install base system
 ```
@@ -445,6 +446,36 @@ For an example, we will set Zsh as default SHELL which we installed in the last 
 chsh -s /usr/bin/zsh
 ```
 For the changes to apply, you will have Logout and Log back in or better do `reboot`.
+
+## ClamAV
+[Clam AntiVirus](https://wiki.archlinux.org/index.php/ClamAV) is an open source (GPL) anti-virus toolkit for UNIX. It provides a number of utilities including a flexible and scalable multi-threaded daemon, a command line scanner and advanced tool for automatic database updates.
+#### 1. Install
+```
+sudo pacman -S clamav
+```
+
+#### 2. Update Signatures/Database (must do)
+```
+sudo freshclam
+```
+
+#### 3. Enable & start services
+```
+sudo systemctl enable --now clamav-freshclam.service
+sudo systemctl enable --now clamav-daemon.service
+```
+
+#### 4a. ClamTK (optional)
+GUI for ClamAV
+```
+sudo pacman -S clamtk
+```
+
+#### 4b. KDE Dolphin File Manager Plugin (optional)
+Download the latest `master zip` from [ClanTK-KDE Gitlab](https://gitlab.com/dave_m/clamtk-kde) & extract it your `~/Downloads` folder. Now open a terminal from within the extracted folder & run:
+```
+sudo cp clamtk-kde.desktop /usr/share/kservices5/ServiceMenus/
+```
 </br>
 
 ## Theming & Customisations
@@ -563,6 +594,9 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
+  * **2020-11-08**
+    * Updated guide compatibility for `2020-11-01` iso image.
+    * Added `ClamAV` AntiVirus/Security for protecting our Arch system.
   * **2020-10-24**
     * Edited `Zsh` & `Oh-My-Zsh` Sections and added further details.
     * Added `Change SHELL` Section.
