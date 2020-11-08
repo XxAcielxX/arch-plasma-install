@@ -139,7 +139,7 @@ We are going to make two partitions on our HDD, `SWAP & ROOT` using `cfdisk`.
 cfdisk /dev/[disk name]
 ```
 - [disk name] = device to partition, find yours by running `lsblk`.
-- SWAP Partition should double the size of RAM available in your system.
+- SWAP Partition should double the size of RAM available in your system. Not applicable on 16GB or more RAM.
 - We will be using one partition for our `/`, `/boot` & `/home`.
 
 ### Format the Partition, Make SWAP & Mount ROOT (MBR)
@@ -189,17 +189,17 @@ Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
 arch-chroot /mnt
 ```
 ### Create Swapfile (UEFI only)
+Replace the below 4096 in `count=4096` with double the amount of RAM installed your system. Not applicable on 16GB or more RAM.
 ```
-dd if=/dev/zero of=/swapfile bs=1G count=2 status=progress
+dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile
 ```
-Replace the above 1G in `bs=1G` with the amount of RAM installed your system.
 
 ### Add Swapfile entery in your `/etc/fstab` file (UEFI only) 
 ```
-/swapfile    none    swap    defaults    0 0
+/swapfile none swap defaults 0 0
 ```
 Insert the above line at the bottom of `/etc/fstab`.
 
@@ -236,7 +236,7 @@ echo LANG=en_US.UTF-8 > /etc/locale.conf
 ### Add Keymaps to vconsole
 For keyboard users with non US Eng only. Replace `[keymap]` with yours.
 ```
-echo "KEYMAP=[keymap]" >> /etc/vconsole.conf
+echo "KEYMAP=[keymap]" > /etc/vconsole.conf
 ```
 
 ## Set Hostname
