@@ -168,7 +168,7 @@ Replace `Country1` & `Country2` with countries near to you or with the one you'r
 
 ### Install base system
 ```
-pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucode reflector
+pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucode reflector mtools dosfstools
 ```
 - Replace `linux` with *linux-hardened*, *linux-lts* or *linux-zen* to install the kernel of your choice.
 - Replace `linux-headers` with Kernel type type of your choice respectively (e.g if you installed `linux-zen` then you will need `linux-zen-headers`).
@@ -231,6 +231,12 @@ locale-gen
 ### Add LANG to locale.conf
 ```
 echo LANG=en_US.UTF-8 > /etc/locale.conf
+```
+
+### Add Keymaps to vconsole
+For keyboard users with non US Eng only. Replace `[keymap]` with yours.
+```
+echo "KEYMAP=[keymap]" >> /etc/vconsole.conf
 ```
 
 ## Set Hostname
@@ -368,7 +374,7 @@ Packages | Description
 --------- | ----------
 plasma | KDE Plasma Desktop Environment.
 konsole | KDE Terminal.
-dolphin | KDE default File Manager.
+dolphin | KDE File Manager.
 ark | Archiving Tool.
 kwrite | Text Editor.
 kcalc | Scientific Calculator.
@@ -387,18 +393,25 @@ bluez | Provides the Bluetooth protocol stack.
 bluez-utils | Provides the `bluetoothctl` utility.
 
 ### My Required Applications
+You can install all the following packages or only the one you want.
 ```
-sudo pacman -S firefox openssh qbittorrent wget screen git neofetch
+sudo pacman -S firefox openssh qbittorrent audacious wget screen git neofetch
 ```
 Packages | Description
 --------- | ----------
 firefox | Mozilla Firefox Web Browser.
 openssh | Secure Shell access server.
-qbittorrent | A BitTorrent Client based on QT.
+qbittorrent | A BitTorrent Client based on Qt.
+audacious | Qt based music player. 
 wget | Wget is a free utility for non-interactive download of files from the Web.
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
-git | Github Utility Tools.
+git | Github command-line utility tools.
 neofetch | Neofetch is a command-line system information tool.
+
+### Enable OpenSSH daemon
+```
+sudo systemctl enable sshd.service
+```
 
 ### Final Reboot
 ```
