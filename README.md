@@ -43,6 +43,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Zsh](#install-zsh)
     * [Change SHELL](#changing-your-shell)
     * [Clam AntiVirus](#clamav)
+    * [Printer Service](#printer-service)
   * [**Theming & Customizations**](theming--customisations)
      * [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
      * [Kvantum Manager](#kvantum-manager)
@@ -392,6 +393,11 @@ alsa-utils | This contains (among other utilities) the `alsamixer` and `amixer` 
 bluez | Provides the Bluetooth protocol stack.
 bluez-utils | Provides the `bluetoothctl` utility.
 
+#### Enable Bluetooth Service
+```
+sudo systemctl enable bluetooth.service
+```
+
 ### My Required Applications
 You can install all the following packages or only the one you want.
 ```
@@ -488,6 +494,16 @@ sudo pacman -S clamtk
 Download the latest `master zip` from [ClanTK-KDE Gitlab](https://gitlab.com/dave_m/clamtk-kde) & extract it your `~/Downloads` folder. Now open a terminal from within the extracted folder & run:
 ```
 sudo cp clamtk-kde.desktop /usr/share/kservices5/ServiceMenus/
+```
+
+### Printer Service
+```
+sudo pacman -S cups
+```
+
+#### Enable CUPS (Printer) Service
+```
+sudo systemctl enable --now cups.service
 ```
 </br>
 
@@ -607,6 +623,8 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
+  * **2020-11-22**
+    * Added `CUPS` Printer Service under *Extras* Section.
   * **2020-11-08**
     * Updated guide compatibility for `2020-11-01` iso image.
     * Added `ClamAV` AntiVirus/Security for protecting our Arch system.
