@@ -75,7 +75,7 @@ loadkeys [keymap]
 
 ### Check for Internet Connectivity
 ```
-ping -t 4 google.com
+ping -c 4 google.com
 ```
 - If you are connected through Ethernet, then your Internet will be working out of the box.
 - If you are using Wi-Fi, then use `wifi-menu` to connect to your local network.
@@ -254,7 +254,7 @@ nano /etc/hosts
 ```
 127.0.0.1    localhost
 ::1          localhost
-127. 0.1.1   arch.localdomain arch
+127.0.1.1    arch.localdomain arch
 ```
 Replace `arch` with hostname of your choice.
 save & exit.
@@ -368,7 +368,7 @@ sudo systemctl enable sddm
 
 ### KDE Plasma & Applications
 ```
-sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager
+sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 ```
 Packages | Description
 --------- | ----------
