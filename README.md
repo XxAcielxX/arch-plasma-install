@@ -540,29 +540,16 @@ Find the line starting with `ZSH_THEME="...."` and replace the theme name so the
 ## Kvantum Manager
 [Kvantum](https://github.com/tsujan/Kvantum) is a SVG-based theme engine for Qt, tuned to KDE and LXQt, with an emphasis on elegance, usability and practicality.
 
-### Install through Yay (easy way)
+### Install through Yay (git version)
 ```
 yay -S kvantum-qt5-git
 ```
 
 ***Or***
 
-### Install through Pacman (manual way)
-
-#### 1. First install dependencies
-Get these if you don't have them installed already.
+### Install through Pacman
 ```
-sudo pacman -S gcc libx11 libxext qt5-base qt5-svg qt5-x11extras kwindowsystem
-```
-
-#### 2. Let's build & install
-Just open a terminal and issue the following commands:
-```
-git clone https://github.com/tsujan/Kvantum.git
-cd Kvantum
-
-qmake && make
-sudo make install
+sudo pacman -S kvantum-qt5
 ```
 
 </br>
