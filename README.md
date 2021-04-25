@@ -44,7 +44,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Change SHELL](#changing-your-shell)
     * [Clam AntiVirus](#clamav)
     * [Printer Service](#printer-service)
-  * [**Theming & Customizations**](theming--customisations)
+  * [**Theming & Customisations**](theming--customisations)
      * [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
      * [Kvantum Manager](#kvantum-manager)
   * [**Maintenance, Performance Tuning & Monitoring**](maintenance-performance-tuning--monitoring)
