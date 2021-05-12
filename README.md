@@ -1,6 +1,6 @@
 [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
-(Works with Arch ISO Image build as of: 2021.04.01)
+(Works with Arch ISO Image build as of: 2021.05.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -41,6 +41,8 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
     * [Yay](#install-yay)
     * [Zsh](#install-zsh)
     * [Change SHELL](#changing-your-shell)
+    * [PipeWire](#pipewire)
+    * [PulseEffects](#pulseeffects)
     * [Clam AntiVirus](#clamav)
     * [Printer Service](#printer-service)
   * [**Theming & Customisations**](#theming--customisations)
@@ -88,7 +90,7 @@ timedatectl set-ntp true
 
 ## Preparing the Disk for System
 
-> :warning:Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
+> :warning: Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
 Disk partitioning type (use UEFI or MBR, go according to your system).
 
 ## For UEFI System
@@ -464,6 +466,24 @@ chsh -s /usr/bin/zsh
 ```
 For the changes to apply, you will have Logout and Log back in or better do `reboot`.
 
+## PipeWire
+[PipeWire]() is a new low-level multimedia framework. And 
+#### Install
+```
+sudo pacman -S pipewire
+```
+
+## PulseEffects
+[PulseEffects](https://wiki.archlinux.org/title/PipeWire#PulseEffects) is a GTK utility which provides a large array of audio effects and filters to individual application output streams and microphone input streams. Notable effects include an input/output equalizer, output loudness equalization and bass enhancement, and input de-esser and noise reduction plug-in.
+```
+sudo pacman -S pulseeffects
+
+or
+
+yay -S pulseeffects-git
+```
+> This will also install pipewire-pulse and replace PulseAudio with PipeWire.
+
 ## ClamAV
 [Clam AntiVirus](https://wiki.archlinux.org/index.php/ClamAV) is an open source (GPL) anti-virus toolkit for UNIX. It provides a number of utilities including a flexible and scalable multi-threaded daemon, a command line scanner and advanced tool for automatic database updates.
 #### 1. Install
@@ -608,7 +628,10 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
-  * **2021-04-5**
+  * **2021-05-12**
+    * Updated guide compatibility for `2021-05-01` iso image.
+    * Added `PipeWire` & `PulseEffects` packages section under *Extras*.
+  * **2021-04-05**
     * Updated guide compatibility for `2021-04-01` iso image.
   * **2021-02-22**
     * Updated guide compatibility for `2021-02-01` iso image.
