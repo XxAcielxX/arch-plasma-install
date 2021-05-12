@@ -467,7 +467,7 @@ chsh -s /usr/bin/zsh
 For the changes to apply, you will have Logout and Log back in or better do `reboot`.
 
 ## PipeWire
-[PipeWire]() is a new low-level multimedia framework. And 
+[PipeWire](https://wiki.archlinux.org/title/PipeWire) is a new low-level multimedia framework. And 
 #### Install
 ```
 sudo pacman -S pipewire
@@ -475,11 +475,10 @@ sudo pacman -S pipewire
 
 ## PulseEffects
 [PulseEffects](https://wiki.archlinux.org/title/PipeWire#PulseEffects) is a GTK utility which provides a large array of audio effects and filters to individual application output streams and microphone input streams. Notable effects include an input/output equalizer, output loudness equalization and bass enhancement, and input de-esser and noise reduction plug-in.
+Install
 ```
 sudo pacman -S pulseeffects
-
 or
-
 yay -S pulseeffects-git
 ```
 > This will also install pipewire-pulse and replace PulseAudio with PipeWire.
