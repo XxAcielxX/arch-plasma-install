@@ -1,6 +1,6 @@
 [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
-(Works with Arch ISO Image build as of: 2021.05.01)
+(Works with Arch ISO Image build as of: 2021.06.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -627,6 +627,8 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
+  * **2021-06-14**
+    * Updated guide compatibility for `2021-06-01` iso image.
   * **2021-05-12**
     * Updated guide compatibility for `2021-05-01` iso image.
     * Added `PipeWire` & `PulseEffects` packages section under *Extras*.
