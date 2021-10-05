@@ -1,6 +1,6 @@
 [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3MteSFjpJtHiWygvm23AGDZuJ7U9krzf8J)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
-(Works with Arch ISO Image build as of: 2021.09.01)
+(Works with Arch ISO Image build as of: 2021.10.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -628,6 +628,8 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 ## Changelog
 
 
+  * **2021-10-05**
+    * Updated guide compatibility for `2021-10-01` iso image.
   * **2021-09-09**
     * Updated guide compatibility for `2021-09-01` iso image.
   * **2021-08-01**
