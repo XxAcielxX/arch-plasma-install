@@ -628,9 +628,9 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 ## Changelog
 
 
-  *  **2021-10-19**
+  * **2021-10-19**
     * Updated `EasyEffects` with new package name, formerly known as PulseEffects.
-  *  **2021-10-05**
+  * **2021-10-05**
     * Updated guide compatibility for `2021-10-01` iso image.
   * **2021-09-09**
     * Updated guide compatibility for `2021-09-01` iso image.
