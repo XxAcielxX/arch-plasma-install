@@ -1,6 +1,6 @@
 [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3MteSFjpJtHiWygvm23AGDZuJ7U9krzf8J)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
-(Works with Arch ISO Image build as of: 2022.01.18)
+(Works with Arch ISO Image build as of: 2022.01.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
