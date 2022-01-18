@@ -1,6 +1,6 @@
 [![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3MteSFjpJtHiWygvm23AGDZuJ7U9krzf8J)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
-(Works with Arch ISO Image build as of: 2021.10.01)
+(Works with Arch ISO Image build as of: 2022.01.18)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -628,6 +628,8 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 ## Changelog
 
 
+  * **2022-01-18**
+    * Updated guide compatibility for `2022-01-01` iso image.
   * **2021-10-19**
     * Updated `EasyEffects` with new package name, formerly known as PulseEffects.
   * **2021-10-05**
