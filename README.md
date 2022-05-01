@@ -1,4 +1,4 @@
-[![Donate with Bitcoin](https://en.cryptobadges.io/badge/micro/3MteSFjpJtHiWygvm23AGDZuJ7U9krzf8J)](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
+[<img src="https://img.shields.io/badge/BTC-3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8-E66000?labelColor=353535&style=for-the-badge&logo=btc"/>](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
 (Works with Arch ISO Image build as of: 2022.04.01)
 
