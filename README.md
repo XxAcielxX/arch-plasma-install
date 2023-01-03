@@ -1,6 +1,6 @@
 [<img src="https://img.shields.io/badge/BTC-3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8-E66000?labelColor=353535&style=for-the-badge&logo=btc"/>](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
 
-(Works with Arch ISO Image build as of: 2022.10.01)
+(Works with Arch ISO Image build as of: 2023.01.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -627,7 +627,8 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
-
+  * **2023-01-03**
+    * Updated guide compatibility for `2023-01-01` iso image.
   * **2022-10-02**
     * Updated guide compatibility for `2022-10-01` iso image.
   * **2022-08-05**
