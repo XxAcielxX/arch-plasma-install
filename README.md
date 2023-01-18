@@ -630,4 +630,4 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
   * **2023-01-03**
     * Updated guide compatibility for `2023-01-01` iso image.
 
-#### Full and complete changelog, [click here](https://github.com/GioF71/mpd-alsa-docker/blob/main/doc/alsa-eq.md).
+#### Full and complete changelog, [click here](https://github.com/XxAcielxX/arch-plasma-install/blob/main/CHANGELOG.md).
