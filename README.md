@@ -628,7 +628,7 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 ## Changelog
 
   * **2023-03-06**
-    * Updated guide compatibility for `2023-03-01` iso
+    * Updated guide compatibility for `2023-03-01` iso image.
   * **2023-01-03**
     * Updated guide compatibility for `2023-01-01` iso image.
 
