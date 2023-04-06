@@ -1,5 +1,7 @@
 # CHANGELOG
 
+  * **2023-04-06**
+    * Updated guide compatibility for `2023-04-01` iso image.
   * **2023-03-06**
     * Updated guide compatibility for `2023-03-01` iso image.
   * **2023-01-03**
