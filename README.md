@@ -276,6 +276,11 @@ passwd
 pacman -S grub
 ```
 
+### Install EFI Boot manager (UEFI)
+```
+pacman -S efibootmgr
+```
+
 #### For UEFI System
 ```
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
