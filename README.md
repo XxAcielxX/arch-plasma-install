@@ -276,7 +276,7 @@ passwd
 pacman -S grub
 ```
 
-### Install EFI Boot manager
+### Install EFI Boot manager (UEFI)
 ```
 pacman -S efibootmgr
 ```
