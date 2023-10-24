@@ -1,6 +1,6 @@
-[<img src="https://img.shields.io/badge/BTC-3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8-E66000?labelColor=353535&style=for-the-badge&logo=btc"/>](https://en.cryptobadges.io/donate/3Hqd4mameE1GzDNrfj2V9KAWaL7sUxJtA8)
+[<img src="https://img.shields.io/badge/BTC-1USXozdnotw3u5XkzooUadw7NrdyV752V-E66000?labelColor=353535&style=for-the-badge&logo=btc"/>](https://acielgaming.cb.id)
 
-(Works with Arch ISO Image build as of: 2023.04.01)
+(Works with Arch ISO Image build as of: 2023.10.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -632,6 +632,8 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
+  * **2023-10-24**
+    * Added `efibootmgr` package for UEFI installation. Thanks to [mctesterwork](https://github.com/mctesterwork) for the pull.
   * **2023-04-06**
     * Updated guide compatibility for `2023-04-01` iso image.
   * **2023-03-06**
