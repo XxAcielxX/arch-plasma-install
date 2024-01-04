@@ -1,6 +1,6 @@
 [<img src="https://img.shields.io/badge/BTC-1USXozdnotw3u5XkzooUadw7NrdyV752V-E66000?labelColor=353535&style=for-the-badge&logo=btc"/>](https://acielgaming.cb.id)
 
-(Works with Arch ISO Image build as of: 2023.12.01)
+(Works with Arch ISO Image build as of: 2024.01.01)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
@@ -8,50 +8,50 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 </br>
 
 ## Table of Contents
-  * [**Let's Begin**](#lets-begin)
-  * [**Disk Partitioning**](#preparing-the-disk-for-system)
-    * [UEFI System](#for-uefi-system)
-    * [MBR System](#for-mbr-system)
-  * [**Base System Installation**](#base-system-installation)
-    * [Update Mirrors](#update-mirrors-using-reflector)
-    * [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
-    * [Generate fstab](#generate-fstab)
-  * [**Chroot**](#chroot)
-    * [Swapfile (UEFI only)](#create-swapfile-uefi-only)
-    * [Date & Time](#set-time--date)
-    * [Language](#set-language)
-    * [Hostname & Hosts](#set-hostname)
-    * [Network Manager](#install--enable-networkmanager) 
-    * [ROOT Password](#set-root-password) 
-    * [GRUB Bootloader](#install-grub-bootloader) 
-      * [UEFI System](#for-uefi-system-1) 
-      * [MBR System](#for-mbr-system-1)
-  * [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
-    * [Add User](#add-new-user) 
-    * [Sudo Command](#allow-wheel-group-to-use-sudo-commands) 
-  * [**User Login**](#login-as-user)
-    * [Display Server & GPU Drivers](#xorg--gpu-drivers)
-    * [Multilib Repository (32bit)](#enable-multilib-repo-optional)
-    * [Display Manager (SDDM)](#install--enable-sddm)
-    * [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
-    * [Audio Utilities & Bluetooth](#audio-utilities--bluetooth)
-    * [Misc Applications](https://#my-required-applications)
-  * [**The Conclusion**](#the-conclusion) 
-  * [**Extras (optional)**](#extras-optional)
-    * [Yay](#install-yay)
-    * [Zsh](#install-zsh)
-    * [Change SHELL](#changing-your-shell)
-    * [PipeWire](#pipewire)
-    * [EasyEffects](#easyeffects)
-    * [Clam AntiVirus](#clamav)
-    * [Printer Service](#printer-service)
-  * [**Theming & Customisations**](#theming--customisations)
-     * [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
-     * [Kvantum Manager](#kvantum-manager)
-  * [**Maintenance, Performance Tuning & Monitoring**](maintenance-performance-tuning--monitoring)
-    * [Paccache](#paccache)
-    * [Cockpit](#install-cockpit)
-  * [**Changelog**](#changelog)
+ - [**Let's Begin**](#lets-begin)
+ - [**Disk Partitioning**](#preparing-the-disk-for-system)
+   - [UEFI System](#for-uefi-system)
+   - [MBR System](#for-mbr-system)
+ - [**Base System Installation**](#base-system-installation)
+   - [Update Mirrors](#update-mirrors-using-reflector)
+   - [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
+   - [Generate fstab](#generate-fstab)
+ - [**Chroot**](#chroot)
+   - [Swapfile (UEFI only)](#create-swapfile-uefi-only)
+   - [Date & Time](#set-time--date)
+   - [Language](#set-language)
+   - [Hostname & Hosts](#set-hostname)
+   - [Network Manager](#install--enable-networkmanager)
+   - [ROOT Password](#set-root-password)
+   - [GRUB Bootloader](#install-grub-bootloader)
+     - [UEFI System](#for-uefi-system-1)
+     - [MBR System](#for-mbr-system-1)
+ - [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
+   - [Add User](#add-new-user)
+   - [Sudo Command](#allow-wheel-group-to-use-sudo-commands)
+ - [**User Login**](#login-as-user)
+   - [Display Server & GPU Drivers](#xorg--gpu-drivers)
+   - [Multilib Repository (32bit)](#enable-multilib-repo-optional)
+   - [Display Manager (SDDM)](#install--enable-sddm)
+   - [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
+   - [Audio Utilities & Bluetooth](#audio-utilities--bluetooth)
+   - [Misc Applications](https://#my-required-applications)
+ - [**The Conclusion**](#the-conclusion)
+ - [**Extras (optional)**](#extras-optional)
+   - [Yay](#install-yay)
+   - [Zsh](#install-zsh)
+   - [Change SHELL](#changing-your-shell)
+   - [PipeWire](#pipewire)
+   - [EasyEffects](#easyeffects)
+   - [Clam AntiVirus](#clamav)
+   - [Printer Service](#printer-service)
+ - [**Theming & Customisations**](#theming--customisations)
+    - [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
+    - [Kvantum Manager](#kvantum-manager)
+ - [**Maintenance, Performance Tuning & Monitoring**](maintenance-performance-tuning--monitoring)
+   - [Paccache](#paccache)
+   - [Cockpit](#install-cockpit)
+ - [**Changelog**](#changelog)
 </br>
 
 ## Let's begin
@@ -91,7 +91,8 @@ timedatectl set-ntp true
 ## Preparing the Disk for System
 
 > :warning: Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
-Disk partitioning type (use UEFI or MBR, go according to your system).
+
+> Disk partitioning type (use UEFI or MBR, go according to your system).
 
 ## For UEFI System
 
@@ -102,7 +103,7 @@ We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
 gdisk /dev/[disk name]
 ```
 - [disk name] = device to partition, find yours by running `lsblk`.
-- We will be using one partition for our `/`, `/boot` & `/home`. 
+- We will be using one partition for our `/`, `/boot` & `/home`.
 
 ```
 n = New Partition
@@ -113,7 +114,7 @@ ef00 = EFI Partition Type
 
 n = New Partition again
 simply press enter = 2nd Partition
-simply press enter = As First Sector 
+simply press enter = As First Sector
 simply press enter = As Last sector [ROOT Partition Size (using the remaining disk space left)]
 8300 or simply press enter = EXT4 ROOT Partition Type
 
@@ -122,7 +123,7 @@ w = write & exit
 ### Format Partitions (UEFI)
 ```
 mkfs.fat -F32 /dev/[efi partition name]
-mkfs.ext4 /dev/[root partiton name] 
+mkfs.ext4 /dev/[root partiton name]
 ```
 
 ### Mount Partitions (UEFI)
@@ -181,7 +182,7 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. 
+Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
 </br>
 
 ## Chroot
@@ -198,7 +199,7 @@ mkswap /swapfile
 swapon /swapfile
 ```
 
-### Add Swapfile entery in your `/etc/fstab` file (UEFI only) 
+### Add Swapfile entery in your `/etc/fstab` file (UEFI only)
 ```
 /swapfile none swap defaults 0 0
 ```
@@ -298,7 +299,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ### Final Step
 ```
-exit 
+exit
 umount -a
 reboot
 ```
@@ -376,26 +377,26 @@ sudo systemctl enable sddm
 ```
 sudo pacman -S plasma konsole dolphin ark kwrite kcalc spectacle krunner partitionmanager packagekit-qt5
 ```
-Packages | Description
---------- | ----------
-plasma | KDE Plasma Desktop Environment.
-konsole | KDE Terminal.
-dolphin | KDE File Manager.
-ark | Archiving Tool.
-kwrite | Text Editor.
-kcalc | Scientific Calculator.
-spectacle | KDE screenshot capture utility.
-krunner | KDE Quick drop-down desktop search.
+Packages         | Description
+---------------- | ------------------------------------
+plasma           | KDE Plasma Desktop Environment.
+konsole          | KDE Terminal.
+dolphin          | KDE File Manager.
+ark              | Archiving Tool.
+kwrite           | Text Editor.
+kcalc            | Scientific Calculator.
+spectacle        | KDE screenshot capture utility.
+krunner          | KDE Quick drop-down desktop search.
 partitionmanager | KDE Disk & Partion Manager.
 
 ### Audio Utilities & Bluetooth
 ```
 sudo pacman -S alsa-utils bluez bluez-utils
 ```
-Packages | Description
---------- | ----------
-alsa-utils | This contains (among other utilities) the `alsamixer` and `amixer` utilities.
-bluez | Provides the Bluetooth protocol stack.
+Packages    | Description
+----------- | -----------------------------------------
+alsa-utils  | This contains (among other utilities) the `alsamixer` and `amixer` utilities.
+bluez       | Provides the Bluetooth protocol stack.
 bluez-utils | Provides the `bluetoothctl` utility.
 
 #### Enable Bluetooth Service
@@ -413,7 +414,7 @@ Packages | Description
 firefox | Mozilla Firefox Web Browser.
 openssh | Secure Shell access server.
 qbittorrent | A BitTorrent Client based on Qt.
-audacious | Qt based music player. 
+audacious | Qt based music player.
 wget | Wget is a free utility for non-interactive download of files from the Web.
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
 git | Github command-line utility tools.
@@ -446,7 +447,7 @@ cd yay
 makepkg -si
 ```
 
-### Install [Zsh](https://wiki.archlinux.org/index.php/zsh/) 
+### Install [Zsh](https://wiki.archlinux.org/index.php/zsh/)
 Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter.
 ```
 sudo pacman -S zsh zsh-completions
@@ -472,7 +473,7 @@ chsh -s /usr/bin/zsh
 For the changes to apply, you will have Logout and Log back in or better do `reboot`.
 
 ## PipeWire
-[PipeWire](https://wiki.archlinux.org/title/PipeWire) is a new low-level multimedia framework. It aims to offer capture and playback for both audio and video with minimal latency and support for PulseAudio, JACK, ALSA and GStreamer-based applications. 
+[PipeWire](https://wiki.archlinux.org/title/PipeWire) is a new low-level multimedia framework. It aims to offer capture and playback for both audio and video with minimal latency and support for PulseAudio, JACK, ALSA and GStreamer-based applications.
 #### Install
 ```
 sudo pacman -S pipewire
@@ -531,7 +532,7 @@ sudo systemctl enable --now cups.service
 
 ## Theming & Customisations
 
-### Install [Oh My Zsh](https://ohmyz.sh/) 
+### Install [Oh My Zsh](https://ohmyz.sh/)
 Oh My Zsh is an open source, community-driven framework for managing your Zsh configuration.
 ```
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
@@ -572,7 +573,7 @@ yay -S kvantum-qt5-git
 
 ### Install through Pacman
 ```
-sudo pacman -S kvantum-qt5
+sudo pacman -S kvantum
 ```
 
 </br>
@@ -632,13 +633,15 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
-  * **2023-10-24**
-    * Added `efibootmgr` package for UEFI installation. Thanks to [mctesterwork](https://github.com/mctesterwork) for the pull.
-  * **2023-04-06**
-    * Updated guide compatibility for `2023-04-01` iso image.
-  * **2023-03-06**
-    * Updated guide compatibility for `2023-03-01` iso image.
-  * **2023-01-03**
-    * Updated guide compatibility for `2023-01-01` iso image.
+ - **2023-10-24**
+   - Updated `kvantum` package name.
+ - **2023-10-24**
+   - Added `efibootmgr` package for UEFI installation. Thanks to [mctesterwork](https://github.com/mctesterwork) for the pull.
+ - **2023-04-06**
+   - Updated guide compatibility for `2023-04-01` iso image.
+ - **2023-03-06**
+   - Updated guide compatibility for `2023-03-01` iso image.
+ - **2023-01-03**
+   - Updated guide compatibility for `2023-01-01` iso image.
 
 #### Full and complete changelog, [click here](https://github.com/XxAcielxX/arch-plasma-install/blob/main/CHANGELOG.md).
