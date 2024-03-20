@@ -476,7 +476,7 @@ For the changes to apply, you will have Logout and Log back in or better do `reb
 [PipeWire](https://wiki.archlinux.org/title/PipeWire) is a new low-level multimedia framework. It aims to offer capture and playback for both audio and video with minimal latency and support for PulseAudio, JACK, ALSA and GStreamer-based applications.
 #### Install
 ```
-sudo pacman -S pipewire
+sudo pacman -S pipewire wireplumber pipewire-audio pipewire-alsa pipewire-pulse
 ```
 
 ## EasyEffects
