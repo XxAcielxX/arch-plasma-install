@@ -25,6 +25,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
      - [UEFI System](#for-uefi-system-1)
      - [MBR System](#for-mbr-system-1)
  - [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
+   - [Connect to the internet (again)](#reconnect-to-the-internet)
    - [Add User](#add-new-user)
    - [Sudo Command](#allow-wheel-group-to-use-sudo-commands)
  - [**User Login**](#login-as-user)
@@ -67,7 +68,7 @@ Firstly, use the command:
 iwctl
 ```
 
-To see which networks adapters you have installed, use the command:
+To see which networks stations you have installed, use the command:
 ```
 device list
 ```
@@ -373,7 +374,27 @@ save & exit.
 exit
 ```
 
-## Login as USER
+## Login as USER and let's connect to the internet again! <a name="reconnect-to-the-internet"></a>
+
+For some reason, Arch seems to forget that we were just connected to the internet.\
+Since we're now using NetworkManager instead of iwd, the connection process is slightly different.\
+\
+Firstly, to take a look at what netowkr stations you have installed on your computer, use the command:
+```
+nmcli device
+```
+Then, we turn on wifi by using the command:
+```
+nmcli radio wifi on
+```
+And we list local access points by using the command:
+```
+nmcli device wifi list
+```
+Select one of the access points listed and connect to it by running the following command:
+```
+nmcli device wifi connect [Access Point SSID] password [Access Point Password]
+```
 
 ### Check for updates
 ```
