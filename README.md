@@ -37,7 +37,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
  - [**The Conclusion**](#the-conclusion)
  - [**Extras (optional)**](#extras-optional)
    - [Yay](#install-yay)
-   - [Zsh](#install-zsh)
+   - [Alternative Shells](#alternative-shells)
    - [Change SHELL](#changing-your-shell)
    - [PipeWire](#pipewire)
    - [EasyEffects](#easyeffects)
@@ -490,7 +490,7 @@ cd yay
 makepkg -si
 ```
 
-### Install [NuShell](https://www.nushell.sh)
+### Install [NuShell](https://www.nushell.sh) <a name="alternative-shells"></a>
 NuShell is a powerful shell that has really helpful debug statements and is overall my preferred shell environment.
 ```
 yay -S nushell
