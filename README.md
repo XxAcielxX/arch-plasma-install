@@ -9,6 +9,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 
 ## Table of Contents
  - [**Let's Begin**](#lets-begin)
+ - [**Connect to the Internet**](#connect-to-the-internet)
  - [**Disk Partitioning**](#preparing-the-disk-for-system)
    - [UEFI System](#for-uefi-system)
    - [MBR System](#for-mbr-system)
@@ -54,9 +55,59 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
  - [**Changelog**](#changelog)
 </br>
 
-## Let's begin
 - Grab the latest built ISO Image from **[Arch Linux Download](https://www.archlinux.org/download/)** and write it to an empty USB Stick.
-- After the image is done writing, it's time to boot into the Arch Live Environment. First thing you do is:
+- After the image is done writing, restart your computer and hold one of the following keys: Del, F12, F9, F7
+- Your computer will then prompt you to select a bootable device
+- Select the bootable USB stick and your computer should play the Super Mario Bros. (please don't sue me nintendo) coin sound and show a range of options
+- Select "Arch Linux Install medium" and wait to be booted into the ArchISO
+
+## Connect to the internet <a name="connect-to-the-internet"></a>
+Firstly, use the command:
+```
+iwctl
+```
+
+To see which networks adapters you have installed, use the command:
+```
+device list
+```
+
+Select a station from the ones listed and power it on by using the command:
+```
+device [selected station] set-property Powered on
+```
+
+Use the command above to turn on its corresponding adapter, only replacing "device" with "adapter"
+Then, you may either scan for networks or connect through WPS.
+
+### WPS
+
+Use the following command:
+```
+wsc [selected station] push-button
+```
+
+And push the WPS button at the back of your router. This may take a minute or two to complete.
+Once the WPS LED stops flashing, your computer has been connected to the internet!
+
+### Regular method
+
+Use the following command to scan for all of the access points you can currently connect to:
+```
+station [selected station] scan
+```
+
+Then, to display the networks, use the following command:
+```
+station [selected station] get-networks
+```
+
+Select an access point from the list provided and connect to it by using the following command:
+```
+station [selected station] connect [SSID]
+```
+
+IWCTL will prompt you to enter the access point's passphrase. Enter it and you should be connected soon after.
 
 ### Load Keymaps (for non US ENG Keyboard Users only)
 For a list of all the available keymaps, use the command:
