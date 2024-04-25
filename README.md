@@ -11,14 +11,11 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
  - [**Let's Begin**](#lets-begin)
  - [**Connect to the Internet**](#connect-to-the-internet)
  - [**Disk Partitioning**](#preparing-the-disk-for-system)
-   - [UEFI System](#for-uefi-system)
-   - [MBR System](#for-mbr-system)
  - [**Base System Installation**](#base-system-installation)
    - [Update Mirrors](#update-mirrors-using-reflector)
    - [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
    - [Generate fstab](#generate-fstab)
  - [**Chroot**](#chroot)
-   - [Swapfile (UEFI only)](#create-swapfile-uefi-only)
    - [Date & Time](#set-time--date)
    - [Language](#set-language)
    - [Hostname & Hosts](#set-hostname)
@@ -60,6 +57,9 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 - Your computer will then prompt you to select a bootable device
 - Select the bootable USB stick and your computer should play the Super Mario Bros. (please don't sue me nintendo) coin sound and show a range of options
 - Select "Arch Linux Install medium" and wait to be booted into the ArchISO
+
+If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.
+Go into your BIOS settings and disable Secure Boot.
 
 ## Connect to the internet <a name="connect-to-the-internet"></a>
 Firstly, use the command:
@@ -143,11 +143,7 @@ timedatectl set-ntp true
 
 > :warning: Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
 
-> Disk partitioning type (use UEFI or MBR, go according to your system).
-
-## For UEFI System
-
-### Disk Partitioning (UEFI)
+### Disk Partitioning
 We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
 - If you have a brand new HDD or if no partition table is found, then create GPT Partition Table by pressing `g`.
 ```
@@ -163,57 +159,50 @@ simply press enter = As First Sector
 +512M = As Last sector (BOOT Partition Size)
 ef00 = EFI Partition Type
 
-n = New Partition again
+n = New Partition
 simply press enter = 2nd Partition
 simply press enter = As First Sector
-simply press enter = As Last sector [ROOT Partition Size (using the remaining disk space left)]
-8300 or simply press enter = EXT4 ROOT Partition Type
++16G = As Last sector (SWAP size)
+8200 = Linux Swap
+
+n = New Partition again
+simply press enter = 3rd Partition
+simply press enter = As First Sector
++40G = As Last sector [ROOT Partition Size (you may use 20GiB if you have a small hard drive)]
+8300 or simply press enter = Linux filesystem
+
+n = New Parition again
+simply press enter = 4th Partition
+simply press enter = As first sector
+simply press enter = As last sector [HOME parition size (takes up remaining hard drive space)]
+8300 or simply press enter = Linux filesystem
 
 w = write & exit
 ```
-### Format Partitions (UEFI)
+
+It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop.
+
+### Format Partitions
 ```
-mkfs.fat -F32 /dev/[efi partition name]
-mkfs.ext4 /dev/[root partiton name]
+mkfs.fat -F32 /dev/[efi partition]
+mkswap /dev/[swap partition]
+mkfs.btrfs /dev/[root partiton] # Add -f if your system tells you another filesystem like ext4 is already present
+mkfs.btrfs /dev/[home partition]
 ```
 
-### Mount Partitions (UEFI)
+### Mount Partitions and turn on swap memory
 ```
-mount /dev/[root partition name] /mnt
-mkdir /mnt/boot/efi
+mount /dev/[root partition name] /mnt # It is important that you mount root first
+swapon /dev/[swap partition] # Turns on swap memory
+mkdir -p /mnt/boot/efi # Since /mnt/boot/ isn't a real path, we specify the -p parameter to tell mkdir to recursively make directories until the path is good
+mkdir /mnt/home
 mount /dev/[efi partition name] /mnt/boot/efi
+mount /dev/[home partition] /mnt/home
 ```
-## For MBR System
-
-### Disk Partitioning (MBR)
-We are going to make two partitions on our HDD, `SWAP & ROOT` using `cfdisk`.
-- If you have a brand new HDD or if no partition table is found, then create MSDos Partition Table by selecting `msdos`.
-```
-cfdisk /dev/[disk name]
-```
-- [disk name] = device to partition, find yours by running `lsblk`.
-- SWAP Partition should double the size of RAM available in your system. Not applicable on 16GB or more RAM.
-- We will be using one partition for our `/`, `/boot` & `/home`.
-
-### Format the Partition, Make SWAP & Mount ROOT (MBR)
-#### Format ROOT Partition as EXT4
-```
-mkfs.ext4 /dev/[root partition name]
-```
-#### Make & Turn SWAP Partition on (MBR)
-```
-mkswap /dev/[swap partition name]
-swapon /dev/[swap partition name]
-```
-#### Mount ROOT Partition (MBR)
-```
-mount /dev/[root partition name] /mnt
-```
-</br>
 
 ## Base System Installation
 
-### Update Mirrors using Reflector
+### Update Mirrors using Reflector (optional but recommended for faster download speeds, won't save into your system)
 ```
 reflector -c County1 -c Country2 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist
 ```
@@ -241,27 +230,24 @@ Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
 ```
 arch-chroot /mnt
 ```
-### Create Swapfile (UEFI only)
-Replace the below 4096 in `count=4096` with double the amount of RAM installed your system. Not applicable on 16GB or more RAM.
-```
-dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-```
-
-### Add Swapfile entery in your `/etc/fstab` file (UEFI only)
-```
-/swapfile none swap defaults 0 0
-```
-Insert the above line at the bottom of `/etc/fstab`.
 
 ### Set Time & Date
 ```
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 ```
-Replace `Region` & `City` according to your Time zone. Refer to **[Time zone](https://wiki.archlinux.org/index.php/installation_guide#Time_zone)** more info.
+Replace `Region` & `City` according to your Time zone. To see what timezones are available, use the following commands:
+```
+ls /usr/share/zoneinfo/
+```
+and
+```
+ls /usr/share/zoneinfo/[Region]
+```
+An example of this would be:
+```
+/usr/share/zoneinfo/Europe/London
+```
 
 ## Set Language
 We will use `en_US.UTF-8` here but, if you want to set your language, replace `en_US.UTF-8` with yours in all below instances.
@@ -358,7 +344,7 @@ reboot
 
 ## Now boot into your freshly installed Arch system
 
-### Login as ROOT
+### Login as "root" and enter root password when prompted
 
 ### Add new User
 ```
@@ -382,7 +368,7 @@ EDITOR=nano visudo
 ```
 save & exit.
 
-### Logout ROOT
+### Logout of "root"
 ```
 exit
 ```
@@ -394,6 +380,8 @@ exit
 sudo pacman -Syu
 ```
 
+You can stop here if you want to do a server installation or have a desktop-less Arch system for some other reason.
+
 ### Xorg & GPU Drivers
 ```
 sudo pacman -S xorg [xf86-video-your gpu type]
@@ -403,7 +391,7 @@ sudo pacman -S xorg [xf86-video-your gpu type]
 - For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
 - For dedicated Intel Graphics, type `xf86-video-intel`.
 
-### Enable Multilib Repo (optional)
+### Enable Multilib Repo (optional but absolutely recommended)
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://www.winehq.org/), [Steam](https://store.steampowered.com/), etc).
 
 Edit `/etc/pacman.conf` & uncomment the below two lines.
@@ -412,7 +400,7 @@ Edit `/etc/pacman.conf` & uncomment the below two lines.
 #Include = /etc/pacman.d/mirrorlist
 ```
 
-#### MESA Libraries (32bit)
+#### MESA Libraries (32bit) (optional but highly recommmended)
 This package is required by Steam if you play games using Vulkan Backend.
 ```
 sudo pacman -S lib32-mesa
@@ -440,7 +428,7 @@ spectacle        | KDE screenshot capture utility.
 krunner          | KDE Quick drop-down desktop search.
 partitionmanager | KDE Disk & Partion Manager.
 
-### Audio Utilities & Bluetooth
+### Audio Utilities & Bluetooth (optional but recommended)
 ```
 sudo pacman -S alsa-utils bluez bluez-utils
 ```
@@ -455,7 +443,8 @@ bluez-utils | Provides the `bluetoothctl` utility.
 sudo systemctl enable bluetooth.service
 ```
 
-### My Required Applications
+
+### Apps I would personally recommend installing but aren't required
 You can install all the following packages or only the one you want.
 ```
 sudo pacman -S firefox openssh qbittorrent audacious wget screen git neofetch
@@ -468,7 +457,7 @@ qbittorrent | A BitTorrent Client based on Qt.
 audacious | Qt based music player.
 wget | Wget is a free utility for non-interactive download of files from the Web.
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
-git | Github command-line utility tools.
+git | Github command-line utility tools. (needed to access the AUR)
 neofetch | Neofetch is a command-line system information tool.
 
 ### Enable OpenSSH daemon
