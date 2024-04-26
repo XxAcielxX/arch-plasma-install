@@ -9,15 +9,13 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 
 ## Table of Contents
  - [**Let's Begin**](#lets-begin)
+ - [**Connect to the Internet**](#connect-to-the-internet)
  - [**Disk Partitioning**](#preparing-the-disk-for-system)
-   - [UEFI System](#for-uefi-system)
-   - [MBR System](#for-mbr-system)
  - [**Base System Installation**](#base-system-installation)
    - [Update Mirrors](#update-mirrors-using-reflector)
    - [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
    - [Generate fstab](#generate-fstab)
  - [**Chroot**](#chroot)
-   - [Swapfile (UEFI only)](#create-swapfile-uefi-only)
    - [Date & Time](#set-time--date)
    - [Language](#set-language)
    - [Hostname & Hosts](#set-hostname)
@@ -27,6 +25,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
      - [UEFI System](#for-uefi-system-1)
      - [MBR System](#for-mbr-system-1)
  - [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
+   - [Connect to the internet (again)](#reconnect-to-the-internet)
    - [Add User](#add-new-user)
    - [Sudo Command](#allow-wheel-group-to-use-sudo-commands)
  - [**User Login**](#login-as-user)
@@ -39,7 +38,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
  - [**The Conclusion**](#the-conclusion)
  - [**Extras (optional)**](#extras-optional)
    - [Yay](#install-yay)
-   - [Zsh](#install-zsh)
+   - [Alternative Shells](#alternative-shells)
    - [Change SHELL](#changing-your-shell)
    - [PipeWire](#pipewire)
    - [EasyEffects](#easyeffects)
@@ -54,9 +53,63 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
  - [**Changelog**](#changelog)
 </br>
 
-## Let's begin
 - Grab the latest built ISO Image from **[Arch Linux Download](https://www.archlinux.org/download/)** and write it to an empty USB Stick.
-- After the image is done writing, it's time to boot into the Arch Live Environment. First thing you do is:
+- After the image is done writing, restart your computer and hold one of the following keys: Del, F12, F9, F7
+- Your computer will then prompt you to select a bootable device
+- Select the bootable USB stick and your computer should play the Super Mario Bros. (please don't sue me nintendo) coin sound and show a range of options
+- Select "Arch Linux Install medium" and wait to be booted into the ArchISO
+
+If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.
+Go into your BIOS settings and disable Secure Boot.
+Tip: Hit CTRL+L to quickly clear the screen
+
+## Connect to the internet <a name="connect-to-the-internet"></a>
+Firstly, use the command:
+```
+iwctl
+```
+
+To see which networks stations you have installed, use the command:
+```
+device list
+```
+
+Select a station from the ones listed and power it on by using the command:
+```
+device [selected station] set-property Powered on
+```
+
+Use the command above to turn on its corresponding adapter, only replacing "device" with "adapter"
+Then, you may either scan for networks or connect through WPS.
+
+### WPS
+
+Use the following command:
+```
+wsc [selected station] push-button
+```
+
+And push the WPS button at the back of your router. This may take a minute or two to complete.
+Once the WPS LED stops flashing, your computer has been connected to the internet!
+
+### Regular method
+
+Use the following command to scan for all of the access points you can currently connect to:
+```
+station [selected station] scan
+```
+
+Then, to display the networks, use the following command:
+```
+station [selected station] get-networks
+```
+
+Select an access point from the list provided and connect to it by using the following command:
+```
+station [selected station] connect [SSID]
+```
+
+IWCTL will prompt you to enter the access point's passphrase. Enter it and you should be connected soon after.
 
 ### Load Keymaps (for non US ENG Keyboard Users only)
 For a list of all the available keymaps, use the command:
@@ -92,81 +145,92 @@ timedatectl set-ntp true
 
 > :warning: Be extremely careful when managing your disks, incase you delete your precious data then DON'T blame me.
 
-> Disk partitioning type (use UEFI or MBR, go according to your system).
-
-## For UEFI System
-
-### Disk Partitioning (UEFI)
+### Disk Partitioning
 We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
+- You do not need to make a `/boot` partition if you are installing on an MBR system
 - If you have a brand new HDD or if no partition table is found, then create GPT Partition Table by pressing `g`.
 ```
-gdisk /dev/[disk name]
+gdisk /dev/[disk name] # If you are on an EFI system
+fdisk /dev/[disk name] # If you are on an MBR system
 ```
-- [disk name] = device to partition, find yours by running `lsblk`.
-- We will be using one partition for our `/`, `/boot` & `/home`.
+- [disk name] = device to partition, find yours by running `lsblk`, this shows all the mountpoints and partitions of a disk.
+- We will be using separate partitions for our `/`, `/boot`, `/swap` & `/home`.
+- Firstly, we will initialise the disk bu using the commands below:
+
+If you are on an EFI system:
+```
+x - Expert command
+z - "Zap" the disk
+y - Blank our MBR (Fully initialises the disk)
+```
+
+If you are on an MBR system:
+```
+q - To quit
+sfdisk --delete /dev/[disk name]
+```
+Then, run gdisk or fdisk again.
 
 ```
 n = New Partition
 simply press enter = 1st Partition
 simply press enter = As First Sector
-+512M = As Last sector (BOOT Partition Size)
++1G = As Last sector (BOOT Partition Size)
 ef00 = EFI Partition Type
 
-n = New Partition again
+n = New Partition
 simply press enter = 2nd Partition
 simply press enter = As First Sector
-simply press enter = As Last sector [ROOT Partition Size (using the remaining disk space left)]
-8300 or simply press enter = EXT4 ROOT Partition Type
++16G = As Last sector (SWAP size, or double your RAM, whichever is smaller)
+8200 = Linux Swap
+
+n = New Partition
+simply press enter = 3rd Partition
+simply press enter = As First Sector
++40G = As Last sector [ROOT Partition Size (you may use 20GiB if you have a small hard drive)]
+8300 or simply press enter = Linux filesystem
+
+n = New Parition
+simply press enter = 4th Partition
+simply press enter = As first sector
+simply press enter = As last sector [HOME parition size (takes up remaining hard drive space)]
+8300 or simply press enter = Linux filesystem
 
 w = write & exit
 ```
-### Format Partitions (UEFI)
+
+It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop.
+
+### Format Partitions
 ```
-mkfs.fat -F32 /dev/[efi partition name]
-mkfs.ext4 /dev/[root partiton name]
+mkfs.fat -F32 /dev/[efi partition]
+mkswap /dev/[swap partition]
+mkfs.btrfs /dev/[root partiton] # Add -f if your system tells you another filesystem like ext4 is already present
+mkfs.btrfs /dev/[home partition]
 ```
 
-### Mount Partitions (UEFI)
+### Mount Partitions and turn on swap memory
 ```
-mount /dev/[root partition name] /mnt
-mkdir /mnt/boot/efi
+mount /dev/[root partition name] /mnt # It is important that you mount root first
+swapon /dev/[swap partition] # Turns on swap memory
+mkdir -p /mnt/boot/efi # Since /mnt/boot/ isn't a real path, we specify the -p parameter to tell mkdir to recursively make directories until the path is good
+mkdir /mnt/home
 mount /dev/[efi partition name] /mnt/boot/efi
+mount /dev/[home partition] /mnt/home
 ```
-## For MBR System
-
-### Disk Partitioning (MBR)
-We are going to make two partitions on our HDD, `SWAP & ROOT` using `cfdisk`.
-- If you have a brand new HDD or if no partition table is found, then create MSDos Partition Table by selecting `msdos`.
-```
-cfdisk /dev/[disk name]
-```
-- [disk name] = device to partition, find yours by running `lsblk`.
-- SWAP Partition should double the size of RAM available in your system. Not applicable on 16GB or more RAM.
-- We will be using one partition for our `/`, `/boot` & `/home`.
-
-### Format the Partition, Make SWAP & Mount ROOT (MBR)
-#### Format ROOT Partition as EXT4
-```
-mkfs.ext4 /dev/[root partition name]
-```
-#### Make & Turn SWAP Partition on (MBR)
-```
-mkswap /dev/[swap partition name]
-swapon /dev/[swap partition name]
-```
-#### Mount ROOT Partition (MBR)
-```
-mount /dev/[root partition name] /mnt
-```
-</br>
 
 ## Base System Installation
 
-### Update Mirrors using Reflector
+### Update Mirrors using Reflector (optional but recommended for faster download speeds, won't save into your system)
 ```
 reflector -c County1 -c Country2 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist
 ```
 Replace `Country1` & `Country2` with countries near to you or with the one you're living in. Refer to **[Reflector](https://wiki.archlinux.org/index.php/reflector)** for more info.
+
+Example:
+```
+reflector -c 'United States' -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist
+```
 
 ### Install base system
 ```
@@ -190,27 +254,24 @@ Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
 ```
 arch-chroot /mnt
 ```
-### Create Swapfile (UEFI only)
-Replace the below 4096 in `count=4096` with double the amount of RAM installed your system. Not applicable on 16GB or more RAM.
-```
-dd if=/dev/zero of=/swapfile bs=1M count=4096 status=progress
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-```
-
-### Add Swapfile entery in your `/etc/fstab` file (UEFI only)
-```
-/swapfile none swap defaults 0 0
-```
-Insert the above line at the bottom of `/etc/fstab`.
 
 ### Set Time & Date
 ```
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
 hwclock --systohc
 ```
-Replace `Region` & `City` according to your Time zone. Refer to **[Time zone](https://wiki.archlinux.org/index.php/installation_guide#Time_zone)** more info.
+Replace `Region` & `City` according to your Time zone. To see what timezones are available, use the following commands:
+```
+ls /usr/share/zoneinfo/
+```
+and
+```
+ls /usr/share/zoneinfo/[Region]
+```
+An example of this would be:
+```
+/usr/share/zoneinfo/Europe/London
+```
 
 ## Set Language
 We will use `en_US.UTF-8` here but, if you want to set your language, replace `en_US.UTF-8` with yours in all below instances.
@@ -282,6 +343,9 @@ pacman -S grub
 pacman -S efibootmgr
 ```
 
+"Targets" are CPU architechtures. These are important for grub to know so it can handle the boot proess correctly.
+Find your CPU architechture from [this site](https://renenyffenegger.ch/notes/Linux/shell/commands/grub-install#grub-install-target) and specify that as the target
+
 #### For UEFI System
 ```
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
@@ -289,7 +353,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 
 #### For MBR System
 ```
-grub-install --target=i386-pc /dev/[disk name]
+grub-install /dev/[disk name] # You don't need to specify a target because the default is i386-pc
 ```
 
 ### Create Grub configuration file
@@ -307,7 +371,7 @@ reboot
 
 ## Now boot into your freshly installed Arch system
 
-### Login as ROOT
+### Login as "root" and enter root password when prompted
 
 ### Add new User
 ```
@@ -331,17 +395,39 @@ EDITOR=nano visudo
 ```
 save & exit.
 
-### Logout ROOT
+### Logout of "root"
 ```
 exit
 ```
 
-## Login as USER
+## Login as USER and let's connect to the internet again! <a name="reconnect-to-the-internet"></a>
+
+For some reason, Arch seems to forget that we were just connected to the internet.\
+Since we're now using NetworkManager instead of iwd, the connection process is slightly different.\
+\
+Firstly, to take a look at what netowkr stations you have installed on your computer, use the command:
+```
+nmcli device
+```
+Then, we turn on wifi by using the command:
+```
+nmcli radio wifi on
+```
+And we list local access points by using the command:
+```
+nmcli device wifi list
+```
+Select one of the access points listed and connect to it by running the following command:
+```
+nmcli device wifi connect [Access Point SSID] password [Access Point Password]
+```
 
 ### Check for updates
 ```
 sudo pacman -Syu
 ```
+
+You can stop here if you want to do a server installation or have a desktop-less Arch system for some other reason.
 
 ### Xorg & GPU Drivers
 ```
@@ -352,7 +438,7 @@ sudo pacman -S xorg [xf86-video-your gpu type]
 - For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
 - For dedicated Intel Graphics, type `xf86-video-intel`.
 
-### Enable Multilib Repo (optional)
+### Enable Multilib Repo (optional but absolutely recommended)
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://www.winehq.org/), [Steam](https://store.steampowered.com/), etc).
 
 Edit `/etc/pacman.conf` & uncomment the below two lines.
@@ -361,7 +447,7 @@ Edit `/etc/pacman.conf` & uncomment the below two lines.
 #Include = /etc/pacman.d/mirrorlist
 ```
 
-#### MESA Libraries (32bit)
+#### MESA Libraries (32bit) (optional but highly recommmended)
 This package is required by Steam if you play games using Vulkan Backend.
 ```
 sudo pacman -S lib32-mesa
@@ -389,7 +475,7 @@ spectacle        | KDE screenshot capture utility.
 krunner          | KDE Quick drop-down desktop search.
 partitionmanager | KDE Disk & Partion Manager.
 
-### Audio Utilities & Bluetooth
+### Audio Utilities & Bluetooth (optional but recommended)
 ```
 sudo pacman -S alsa-utils bluez bluez-utils
 ```
@@ -404,7 +490,8 @@ bluez-utils | Provides the `bluetoothctl` utility.
 sudo systemctl enable bluetooth.service
 ```
 
-### My Required Applications
+
+### Apps I would personally recommend installing but aren't required
 You can install all the following packages or only the one you want.
 ```
 sudo pacman -S firefox openssh qbittorrent audacious wget screen git neofetch
@@ -415,14 +502,18 @@ firefox | Mozilla Firefox Web Browser.
 openssh | Secure Shell access server.
 qbittorrent | A BitTorrent Client based on Qt.
 audacious | Qt based music player.
-wget | Wget is a free utility for non-interactive download of files from the Web.
+wget | Wget is a free utility for non-interactive download of files from the Web. *
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
-git | Github command-line utility tools.
+git | Github command-line utility tools. (needed to access the AUR) *
 neofetch | Neofetch is a command-line system information tool.
+cups | Printer service
 
-### Enable OpenSSH daemon
+* - These are some of the more important packages, which a lot of programs tend to use. They're optional but it is highly recommended to install both of them.
+
+### Enable OpenSSH daemon and CUPS printer service
 ```
 sudo systemctl enable sshd.service
+sudo systemctl enable --now cups.service
 ```
 
 ### Final Reboot
@@ -437,18 +528,25 @@ Now everything is installed and after the final `reboot`, you will land in you G
 - Paccache can be used clean pacman cached packages either manually or in an automated way.
 </br>
 
-## Extras (optional)
+## Extras (optional but worth a read)
 
 ### Install [Yay](https://github.com/Jguer/yay)
 Yet Another Yogurt - An AUR Helper.
+A lot of programs written for Arch can be founded in the AUR, but be careful of what you download from there.
 ```
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 ```
 
+### Install [NuShell](https://www.nushell.sh) <a name="alternative-shells"></a>
+NuShell is a powerful shell that has really helpful debug statements and is overall my preferred shell environment.
+```
+yay -S nushell
+```
+
 ### Install [Zsh](https://wiki.archlinux.org/index.php/zsh/)
-Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter.
+Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter. It's XxAcielxX's preferred shell environment.
 ```
 sudo pacman -S zsh zsh-completions
 ```
@@ -465,10 +563,11 @@ echo $SHELL
 chsh -l
 ```
 
-### Set Zsh as our SHELL
+### Set NuShell or Zsh as our SHELL
 For an example, we will set Zsh as default SHELL which we installed in the last step:
 ```
-chsh -s /usr/bin/zsh
+chsh -s /usr/bin/zsh # To set Zsh as the default SHELL
+chsh -s /usr/bin/nu # To set NuShell as the default SHELL
 ```
 For the changes to apply, you will have Logout and Log back in or better do `reboot`.
 
@@ -518,16 +617,6 @@ Download the latest `master zip` from [ClanTK-KDE Gitlab](https://gitlab.com/dav
 ```
 sudo cp clamtk-kde.desktop /usr/share/kservices5/ServiceMenus/
 ```
-
-### Printer Service
-```
-sudo pacman -S cups
-```
-
-#### Enable CUPS (Printer) Service
-```
-sudo systemctl enable --now cups.service
-```
 </br>
 
 ## Theming & Customisations
@@ -575,8 +664,6 @@ yay -S kvantum-qt5-git
 ```
 sudo pacman -S kvantum
 ```
-
-</br>
 
 ## Maintenance, Performance Tuning & Monitoring
 
