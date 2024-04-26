@@ -166,7 +166,7 @@ y - Blank our MBR (Fully initialises the disk)
 If you are on an MBR system:
 ```
 q - To quit
-dd if=/dev/zero of=/dev/[disk name]
+sfdisk --delete /dev/[disk name]
 ```
 Then, run gdisk or fdisk again.
 
