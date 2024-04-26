@@ -61,6 +61,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 
 If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.
 Go into your BIOS settings and disable Secure Boot.
+Tip: Hit CTRL+L to quickly clear the screen
 
 ## Connect to the internet <a name="connect-to-the-internet"></a>
 Firstly, use the command:
@@ -146,33 +147,49 @@ timedatectl set-ntp true
 
 ### Disk Partitioning
 We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
+- You do not need to make a `/boot` partition if you are installing on an MBR system
 - If you have a brand new HDD or if no partition table is found, then create GPT Partition Table by pressing `g`.
 ```
-gdisk /dev/[disk name]
+gdisk /dev/[disk name] # If you are on an EFI system
+fdisk /dev/[disk name] # If you are on an MBR system
 ```
-- [disk name] = device to partition, find yours by running `lsblk`.
-- We will be using one partition for our `/`, `/boot` & `/home`.
+- [disk name] = device to partition, find yours by running `lsblk`, this shows all the mountpoints and partitions of a disk.
+- We will be using separate partitions for our `/`, `/boot`, `/swap` & `/home`.
+
+If you are on an EFI system:
+```
+x - Expert command
+z - "Zap" the disk
+y - Blank our MBR (Fully initialises the disk)
+```
+
+If you are on an MBR system:
+```
+q - To quit
+dd if=/dev/zero of=/dev/[disk name]
+```
+Then, run gdisk or fdisk again.
 
 ```
 n = New Partition
 simply press enter = 1st Partition
 simply press enter = As First Sector
-+512M = As Last sector (BOOT Partition Size)
++1G = As Last sector (BOOT Partition Size)
 ef00 = EFI Partition Type
 
 n = New Partition
 simply press enter = 2nd Partition
 simply press enter = As First Sector
-+16G = As Last sector (SWAP size)
++16G = As Last sector (SWAP size, or double your RAM, whichever is smaller)
 8200 = Linux Swap
 
-n = New Partition again
+n = New Partition
 simply press enter = 3rd Partition
 simply press enter = As First Sector
 +40G = As Last sector [ROOT Partition Size (you may use 20GiB if you have a small hard drive)]
 8300 or simply press enter = Linux filesystem
 
-n = New Parition again
+n = New Parition
 simply press enter = 4th Partition
 simply press enter = As first sector
 simply press enter = As last sector [HOME parition size (takes up remaining hard drive space)]
