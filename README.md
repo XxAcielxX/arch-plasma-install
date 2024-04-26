@@ -155,6 +155,7 @@ fdisk /dev/[disk name] # If you are on an MBR system
 ```
 - [disk name] = device to partition, find yours by running `lsblk`, this shows all the mountpoints and partitions of a disk.
 - We will be using separate partitions for our `/`, `/boot`, `/swap` & `/home`.
+- Firstly, we will initialise the disk bu using the commands below:
 
 If you are on an EFI system:
 ```
@@ -225,6 +226,11 @@ mount /dev/[home partition] /mnt/home
 reflector -c County1 -c Country2 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist
 ```
 Replace `Country1` & `Country2` with countries near to you or with the one you're living in. Refer to **[Reflector](https://wiki.archlinux.org/index.php/reflector)** for more info.
+
+Example:
+```
+reflector -c 'United States' -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist
+```
 
 ### Install base system
 ```
@@ -337,6 +343,9 @@ pacman -S grub
 pacman -S efibootmgr
 ```
 
+"Targets" are CPU architechtures. These are important for grub to know so it can handle the boot proess correctly.
+Find your CPU architechture from [this site](https://renenyffenegger.ch/notes/Linux/shell/commands/grub-install#grub-install-target) and specify that as the target
+
 #### For UEFI System
 ```
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
@@ -344,7 +353,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 
 #### For MBR System
 ```
-grub-install --target=i386-pc /dev/[disk name]
+grub-install /dev/[disk name] # You don't need to specify a target because the default is i386-pc
 ```
 
 ### Create Grub configuration file
@@ -493,11 +502,13 @@ firefox | Mozilla Firefox Web Browser.
 openssh | Secure Shell access server.
 qbittorrent | A BitTorrent Client based on Qt.
 audacious | Qt based music player.
-wget | Wget is a free utility for non-interactive download of files from the Web.
+wget | Wget is a free utility for non-interactive download of files from the Web. *
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
-git | Github command-line utility tools. (needed to access the AUR)
+git | Github command-line utility tools. (needed to access the AUR) *
 neofetch | Neofetch is a command-line system information tool.
 cups | Printer service
+
+* - These are some of the more important packages, which a lot of programs tend to use. They're optional but it is highly recommended to install both of them.
 
 ### Enable OpenSSH daemon and CUPS printer service
 ```
@@ -517,7 +528,7 @@ Now everything is installed and after the final `reboot`, you will land in you G
 - Paccache can be used clean pacman cached packages either manually or in an automated way.
 </br>
 
-## Extras (optional but you might find some useful apps below if you keep reading)
+## Extras (optional but worth a read)
 
 ### Install [Yay](https://github.com/Jguer/yay)
 Yet Another Yogurt - An AUR Helper.
