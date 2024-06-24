@@ -202,7 +202,7 @@ w = write & exit
 ```
 
 It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop\
-From now on, your disk will be referred to as sdx, with x being the letter representing your drive.
+**IMPORTANT**: From now on, your disk will be referred to as sdx, with x being the letter representing your drive.
 
 ### Format Partitions
 ```
@@ -383,6 +383,13 @@ Replace `[username]` with your username of choice.
 passwd [username]
 ```
 
+Repeat the above process as many times as you want, depending on the amount of users you want to add to your system.\
+If you do not want a user to use sudo commands, use the below command instead:
+
+```
+useradd -m [username]
+```
+
 ### Allow Wheel Group to use Sudo Commands
 ```
 EDITOR=nano visudo
@@ -419,7 +426,7 @@ Select one of the access points listed and connect to it by running the followin
 nmcli device wifi connect [Access Point SSID] password [Access Point Password]
 ```
 
-You don't need to check for updates as Arch will have already pulled the latest version of Arch Linux
+You don't need to check for updates as Arch will have already downloaded the latest version of Arch Linux
 
 You can stop here if you want to do a server installation or have a desktop-less Arch system for any other reason.
 
@@ -494,8 +501,8 @@ Packages | Description
 --------- | ----------
 firefox | Mozilla Firefox Web Browser.
 openssh | Secure Shell access server.
-qbittorrent | A BitTorrent Client based on Qt.
-audacious | Qt based music player.
+qbittorrent | Qt-based BitTorrent Client.
+audacious | Qt-based music player.
 wget\* | Wget is a free utility for non-interactive download of files from the Web. 
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
 git\*| Github command-line utility tools. (needed to access the AUR) 
@@ -534,13 +541,13 @@ makepkg -si
 ```
 
 ### Install [NuShell](https://www.nushell.sh) <a name="alternative-shells"></a>
-NuShell is a powerful shell that has really helpful debug statements and is overall my preferred shell environment.
+NuShell is a powerful shell that has really helpful debug statements and is overall a solid shell environment.
 ```
 yay -S nushell
 ```
 
 ### Install [Zsh](https://wiki.archlinux.org/index.php/zsh/)
-Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter. It's XxAcielxX's preferred shell environment.
+Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter. It's a preferred shell environment by many.
 ```
 sudo pacman -S zsh zsh-completions
 ```
@@ -577,7 +584,7 @@ sudo pacman -S pipewire wireplumber pipewire-audio pipewire-alsa pipewire-pulse
 Install
 ```
 sudo pacman -S easyeffects
-or
+# or
 yay -S easyeffects-git
 ```
 > This will also install pipewire-pulse and replace PulseAudio with PipeWire.
