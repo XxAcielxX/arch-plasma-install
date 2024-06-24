@@ -21,29 +21,28 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
    - [Hostname & Hosts](#set-hostname)
    - [Network Manager](#install--enable-networkmanager)
    - [ROOT Password](#set-root-password)
-   - [GRUB Bootloader](#install-grub-bootloader)
-     - [UEFI System](#for-uefi-system-1)
-     - [MBR System](#for-mbr-system-1)
+   - [Installing the Bootloader](#installing-bootloader)
+     - [GRUB](#grub)
+     - [SystemD-Boot](#systemd-boot)
  - [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
    - [Connect to the internet (again)](#reconnect-to-the-internet)
    - [Add User](#add-new-user)
    - [Sudo Command](#allow-wheel-group-to-use-sudo-commands)
- - [**User Login**](#login-as-user)
+ - [**User Login**](#reconnect-to-the-internet)
    - [Display Server & GPU Drivers](#xorg--gpu-drivers)
-   - [Multilib Repository (32bit)](#enable-multilib-repo-optional)
+   - [Multilib Repository (32bit)](#multilib)
    - [Display Manager (SDDM)](#install--enable-sddm)
    - [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
    - [Audio Utilities & Bluetooth](#audio-utilities--bluetooth)
    - [Misc Applications](https://#my-required-applications)
  - [**The Conclusion**](#the-conclusion)
- - [**Extras (optional)**](#extras-optional)
+ - [**Extras (optional)**](#extras)
    - [Yay](#install-yay)
    - [Alternative Shells](#alternative-shells)
    - [Change SHELL](#changing-your-shell)
    - [PipeWire](#pipewire)
    - [EasyEffects](#easyeffects)
    - [Clam AntiVirus](#clamav)
-   - [Printer Service](#printer-service)
  - [**Theming & Customisations**](#theming--customisations)
     - [Oh My Zsh & Powerlevel10k Theme](#install-oh-my-zsh)
     - [Kvantum Manager](#kvantum-manager)
@@ -53,15 +52,18 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
  - [**Changelog**](#changelog)
 </br>
 
+## Let's begin! <a name="lets-begin"></a>
+
 - Grab the latest built ISO Image from **[Arch Linux Download](https://www.archlinux.org/download/)** and write it to an empty USB Stick.
-- After the image is done writing, restart your computer and hold one of the following keys: Del, F12, F9, F7
+- After the image is done writing, restart your computer and hold one of the following keys: Del, F12, F9, F7, Option
 - Your computer will then prompt you to select a bootable device
-- Select the bootable USB stick and your computer should play the Super Mario Bros. (please don't sue me nintendo) coin sound and show a range of options
+- Select the bootable USB stick and your computer should show a range of options
 - Select "Arch Linux Install medium" and wait to be booted into the ArchISO
 
 If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.
 Go into your BIOS settings and disable Secure Boot.
-Tip: Hit CTRL+L to quickly clear the screen
+
+> Tip: Hit CTRL+L to quickly clear the screen
 
 ## Connect to the internet <a name="connect-to-the-internet"></a>
 Firstly, use the command:
@@ -109,9 +111,9 @@ Select an access point from the list provided and connect to it by using the fol
 station [selected station] connect [SSID]
 ```
 
-IWCTL will prompt you to enter the access point's passphrase. Enter it and you should be connected soon after.
+IWCTL will prompt you to enter the access point's passphrase. Enter it and you should be connected to the internet soon after.
 
-### Load Keymaps (for non US ENG Keyboard Users only)
+### Load Keymaps (for non US-ENG Keyboard Users only)
 For a list of all the available keymaps, use the command:
 ```
 localectl list-keymaps
@@ -147,7 +149,7 @@ timedatectl set-ntp true
 
 ### Disk Partitioning
 We are going to make two partitions on our HDD, `EFI BOOT & ROOT` using `gdisk`.
-- You do not need to make a `/boot` partition if you are installing on an MBR system
+- **IMPORTANT**:  Do not make a `/boot` partition if you are installing on an MBR system
 - If you have a brand new HDD or if no partition table is found, then create GPT Partition Table by pressing `g`.
 ```
 gdisk /dev/[disk name] # If you are on an EFI system
@@ -155,7 +157,7 @@ fdisk /dev/[disk name] # If you are on an MBR system
 ```
 - [disk name] = device to partition, find yours by running `lsblk`, this shows all the mountpoints and partitions of a disk.
 - We will be using separate partitions for our `/`, `/boot`, `/swap` & `/home`.
-- Firstly, we will initialise the disk bu using the commands below:
+- Firstly, we will initialise the disk by using the commands below:
 
 If you are on an EFI system:
 ```
@@ -199,29 +201,32 @@ simply press enter = As last sector [HOME parition size (takes up remaining hard
 w = write & exit
 ```
 
-It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop.
+It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop\
+From now on, your disk will be referred to as sdx, with x being the letter representing your drive.
 
 ### Format Partitions
 ```
-mkfs.fat -F32 /dev/[efi partition]
-mkswap /dev/[swap partition]
-mkfs.btrfs /dev/[root partiton] # Add -f if your system tells you another filesystem like ext4 is already present
-mkfs.btrfs /dev/[home partition]
+mkfs.fat -F32 /dev/sdx1
+mkswap /dev/sdx2
+mkfs.btrfs /dev/sdx3 # Add -f if your system tells you another filesystem like ext4 is already present
+mkfs.btrfs /dev/sdx4
+```
+
+Turn on swap memory
+```
+swapon /dev/sdx2
 ```
 
 ### Mount Partitions and turn on swap memory
 ```
-mount /dev/[root partition name] /mnt # It is important that you mount root first
-swapon /dev/[swap partition] # Turns on swap memory
-mkdir -p /mnt/boot/efi # Since /mnt/boot/ isn't a real path, we specify the -p parameter to tell mkdir to recursively make directories until the path is good
-mkdir /mnt/home
-mount /dev/[efi partition name] /mnt/boot/efi
-mount /dev/[home partition] /mnt/home
+mount /dev/sdx3 /mnt 
+mount --mkdir /dev/sdx1 /mnt/boot/efi
+mount --mkdir /dev/sdx4 /mnt/home
 ```
 
 ## Base System Installation
 
-### Update Mirrors using Reflector (optional but recommended for faster download speeds, won't save into your system)
+### Update Mirrors using Reflector (optional but recommended for faster download speeds, slow download speeds can time out) <a name="update-mirrors-using-reflector"></a>
 ```
 reflector -c County1 -c Country2 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist
 ```
@@ -333,32 +338,26 @@ systemctl enable NetworkManager
 passwd
 ```
 
-### Install GRUB Bootloader
-```
-pacman -S grub
-```
+## Installling the bootloader <a name="installing-bootloader"></a>
 
-### Install EFI Boot manager (UEFI)
-```
-pacman -S efibootmgr
-```
+The bootloader is what manages the boot process, and is the PID 0 of your Arch system.\
+For MBR systems, we will install GRUB and for UEFI system, we will install SystemD-Boot
 
-"Targets" are CPU architechtures. These are important for grub to know so it can handle the boot proess correctly.
+### Installing GRUB (MBR) <a name="grub"></a>
+
+"Targets" are CPU architechtures. These are important for grub to know so it can handle the boot proess correctly.\
 Find your CPU architechture from [this site](https://renenyffenegger.ch/notes/Linux/shell/commands/grub-install#grub-install-target) and specify that as the target
 
-#### For UEFI System
 ```
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
-```
-
-#### For MBR System
-```
+pacman -S grub
 grub-install /dev/[disk name] # You don't need to specify a target because the default is i386-pc
+grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### Create Grub configuration file
+### Install EFI Boot manager and SystemD-Boot (UEFI) <a name="systemd-boot"></a>
 ```
-grub-mkconfig -o /boot/grub/grub.cfg
+pacman -S efibootmgr
+bootctl --path=/mnt/boot install
 ```
 
 ### Final Step
@@ -402,10 +401,8 @@ exit
 
 ## Login as USER and let's connect to the internet again! <a name="reconnect-to-the-internet"></a>
 
-For some reason, Arch seems to forget that we were just connected to the internet.\
-Since we're now using NetworkManager instead of iwd, the connection process is slightly different.\
-\
-Firstly, to take a look at what netowkr stations you have installed on your computer, use the command:
+Since we're now using NetworkManager instead of iwd, our connection settings have been lost (and the connection process is slightly different)\
+Firstly, to take a look at what network stations you have installed on your computer, use the command:
 ```
 nmcli device
 ```
@@ -422,12 +419,9 @@ Select one of the access points listed and connect to it by running the followin
 nmcli device wifi connect [Access Point SSID] password [Access Point Password]
 ```
 
-### Check for updates
-```
-sudo pacman -Syu
-```
+You don't need to check for updates as Arch will have already pulled the latest version of Arch Linux
 
-You can stop here if you want to do a server installation or have a desktop-less Arch system for some other reason.
+You can stop here if you want to do a server installation or have a desktop-less Arch system for any other reason.
 
 ### Xorg & GPU Drivers
 ```
@@ -438,7 +432,7 @@ sudo pacman -S xorg [xf86-video-your gpu type]
 - For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
 - For dedicated Intel Graphics, type `xf86-video-intel`.
 
-### Enable Multilib Repo (optional but absolutely recommended)
+### Enable Multilib Repo (optional but absolutely recommended) <a name="multilib"></a>
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://www.winehq.org/), [Steam](https://store.steampowered.com/), etc).
 
 Edit `/etc/pacman.conf` & uncomment the below two lines.
@@ -475,7 +469,7 @@ spectacle        | KDE screenshot capture utility.
 krunner          | KDE Quick drop-down desktop search.
 partitionmanager | KDE Disk & Partion Manager.
 
-### Audio Utilities & Bluetooth (optional but recommended)
+### Audio Utilities & Bluetooth (optional but recommended) <a name="audio-utilities--bluetooth"></a>
 ```
 sudo pacman -S alsa-utils bluez bluez-utils
 ```
@@ -502,13 +496,13 @@ firefox | Mozilla Firefox Web Browser.
 openssh | Secure Shell access server.
 qbittorrent | A BitTorrent Client based on Qt.
 audacious | Qt based music player.
-wget | Wget is a free utility for non-interactive download of files from the Web. *
+wget\* | Wget is a free utility for non-interactive download of files from the Web. 
 screen | Is a full-screen window manager that multiplexes a physical terminal between several processes, typically interactive shells.
-git | Github command-line utility tools. (needed to access the AUR) *
-neofetch | Neofetch is a command-line system information tool.
-cups | Printer service
+git\*| Github command-line utility tools. (needed to access the AUR) 
+fastfetch | Fastfetch is a command-line system information tool, that is the sucessor to NeoFetch.
+cups\*| Printer service
 
-* - These are some of the more important packages, which a lot of programs tend to use. They're optional but it is highly recommended to install both of them.
+> \* - These are some of the more important packages, which a lot of programs tend to use. They're optional but it is highly recommended to install both of them.
 
 ### Enable OpenSSH daemon and CUPS printer service
 ```
@@ -522,13 +516,13 @@ reboot
 ```
 </br>
 
-### The Conclusion
-Now everything is installed and after the final `reboot`, you will land in you GUI Login Screen ready to use your system. You can also do some extra steps mentioned below to further improve your experience. I'll recommend you to install `yay` & `paccache`.
-- Yay will provide your packages from AUR (Arch User Repository), which are not available in the Official Repo.
+### The Conclusion <a name="the-conclusion"></a>
+Now everything is installed and after the final `reboot`, you will land in the SDDM greeter. You can continue reading for some steps to further improve your experience. I recommend you to install `yay` & `paccache`.
+- Yay will provide your packages from AUR (Arch User Repository), which are not available in the official repos.
 - Paccache can be used clean pacman cached packages either manually or in an automated way.
 </br>
 
-## Extras (optional but worth a read)
+## Extras (optional but worth a read) <a name="extras"></a>
 
 ### Install [Yay](https://github.com/Jguer/yay)
 Yet Another Yogurt - An AUR Helper.
