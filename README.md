@@ -721,15 +721,7 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 
 ## Changelog
 
- - **2023-10-24**
-   - Updated `kvantum` package name.
- - **2023-10-24**
-   - Added `efibootmgr` package for UEFI installation. Thanks to [mctesterwork](https://github.com/mctesterwork) for the pull.
- - **2023-04-06**
-   - Updated guide compatibility for `2023-04-01` iso image.
- - **2023-03-06**
-   - Updated guide compatibility for `2023-03-01` iso image.
- - **2023-01-03**
-   - Updated guide compatibility for `2023-01-01` iso image.
+ - **2024-06-25**
+   - A lot of changes, improvements, and updates. Special thanks to our biggest contributor @[Exvix](https://github.com/Exvix).
 
 #### Full and complete changelog, [click here](https://github.com/XxAcielxX/arch-plasma-install/blob/main/CHANGELOG.md).
