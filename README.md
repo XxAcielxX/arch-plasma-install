@@ -24,6 +24,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
    - [Installing the Bootloader](#installing-bootloader)
      - [GRUB](#grub)
      - [SystemD-Boot](#systemd-boot)
+     - [Making and editing config files (UEFI ONLY)](#making-config-file)
  - [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
    - [Connect to the internet (again)](#reconnect-to-the-internet)
    - [Add User](#add-new-user)
@@ -60,7 +61,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 - Select the bootable USB stick and your computer should show a range of options
 - Select "Arch Linux Install medium" and wait to be booted into the ArchISO
 
-If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.
+If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.\
 Go into your BIOS settings and disable Secure Boot.
 
 > Tip: Hit CTRL+L to quickly clear the screen
@@ -131,7 +132,7 @@ loadkeys [keymap]
 
 ### Check for Internet Connectivity
 ```
-ping -c 4 google.com
+ping -c 4 archlinux.org
 ```
 - If you are connected through Ethernet, then your Internet will be working out of the box.
 - If you are using Wi-Fi, then use `wifi-menu` to connect to your local network.
@@ -217,7 +218,7 @@ Turn on swap memory
 swapon /dev/sdx2
 ```
 
-### Mount Partitions and turn on swap memory
+### Mount Remaining Partitions
 ```
 mount /dev/sdx3 /mnt 
 mount --mkdir /dev/sdx1 /mnt/boot/efi
@@ -357,8 +358,40 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ### Install EFI Boot manager and SystemD-Boot (UEFI) <a name="systemd-boot"></a>
 ```
 pacman -S efibootmgr
-bootctl --path=/mnt/boot install
+bootctl --path=/boot install
 ```
+
+#### Creating config files <a name="making-config-file"></a>
+
+Open and edit /boot/loader/loader.conf
+```
+nano /boot/loader/loader.conf
+```
+Comment out the line beginning with ```default``` by putting a hashtag at the beginning of the line.
+
+And add this line to the bottom of the file
+```
+default arch-*
+```
+
+Once that's done, type:
+```
+nano /boot/loader/entries/arch.conf
+```
+
+And define parameters as follows:
+```
+title    Arch Linux
+linux    /vmlinuz-linux
+initrd   /initramfs-linux.img
+options root /dev/sdx3 rw
+```
+
+(Keeping in mind that sdx refers to the drive you want to install Arch Linux onto)
+
+Save by hitting Ctrl+O, Enter, then Ctrl+X.
+
+**:warning: - Did you follow the above steps? That section is MANDATORY** 
 
 ### Final Step
 ```
