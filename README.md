@@ -365,7 +365,7 @@ bootctl --path=/boot/efi install
 
 Open and edit /boot/loader/loader.conf
 ```
-nano /boot/loader/loader.conf
+nano /boot/efi/loader/loader.conf
 ```
 Comment out the line beginning with ```default``` by putting a hashtag at the beginning of the line.
 
@@ -376,7 +376,7 @@ default arch-*
 
 Once that's done, type:
 ```
-nano /boot/loader/entries/arch.conf
+nano /boot/efi/loader/entries/arch.conf
 ```
 
 And define parameters as follows:
