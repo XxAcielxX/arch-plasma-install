@@ -384,7 +384,7 @@ And define parameters as follows:
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
-options root /dev/sdx3 rw
+options root=/dev/sdx3 rw
 ```
 
 (Keeping in mind that sdx refers to the drive you want to install Arch Linux onto)
