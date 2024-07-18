@@ -358,7 +358,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ### Install EFI Boot manager and SystemD-Boot (UEFI) <a name="systemd-boot"></a>
 ```
 pacman -S efibootmgr
-bootctl --path=/boot install
+bootctl --path=/boot/efi install
 ```
 
 #### Creating config files <a name="making-config-file"></a>
