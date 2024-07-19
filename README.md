@@ -364,7 +364,7 @@ bootctl install
 
 Open and edit /boot/loader/loader.conf
 ```
-nano /boot/efi/loader/loader.conf
+nano /boot/loader/loader.conf
 ```
 Comment out any line beginning with ```default``` by putting a hashtag at the beginning of the line.
 
