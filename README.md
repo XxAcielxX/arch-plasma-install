@@ -425,7 +425,6 @@ Save by hitting Ctrl+O then Enter, quit by hitting Ctrl+X.
 ### Final Step
 ```
 exit
-umount -a
 reboot
 ```
 </br>
