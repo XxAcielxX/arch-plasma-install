@@ -221,7 +221,7 @@ swapon /dev/sdx2
 ### Mount Remaining Partitions
 ```
 mount /dev/sdx3 /mnt 
-mount --mkdir /dev/sdx1 /mnt/boot/efi
+mount --mkdir /dev/sdx1 /mnt/boot
 mount --mkdir /dev/sdx4 /mnt/home
 ```
 
@@ -355,28 +355,27 @@ grub-install /dev/[disk name] # You don't need to specify a target because the d
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### Install EFI Boot manager and SystemD-Boot (UEFI) <a name="systemd-boot"></a>
+### Install SystemD-Boot (UEFI) <a name="systemd-boot"></a>
 ```
-pacman -S efibootmgr
-bootctl --path=/boot/efi install
+bootctl install
 ```
 
-#### Creating config files <a name="making-config-file"></a>
+#### Creating and amending config files <a name="making-config-file"></a>
 
 Open and edit /boot/loader/loader.conf
 ```
 nano /boot/efi/loader/loader.conf
 ```
-Comment out the line beginning with ```default``` by putting a hashtag at the beginning of the line.
+Comment out any line beginning with ```default``` by putting a hashtag at the beginning of the line.
 
 And add this line to the bottom of the file
 ```
-default arch-*
+default arch.conf
 ```
 
 Once that's done, type:
 ```
-nano /boot/efi/loader/entries/arch.conf
+nano /boot/loader/entries/arch.conf
 ```
 
 And define parameters as follows:
@@ -384,14 +383,44 @@ And define parameters as follows:
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
-options root=/dev/sdx3 rw
+options root=UUID="[root partition UUID]" rw
+```
+
+You can find the root partition's UUID by typing into the command line (not your editor):
+```
+blkid /dev/sdx3
 ```
 
 (Keeping in mind that sdx refers to the drive you want to install Arch Linux onto)
 
 Save by hitting Ctrl+O, Enter, then Ctrl+X.
 
+We need to make a similar file for the fallback image. To do that, type:
+```
+cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-fb.conf
+```
+
+Edit the file:
+```
+nano /boot/loader/entries/arch-fb.conf
+```
+
+Change the below lines:
+```
+title Arch Linux
+initrd /initramfs-linux.img
+```
+
+To (respectively):
+```
+title Arch Linux Fallback
+initrd /initrams-linux-fallback.img
+```
+
+Save by hitting Ctrl+O then Enter, quit by hitting Ctrl+X.
+
 **:warning: - Did you follow the above steps? That section is MANDATORY** 
+
 
 ### Final Step
 ```
