@@ -419,7 +419,7 @@ initrd /initrams-linux-fallback.img
 
 Save by hitting Ctrl+O then Enter, quit by hitting Ctrl+X.
 
-**:warning: - Did you follow the above steps? That section is MANDATORY** 
+**:warning: - Did you follow the above steps? That section is MANDATORY. Additionally, any mistakes made can and will cause your Arch system to fail its boot sequence.** 
 
 
 ### Final Step
