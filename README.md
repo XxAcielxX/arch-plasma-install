@@ -4,7 +4,7 @@
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
-Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
+Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In this guide, we will go step by step on how to do so.
 </br>
 
 ## Table of Contents
@@ -24,6 +24,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
    - [Installing the Bootloader](#installing-bootloader)
      - [GRUB](#grub)
      - [SystemD-Boot](#systemd-boot)
+     - [Making and editing config files (UEFI ONLY)](#making-config-file)
  - [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
    - [Connect to the internet (again)](#reconnect-to-the-internet)
    - [Add User](#add-new-user)
@@ -60,7 +61,7 @@ Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plas
 - Select the bootable USB stick and your computer should show a range of options
 - Select "Arch Linux Install medium" and wait to be booted into the ArchISO
 
-If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.
+If your computer doesn't recognise the USB stick or throws an error when trying to boot into it, you likely has Secure Boot on.\
 Go into your BIOS settings and disable Secure Boot.
 
 > Tip: Hit CTRL+L to quickly clear the screen
@@ -92,7 +93,7 @@ wsc [selected station] push-button
 ```
 
 And push the WPS button at the back of your router. This may take a minute or two to complete.
-Once the WPS LED stops flashing, your computer has been connected to the internet!
+Once the WPS LED on your router stops flashing, your computer has been connected to the internet!
 
 ### Regular method
 
@@ -131,7 +132,7 @@ loadkeys [keymap]
 
 ### Check for Internet Connectivity
 ```
-ping -c 4 google.com
+ping -c 4 archlinux.org
 ```
 - If you are connected through Ethernet, then your Internet will be working out of the box.
 - If you are using Wi-Fi, then use `wifi-menu` to connect to your local network.
@@ -141,6 +142,14 @@ ping -c 4 google.com
 ```
 timedatectl set-ntp true
 ```
+
+### Check the system clock is correct
+```
+timedatectl
+```
+
+As of now, you don't have to worry about the timezone, just make sure that the UTC time it returns matches real-world UTC time
+
 </br>
 
 ## Preparing the Disk for System
@@ -171,6 +180,7 @@ If you are on an MBR system:
 q - To quit
 sfdisk --delete /dev/[disk name]
 ```
+
 Then, run gdisk or fdisk again.
 
 ```
@@ -201,26 +211,27 @@ simply press enter = As last sector [HOME parition size (takes up remaining hard
 w = write & exit
 ```
 
-It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop\
+It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop.
+
 **IMPORTANT**: From now on, your disk will be referred to as sdx, with x being the letter representing your drive.
 
-### Format Partitions
+### Format non-swap partitions
 ```
 mkfs.fat -F32 /dev/sdx1
-mkswap /dev/sdx2
 mkfs.btrfs /dev/sdx3 # Add -f if your system tells you another filesystem like ext4 is already present
 mkfs.btrfs /dev/sdx4
 ```
 
-Turn on swap memory
+Format and turn on swap memory
 ```
+mkswap /dev/sdx2
 swapon /dev/sdx2
 ```
 
-### Mount Partitions and turn on swap memory
+### Mount Remaining Partitions
 ```
 mount /dev/sdx3 /mnt 
-mount --mkdir /dev/sdx1 /mnt/boot/efi
+mount --mkdir /dev/sdx1 /mnt/boot
 mount --mkdir /dev/sdx4 /mnt/home
 ```
 
@@ -251,7 +262,10 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
+
+> Note: A single ```>``` will overwrite a file and a double ```>``` will append to a file. Ensure you don't confuse these with each other, and make sure the commands you type are as how this guide has written it before you hit enter.
+
+Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Do not touch the file if you don't know what its contents mean.
 </br>
 
 ## Chroot
@@ -262,8 +276,8 @@ arch-chroot /mnt
 
 ### Set Time & Date
 ```
-ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
-hwclock --systohc
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime 
+hwclock --systohc # Sync hardware clock with system time
 ```
 Replace `Region` & `City` according to your Time zone. To see what timezones are available, use the following commands:
 ```
@@ -285,7 +299,7 @@ We will use `en_US.UTF-8` here but, if you want to set your language, replace `e
 ```
 nano /etc/locale.gen
 ```
-Uncomment the below line
+Uncomment the below line (or any line, depending on your region and what language your keyboard is in) by removing the hashtag preceeding the line
 ```
 #en_US.UTF-8 UTF-8
 ```
@@ -354,16 +368,76 @@ grub-install /dev/[disk name] # You don't need to specify a target because the d
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### Install EFI Boot manager and SystemD-Boot (UEFI) <a name="systemd-boot"></a>
+### Install SystemD-Boot (UEFI) <a name="systemd-boot"></a>
 ```
-pacman -S efibootmgr
-bootctl --path=/mnt/boot install
+bootctl install
 ```
+
+#### Creating and amending config files <a name="making-config-file"></a>
+
+Open and edit /boot/loader/loader.conf
+```
+nano /boot/loader/loader.conf
+```
+Comment out any line beginning with ```default``` by putting a hashtag at the beginning of the line.
+
+And add this line to the bottom of the file
+```
+default arch.conf
+```
+
+Once that's done, type:
+```
+nano /boot/loader/entries/arch.conf
+```
+
+And define parameters as follows:
+```
+title    Arch Linux
+linux    /vmlinuz-linux
+initrd   /initramfs-linux.img
+options  root=UUID="[root partition UUID]" rw
+```
+
+You can find the root partition's UUID by typing into the command line (not your editor):
+```
+blkid /dev/sdx3
+```
+
+(Keeping in mind that sdx refers to the drive you want to install Arch Linux onto)
+
+Save by hitting Ctrl+O, Enter, then Ctrl+X.
+
+We need to make a similar file for the fallback image. To do that, type:
+```
+cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-fb.conf
+```
+
+Edit the file:
+```
+nano /boot/loader/entries/arch-fb.conf
+```
+
+Change the below lines:
+```
+title Arch Linux
+initrd /initramfs-linux.img
+```
+
+To (respectively):
+```
+title Arch Linux Fallback
+initrd /initrams-linux-fallback.img
+```
+
+Save by hitting Ctrl+O then Enter, quit by hitting Ctrl+X.
+
+**:warning: - Did you follow the above steps? That section is MANDATORY. Additionally, any mistakes made can and will cause your Arch system to fail its boot sequence.** 
+
 
 ### Final Step
 ```
 exit
-umount -a
 reboot
 ```
 </br>
@@ -451,8 +525,10 @@ Edit `/etc/pacman.conf` & uncomment the below two lines.
 #### MESA Libraries (32bit) (optional but highly recommmended)
 This package is required by Steam if you play games using Vulkan Backend.
 ```
-sudo pacman -S lib32-mesa
+sudo pacman -Sy lib32-mesa
 ```
+
+Note: The above install will not work if you don't specify ```-Sy``` or type ```sudo pacman -Syy``` beforehand.
 
 ### Install & Enable SDDM
 ```
@@ -538,6 +614,8 @@ A lot of programs written for Arch can be founded in the AUR, but be careful of 
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
+cd .
+rm -rf yay # To delete the yay folder as it isn't necessary anymore
 ```
 
 ### Install [NuShell](https://www.nushell.sh) <a name="alternative-shells"></a>
