@@ -4,7 +4,7 @@
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
-Hello everyone, This is my guide for installing minimal Arch Linux with KDE Plasma Desktop Environment. In this guide we will go step by step on how I install my Arch System and set everything up from scratch for a stable & healthy OS.
+Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In this guide, we will go step by step on how to  do so.
 </br>
 
 ## Table of Contents
@@ -93,7 +93,7 @@ wsc [selected station] push-button
 ```
 
 And push the WPS button at the back of your router. This may take a minute or two to complete.
-Once the WPS LED stops flashing, your computer has been connected to the internet!
+Once the WPS LED on your router stops flashing, your computer has been connected to the internet!
 
 ### Regular method
 
@@ -142,6 +142,14 @@ ping -c 4 archlinux.org
 ```
 timedatectl set-ntp true
 ```
+
+### Check the system clock is correct
+```
+timedatectl
+```
+
+As of now, you don't have to worry about the timezone, just make sure that the UTC time it returns matches real-world UTC time
+
 </br>
 
 ## Preparing the Disk for System
@@ -172,6 +180,7 @@ If you are on an MBR system:
 q - To quit
 sfdisk --delete /dev/[disk name]
 ```
+
 Then, run gdisk or fdisk again.
 
 ```
@@ -202,19 +211,20 @@ simply press enter = As last sector [HOME parition size (takes up remaining hard
 w = write & exit
 ```
 
-It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop\
+It is ABSOLUTELY recommended to make a home partitition, for both security and convenience if you do decide to distro-hop.
+
 **IMPORTANT**: From now on, your disk will be referred to as sdx, with x being the letter representing your drive.
 
-### Format Partitions
+### Format non-swap partitions
 ```
 mkfs.fat -F32 /dev/sdx1
-mkswap /dev/sdx2
 mkfs.btrfs /dev/sdx3 # Add -f if your system tells you another filesystem like ext4 is already present
 mkfs.btrfs /dev/sdx4
 ```
 
-Turn on swap memory
+Format and turn on swap memory
 ```
+mkswap /dev/sdx2
 swapon /dev/sdx2
 ```
 
@@ -252,7 +262,10 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 ```
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
-Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors.
+
+> Note: A single ```>``` will overwrite a file and a double ```>``` will append to a file. Ensure you don't confuse these with each other, and make sure the commands you type are as how this guide has written it before you hit enter.
+
+Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Do not touch the file if you don't know what its contents mean.
 </br>
 
 ## Chroot
@@ -263,8 +276,8 @@ arch-chroot /mnt
 
 ### Set Time & Date
 ```
-ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
-hwclock --systohc
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime 
+hwclock --systohc # Sync hardware clock with system time
 ```
 Replace `Region` & `City` according to your Time zone. To see what timezones are available, use the following commands:
 ```
@@ -286,7 +299,7 @@ We will use `en_US.UTF-8` here but, if you want to set your language, replace `e
 ```
 nano /etc/locale.gen
 ```
-Uncomment the below line
+Uncomment the below line (or any line, depending on your region and what language your keyboard is in) by removing the hashtag preceeding the line
 ```
 #en_US.UTF-8 UTF-8
 ```
@@ -383,7 +396,7 @@ And define parameters as follows:
 title    Arch Linux
 linux    /vmlinuz-linux
 initrd   /initramfs-linux.img
-options root=UUID="[root partition UUID]" rw
+options  root=UUID="[root partition UUID]" rw
 ```
 
 You can find the root partition's UUID by typing into the command line (not your editor):
@@ -512,8 +525,10 @@ Edit `/etc/pacman.conf` & uncomment the below two lines.
 #### MESA Libraries (32bit) (optional but highly recommmended)
 This package is required by Steam if you play games using Vulkan Backend.
 ```
-sudo pacman -S lib32-mesa
+sudo pacman -Sy lib32-mesa
 ```
+
+Note: The above install will not work if you don't specify ```-Sy``` or type ```sudo pacman -Syy``` beforehand.
 
 ### Install & Enable SDDM
 ```
@@ -599,6 +614,8 @@ A lot of programs written for Arch can be founded in the AUR, but be careful of 
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
+cd .
+rm -rf yay # To delete the yay folder as it isn't necessary anymore
 ```
 
 ### Install [NuShell](https://www.nushell.sh) <a name="alternative-shells"></a>
