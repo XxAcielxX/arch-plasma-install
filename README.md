@@ -4,7 +4,7 @@
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
-Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In this guide, we will go step by step on how to  do so.
+Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In this guide, we will go step by step on how to do so.
 </br>
 
 ## Table of Contents
