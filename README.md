@@ -263,7 +263,7 @@ pacstrap /mnt base base-devel linux linux-firmware linux-headers nano intel-ucod
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
-> Note: A single ```>``` will overwrite a file and a double ```>``` will append to a file. Ensure you don't confuse these with each other, and make sure the commands you type are as how this guide has written it before you hit enter.
+> Note: A single ```>``` will overwrite a file and a double ```>>``` will append to a file. Ensure you don't confuse these with each other, and make sure the commands you type are as how this guide has written it before you hit enter.
 
 Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Do not touch the file if you don't know what its contents mean.
 </br>
@@ -432,7 +432,7 @@ initrd /initrams-linux-fallback.img
 
 Save by hitting Ctrl+O then Enter, quit by hitting Ctrl+X.
 
-**:warning: - Did you follow the above steps? That section is MANDATORY. Additionally, any mistakes made can and will cause your Arch system to fail its boot sequence.** 
+> :warning: - Did you follow the above steps? That section is MANDATORY. Additionally, any mistakes made can and will cause your Arch system to fail its boot sequence.** 
 
 
 ### Final Step
@@ -585,7 +585,7 @@ git\*| Github command-line utility tools. (needed to access the AUR)
 fastfetch | Fastfetch is a command-line system information tool, that is the sucessor to NeoFetch.
 cups\*| Printer service
 
-> \* - These are some of the more important packages, which a lot of programs tend to use. They're optional but it is highly recommended to install both of them.
+> \* - These are some of the more important packages, which a lot of programs tend to use. They're optional but it is highly recommended to install all of them.
 
 ### Enable OpenSSH daemon and CUPS printer service
 ```
