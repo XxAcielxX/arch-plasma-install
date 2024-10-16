@@ -12,8 +12,8 @@ Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In t
  - [**Connect to the Internet**](#connect-to-the-internet)
  - [**Disk Partitioning**](#preparing-the-disk-for-system)
  - [**Base System Installation**](#base-system-installation)
-   - [Update Mirrors](#update-mirrors-using-reflector)
-   - [Base System](https://github.com/XxAcielxX/arch-plasma-install#install-base-system)
+   - [Update Mirrors](#update-mirrors-using-reflector-optional-but-recommended-for-faster-download-speeds-slow-download-speeds-can-time-out-)
+   - [Base System](#install-base-system)
    - [Generate fstab](#generate-fstab)
  - [**Chroot**](#chroot)
    - [Date & Time](#set-time--date)
@@ -22,24 +22,25 @@ Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In t
    - [Network Manager](#install--enable-networkmanager)
    - [ROOT Password](#set-root-password)
    - [Installing the Bootloader](#installing-bootloader)
-     - [GRUB](#grub)
-     - [SystemD-Boot](#systemd-boot)
-     - [Making and editing config files (UEFI ONLY)](#making-config-file)
+     - [GRUB (MBR)](#installing-grub-mbr-)
+     - [SystemD-Boot (UEFI)](#install-systemd-boot-uefi-)
+     - [Creating and amending config files (UEFI ONLY)]([#creating-and-amending-config-files-)
  - [**Boot Freshly Installed System**](#now-boot-into-your-freshly-installed-arch-system)
-   - [Connect to the internet (again)](#reconnect-to-the-internet)
-   - [Add User](#add-new-user)
+   - [Add main User](#add-main-user)
    - [Sudo Command](#allow-wheel-group-to-use-sudo-commands)
- - [**User Login**](#reconnect-to-the-internet)
+ - [**User Login**](#login-as-user-and-lets-connect-to-the-internet-again-)
    - [Display Server & GPU Drivers](#xorg--gpu-drivers)
-   - [Multilib Repository (32bit)](#multilib)
+   - [Multilib Repository (32bit)](#enable-multilib-repo-optional-but-absolutely-recommended-)
    - [Display Manager (SDDM)](#install--enable-sddm)
    - [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
    - [Audio Utilities & Bluetooth](#audio-utilities--bluetooth)
-   - [Misc Applications](https://#my-required-applications)
+   - [Misc Applications](#apps-i-would-personally-recommend-installing-but-arent-required)
  - [**The Conclusion**](#the-conclusion)
  - [**Extras (optional)**](#extras)
    - [Yay](#install-yay)
    - [Alternative Shells](#alternative-shells)
+     - [Zsh](#install-zsh)
+     - [NuShell](#Install-nushell)
    - [Change SHELL](#changing-your-shell)
    - [PipeWire](#pipewire)
    - [EasyEffects](#easyeffects)
@@ -508,7 +509,7 @@ You can stop here if you want to do a server installation or have a desktop-less
 ```
 sudo pacman -S xorg [xf86-video-your gpu type]
 ```
-- For Nvidia GPUs, type `nvidia` & `nvidia-settings`. For more info/old GPUs, refer to [Arch Wiki - Nvidia](https://wiki.archlinux.org/index.php/NVIDIA).
+- For Nvidia GPUs, type `nvidia` & `nvidia-settings`. For more info/old GPUs, refer to [Arch Wiki - Nvidia](https://wiki.archlinux.org/title/NVIDIA).
 - For newer AMD GPUs, type `xf86-video-amdgpu`.
 - For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
 - For dedicated Intel Graphics, type `xf86-video-intel`.
@@ -617,19 +618,20 @@ makepkg -si
 cd .
 rm -rf yay # To delete the yay folder as it isn't necessary anymore
 ```
+### Alternate Shells (Zsh or NuShell)
 
-### Install [NuShell](https://www.nushell.sh) <a name="alternative-shells"></a>
-NuShell is a powerful shell that has really helpful debug statements and is overall a solid shell environment.
-```
-yay -S nushell
-```
-
-### Install [Zsh](https://wiki.archlinux.org/index.php/zsh/)
+#### Install [Zsh](https://wiki.archlinux.org/title/zsh/)
 Zsh is a powerful shell that operates as both an interactive shell and as a scripting language interpreter. It's a preferred shell environment by many.
 ```
 sudo pacman -S zsh zsh-completions
 ```
 Read *[here](#install-oh-my-zsh)* for customisation & theming for Zsh. Read below how to change your SHELL.
+
+#### Install [NuShell](https://www.nushell.sh) <a name="alternative-shells"></a>
+NuShell is a powerful shell that has really helpful debug statements and is overall a solid shell environment.
+```
+yay -S nushell
+```
 
 ### Changing your SHELL
 First check your current SHELL by running:
@@ -668,7 +670,7 @@ yay -S easyeffects-git
 > This will also install pipewire-pulse and replace PulseAudio with PipeWire.
 
 ## ClamAV
-[Clam AntiVirus](https://wiki.archlinux.org/index.php/ClamAV) is an open source (GPL) anti-virus toolkit for UNIX. It provides a number of utilities including a flexible and scalable multi-threaded daemon, a command line scanner and advanced tool for automatic database updates.
+[Clam AntiVirus](https://wiki.archlinux.org/title/ClamAV) is an open source (GPL) anti-virus toolkit for UNIX. It provides a number of utilities including a flexible and scalable multi-threaded daemon, a command line scanner and advanced tool for automatic database updates.
 #### 1. Install
 ```
 sudo pacman -S clamav
