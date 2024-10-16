@@ -38,7 +38,7 @@ Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In t
  - [**The Conclusion**](#the-conclusion)
  - [**Extras (optional)**](#extras)
    - [Yay](#install-yay)
-   - [Alternative Shells](#alternative-shells)
+   - [Alternative Shells](#alternative-shells-zsh-or-nushell)
      - [Zsh](#install-zsh)
      - [NuShell](#Install-nushell)
    - [Change SHELL](#changing-your-shell)
