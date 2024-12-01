@@ -802,6 +802,6 @@ Now open your browser and point to it `your-machine-ip:9000` and login with ***r
 ## Changelog
 
  - **2024-06-25**
-   - A lot of changes, improvements, and updates. Special thanks to our biggest contributor @[Exvix](https://github.com/Exvix).
+   - A lot of changes, improvements, and updates. Special thanks to our biggest contributor @[bahmoudd](https://github.com/bahmoudd)
 
 #### Full and complete changelog, [click here](https://github.com/XxAcielxX/arch-plasma-install/blob/main/CHANGELOG.md).
