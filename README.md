@@ -572,7 +572,7 @@ sudo systemctl enable bluetooth.service
 ### Apps I would personally recommend installing but aren't required
 You can install all the following packages or only the one you want.
 ```
-sudo pacman -S firefox openssh qbittorrent audacious wget screen git neofetch
+sudo pacman -S firefox openssh qbittorrent audacious wget screen git fastfetch
 ```
 Packages | Description
 --------- | ----------
