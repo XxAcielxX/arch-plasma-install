@@ -472,7 +472,7 @@ EDITOR=nano visudo
 
 #### Find and uncomment the below line
 ```
-#%wheel ALL=(ALL) ALL
+# %wheel ALL=(ALL:ALL) ALL
 ```
 save & exit.
 
