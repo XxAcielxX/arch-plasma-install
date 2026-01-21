@@ -535,7 +535,8 @@ For GRUB users type in as follows:
 ```
 sudo nano /etc/default/grub
 ```
-Navigate to the line `GRUB_CMDLINE_LINUX_DEFAULT` and append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
+- Navigate to the line `GRUB_CMDLINE_LINUX_DEFAULT`
+- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
 Example:
 ```
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0"
@@ -545,7 +546,8 @@ For SystemD-Boot users type in as follows:
 ```
 sudo nano /boot/loader/entries/arch.conf
 ```
-Navigate to the line `options` and append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
+- Navigate to the line `options`
+- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
 Example:
 ```
 options  [Root ID] rw nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0
