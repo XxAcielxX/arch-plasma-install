@@ -3,7 +3,7 @@
 
 [<img src="https://img.shields.io/badge/BTC-1USXozdnotw3u5XkzooUadw7NrdyV752V-E66000?labelColor=353535&style=for-the-badge&logo=btc"/>](https://acielgaming.cb.id)
 
-(Works with Arch ISO Image build as of: 2024.01.*)
+(Works with Arch ISO Image build as of: 2026.01.*)
 
 # Arch Linux with KDE Plasma Installation Guide (UEFI & MBR)
 
