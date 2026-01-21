@@ -29,8 +29,8 @@ Hello everyone, This is my guide for installing Arch Linux with KDE Plasma. In t
    - [Add main User](#add-main-user)
    - [Sudo Command](#allow-wheel-group-to-use-sudo-commands)
  - [**User Login**](#login-as-user-and-lets-connect-to-the-internet-again-)
-   - [Display Server & GPU Drivers](#xorg--gpu-drivers)
    - [Multilib Repository (32bit)](#enable-multilib-repo-optional-but-absolutely-recommended-)
+   - [Display Server & GPU Drivers](#xorg--gpu-drivers)
    - [Display Manager (SDDM)](#install--enable-sddm)
    - [Desktop Environment (KDE Plasma)](#kde-plasma--applications)
    - [Audio Utilities & Bluetooth](#audio-utilities--bluetooth)
@@ -505,15 +505,6 @@ You don't need to check for updates as Arch will have already downloaded the lat
 
 You can stop here if you want to do a server installation or have a desktop-less Arch system for any other reason.
 
-### Xorg & GPU Drivers
-```
-sudo pacman -S xorg [xf86-video-your gpu type]
-```
-- For Nvidia GPUs, type `nvidia` & `nvidia-settings`. For more info/old GPUs, refer to [Arch Wiki - Nvidia](https://wiki.archlinux.org/title/NVIDIA).
-- For newer AMD GPUs, type `xf86-video-amdgpu`.
-- For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
-- For dedicated Intel Graphics, type `xf86-video-intel`.
-
 ### Enable Multilib Repo (optional but absolutely recommended) <a name="multilib"></a>
 multilib contains 32-bit software and libraries that can be used to run and build 32-bit applications on 64-bit installs (e.g. [Wine](https://www.winehq.org/), [Steam](https://store.steampowered.com/), etc).
 
@@ -521,6 +512,99 @@ Edit `/etc/pacman.conf` & uncomment the below two lines.
 ```
 #[multilib]
 #Include = /etc/pacman.d/mirrorlist
+```
+
+### Xorg & GPU Drivers
+```
+sudo pacman -S xorg [xf86-video-your gpu type]
+```
+- For Nvidia GPUs, type `nvidia-open` & `nvidia-utils` & `nvidia-utils32` (multilib being enabled is neeeded). For more info/old GPUs, refer to [Arch Wiki - Nvidia](https://wiki.archlinux.org/title/NVIDIA).
+- For newer AMD GPUs, type `xf86-video-amdgpu`.
+- For legacy Radeon GPUs like HD 7xxx Series & below, type `xf86-video-ati`.
+- For dedicated Intel Graphics, type `xf86-video-intel`.
+
+#### NVIDIA Set Up
+Special thanks [Korvahannu's guide](https://github.com/korvahannu/arch-nvidia-drivers-installation-guide/) and [Arch Wiki - Nvidia Troubleshooting](https://wiki.archlinux.org/title/NVIDIA/Troubleshooting) for making this possible!
+NOTE : Most info comes from Korvahannu's guide and is recommended to take a look at it aswell if you are having any other issues
+
+Following all three steps should get you properly set up.
+
+##### Setting Up Kernel Parameters
+
+For GRUB users type in as follows:
+```
+sudo nano /etc/default/grub
+```
+- Navigate to the line `GRUB_CMDLINE_LINUX_DEFAULT`
+- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
+
+An example of this:
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0"
+```
+
+For SystemD-Boot users type in as follows:
+```
+sudo nano /boot/loader/entries/arch.conf
+```
+- Navigate to the line `options`
+- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
+
+An example of this:
+```
+options  [Root ID] rw nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0
+```
+
+NOTE : If you encounter an issue with a black screen on boot and are using an intel chip you may need to append `i915.modeset=0` aswell.
+
+##### Adding Early NVIDIA Loading To Mkinitcpio 
+
+Open Mkinitcpio with:
+```
+sudo nano /etc/mkinitcpio.conf
+```
+- Go to the line with `MODULES=()` and add `nvidia nvidia_modeset nvidia_uvm nvidia_drm` inbetween the parentheses.
+- Go to the line with `HOOKS=()` and remove the `kms` hooks inbetween the parentheses.
+
+##### Adding Pacman Hook
+
+Directly type the hook in as follows:
+```
+sudo mkdir -p /etc/pacman.d/hooks/
+sudo nano /etc/pacman.d/hooks/nvidia.hook
+```
+Then in nano type:
+```
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia-open
+Target=linux
+
+[Action]
+Description=Update Nvidia module in initcpio
+Depends=mkinitcpio
+When=PostTransaction
+NeedsTargets
+Exec=/bin/sh -c 'while read -r trg; do case $trg in linux) exit 0; esac; done; /usr/bin/mkinitcpio -P'
+```
+Adjust the lines `Target=nvidia-open` and `Target=linux` depenging on what nvidia driver you installed.
+Such as `Target=nvidia-470xx-dkms` for the nvidia-470xx-dkms driver and `Target=linux-lts` for the linux-lts kernel.
+
+Using `wget` command to grab the hook file from [Korvahannu's guide](https://github.com/korvahannu/arch-nvidia-drivers-installation-guide/):
+```
+sudo pacman -S --needed wget
+wget https://raw.githubusercontent.com/korvahannu/arch-nvidia-drivers-installation-guide/main/nvidia.hook
+```
+Adjust the lines `Target=nvidia-open` and `Target=linux` depenging on what nvidia driver you installed.
+Such as `Target=nvidia-470xx-dkms` for the nvidia-470xx-dkms driver and `Target=linux-lts` for the linux-lts kernel.
+
+Copy the wget file into the hooks location:
+```
+sudo mkdir -p /etc/pacman.d/hooks/
+sudo mv ./nvidia.hook /etc/pacman.d/hooks/
 ```
 
 #### MESA Libraries (32bit) (optional but highly recommmended)
