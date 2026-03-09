@@ -539,7 +539,8 @@ For GRUB users type in as follows:
 sudo nano /etc/default/grub
 ```
 - Navigate to the line `GRUB_CMDLINE_LINUX_DEFAULT`
-- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
+- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nouveau.modeset=0`
+- Additionally you may append `nomodeset` if this doesn't work. However sleep mode may **not** work for your PC if turned on. Only use it if you have to.
 
 An example of this:
 ```
@@ -551,7 +552,8 @@ For SystemD-Boot users type in as follows:
 sudo nano /boot/loader/entries/arch.conf
 ```
 - Navigate to the line `options`
-- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0`
+- Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nouveau.modeset=0`
+- Additionally you may append `nomodeset` if this doesn't work. However sleep mode may **not** work for your PC if turned on. Only use it if you have to.
 
 An example of this:
 ```
