@@ -558,9 +558,9 @@ An example of this:
 options  [Root ID] rw nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nouveau.modeset=0
 ```
 
-> NOTE : If you encounter an issue with a black screen on boot and are using an intel chip you may need to append `i915.modeset=0` aswell.
+NOTE : If you encounter an issue with a black screen on boot and are using an intel chip you may need to append `i915.modeset=0` aswell.
  
-> NOTE : You may also append `nomodeset` if the above still doesn't work. Also read below warning!
+NOTE : You may also append `nomodeset` if the above still doesn't work. Also read below warning!
 
 > :warning: - **HOWEVER** sleep mode may be **BROKEN** if `nomodeset` is turned on. **ONLY** use it if you have to.
 
