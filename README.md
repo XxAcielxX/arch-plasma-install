@@ -544,7 +544,7 @@ sudo nano /etc/default/grub
 
 An example of this:
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nouveau.modeset=0"
 ```
 
 For SystemD-Boot users type in as follows:
@@ -553,15 +553,14 @@ sudo nano /boot/loader/entries/arch.conf
 ```
 - Navigate to the line `options`
 - Append `nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nouveau.modeset=0`
-- Additionally you may append `nomodeset` if this doesn't work. However sleep mode may **not** work for your PC if turned on. Only use it if you have to.
-
 An example of this:
 ```
-options  [Root ID] rw nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nomodeset nouveau.modeset=0
+options  [Root ID] rw nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nouveau.modeset=0
 ```
 
-NOTE : If you encounter an issue with a black screen on boot and are using an intel chip you may need to append `i915.modeset=0` aswell.
-
+> NOTE : If you encounter an issue with a black screen on boot and are using an intel chip you may need to append `i915.modeset=0` aswell.
+> NOTE : You may also append `nomodeset` if the above still doesn't work. Also read below warning!
+> :warning: **HOWEVER** sleep mode may be **BROKEN** if `nomodeset` is turned on. **ONLY** use it if you have to.
 ##### Adding Early NVIDIA Loading To Mkinitcpio 
 
 Open Mkinitcpio with:
