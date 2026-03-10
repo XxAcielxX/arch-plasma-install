@@ -562,7 +562,7 @@ NOTE : If you encounter an issue with a black screen on boot and are using an in
  
 NOTE : You may also append `nomodeset` if the above still doesn't work. Also read below warning!
 
-> :warning: - **HOWEVER** sleep mode may be **BROKEN** if `nomodeset` is turned on. **ONLY** use it if you have to.
+> :warning: - **HOWEVER** in my experience `nomodeset` has the undocumented effect of **BREAKING** sleep mode if on. **ONLY** use it if you have to.
 
 ##### Adding Early NVIDIA Loading To Mkinitcpio 
 
