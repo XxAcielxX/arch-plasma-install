@@ -528,7 +528,7 @@ sudo pacman -S xorg [xf86-video-your gpu type]
 
 #### NVIDIA Set Up
 Special thanks [Korvahannu's guide](https://github.com/korvahannu/arch-nvidia-drivers-installation-guide/) and [Arch Wiki - Nvidia Troubleshooting](https://wiki.archlinux.org/title/NVIDIA/Troubleshooting) for making this possible!
-NOTE : Most info comes from Korvahannu's guide and is recommended to take a look at it aswell if you are having any other issues
+> NOTE: Most info comes from Korvahannu's guide and is recommended to take a look at it aswell if you are having any other issues
 
 Following all three steps should get you properly set up.
 
@@ -558,9 +558,9 @@ An example of this:
 options  [Root ID] rw nvidia-drm.modeset=1 nvidia-drm.fbdev=1 rcutree.gp_init_delay=1 nouveau.modeset=0
 ```
 
-NOTE : If you encounter an issue with a black screen on boot and are using an intel chip you may need to append `i915.modeset=0` aswell.
+> NOTE: If you encounter an issue with a black screen on boot and are using an intel chip you may need to append `i915.modeset=0` aswell.
  
-NOTE : You may also append `nomodeset` if the above still doesn't work. Also read below warning!
+> NOTE: You may also append `nomodeset` if the above still doesn't work. Also read below warning!
 
 > :warning: - **HOWEVER** in my experience `nomodeset` has the undocumented effect of **BREAKING** sleep mode if on. **ONLY** use it if you have to.
 
