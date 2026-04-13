@@ -116,7 +116,7 @@ Select an access point from the list provided and connect to it by using the fol
 station [selected station] connect [SSID]
 ```
 
-IWCTL will prompt you to enter the access point's passphrase. Enter it and you should be connected to the internet soon after.
+IWCTL will prompt you to enter the access point's passphrase. Enter it and you should be connected to the internet soon after. Now type `exit` to quit from the IWCTL.
 
 ### Load Keymaps (for non US-ENG Keyboard Users only)
 For a list of all the available keymaps, use the command:
